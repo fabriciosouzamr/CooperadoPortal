@@ -1,0 +1,212 @@
+﻿#impressao .ImpressaoTitulo
+{
+    font-family : Arial;
+    font-size : 18px;
+    font-weight: bold;
+    color : #000000;
+    text-decoration: none;
+    text-align :left;
+}
+
+#impressao .ImpressaoDataHora {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+#impressao .ListTitulo1 {
+    background-color: #000080;
+    color: #FFF;
+}
+
+#impressao .ListTitulo2 {
+    background-color: #666699;
+    color: #FFF;
+}
+
+#impressao .ListTitulo3 {
+    background-color: #3366ff;
+    color: #FFF;
+}
+
+#impressao .ListLinha1 {
+    background-color: #DFDFDF;
+}
+
+#impressao .ListLinha2 {
+    background-color: #FFFFFF;
+}
+
+
+#impressao .AlinhadoEsquerda td {
+    text-align: left;
+}
+
+#impressao .borda01 {
+    border: 1px solid #000000;
+}
+
+#impressao .borda02 {
+    border: 1px solid #000000;
+}
+
+#impressao .borda03 {
+    border-bottom: 1px solid #999;
+}
+
+#impressao .borda04 {
+    border-right: 1px solid #999;
+}
+
+#impressao .type01 {
+    font-family: Arial;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#impressao .type02 {
+    font-family: Arial;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#impressao .type03 {
+    font-family: Arial;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #000;
+}
+
+#impressao .type04 {
+    font-family: Arial;
+    font-size: 9px;
+    text-transform: uppercase;
+}
+#impressao table {
+    width:100%;
+}
+
+#impressao table.bordageral {
+    border-collapse: collapse;
+}
+
+#impressao table.bordageral tr td {
+    border: 1px solid #999;
+}
+
+#impressao .type05 {
+    font-family: Arial;
+    font-size: 12px;
+}
+
+#impressao .type06 {
+    font-family: Arial;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+#impressao .CssTitulo {
+    background-color: #CFCFCF;
+    padding: 2px;
+}
+
+#impressao .salto {
+    font-size: 1px;
+    height: 10px;
+}
+
+#impressao .FonteMenor1 * {
+    font-size: 10px;
+}
+
+#impressao .FonteMenor2 * {
+    font-size: 11px;
+}
+
+#impressao .TituloMes {
+    font-family: Arial;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #ff0000;
+}
+
+
+/**************************************/
+/****************PRINT*****************/
+.ocultaMenu {
+    background: #fff;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+}
+
+#impressao {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 90000;
+    width: 100%;
+    background: #fff;
+}
+
+.page {
+    width: 21cm;
+    min-height: 23cm;
+    padding: 0.8cm;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    page-break-after: always;
+    position: absolute;
+    z-index: 9;
+}
+    .page .table > thead > tr > th, .page .table > tbody > tr > th, .page .table > tfoot > tr > th, .page .table > thead > tr > td, .page .table > tbody > tr > td, .page .table > tfoot > tr > td {
+        padding: 4px 6px;
+        line-height: 1.2;
+        border-top: none;
+    }
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    .page {
+        width: 21cm;
+        min-height: 29.7cm;
+        padding: 0.8cm;
+        margin: 0cm auto;
+        border: none;
+        border-radius: 5px;
+        background: white;
+        box-shadow: none page-break-after: always;
+        position: absolute;
+        z-index: 9;
+    }
+    .page .table > thead > tr > th, .page .table > tbody > tr > th, .page .table > tfoot > tr > th, .page .table > thead > tr > td, .page .table > tbody > tr > td, .page .table > tfoot > tr > td {
+        padding: 2px 4px;
+        line-height: 1;
+        border-top: none;
+    }
+    .noprint {
+        display: none;
+    }
+
+    .sb-l-o #content_wrapper, body.sb-l-m #content_wrapper {
+        margin: 0px !important;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+}
+
+/****************PRINT*****************/
+/**************************************/

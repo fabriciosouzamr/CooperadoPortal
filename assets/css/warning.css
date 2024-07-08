@@ -1,0 +1,99 @@
+.warning {
+	width: 100%;
+	height: auto;
+	background-color: #2f3538;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 450;
+}
+
+.warning *{	
+	box-sizing: border-box;
+	text-decoration: none;
+	appearance: none;
+	padding: 0;
+	outline: 0;
+	margin: 0;
+	border: 0;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-overflow-scrolling: touch;
+}
+
+.warning .wrapper-content {
+	max-width: 1530px;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+	padding: 25px 15px 25px 15px;
+}
+.warning .btn-close {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #202427;
+	position: absolute;
+	top: 20px;
+	right: 30px;
+}
+.warning .btn-close i {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(0deg);
+	transition: all 0.3s ease-out;
+}
+.warning .btn-close i img {
+	width: 100%;
+	display: block;
+}
+.warning .btn-close:hover i {
+	transform: translate(-50%, -50%) rotate(180deg);
+}
+.warning h3 {
+	font-family: "VWHead-Bold";
+	font-size: 28px;
+	line-height: 33px;
+	color: #fff;
+	margin-bottom: 15px;
+}
+.warning p {
+	font-family: "VWHeadOffice-Regular";
+	font-size: 14px;
+	line-height: 22px;
+	color: #fff;
+	padding-right: 85px;
+}
+.warning p a {
+	color: #0099da;
+	text-decoration: none;
+}
+
+@media only screen and (max-width: 770px) {
+	.warning#warning .wrapper-center {
+		padding-top: 50px;
+	}
+	.warning#warning .btn-close {
+		width: 30px;
+		height: 30px;
+		top: 10px;
+		right: 10px;
+	}
+	.warning#warning .btn-close i {
+		width: 15px;
+		height: 15px;
+	}
+	.warning#warning h3 {
+		font-size: 22px;
+		line-height: 27px;
+	}
+	.warning#warning p {
+		font-size: 12px;
+		line-height: 18px;
+		padding-right: 0;
+	}
+}

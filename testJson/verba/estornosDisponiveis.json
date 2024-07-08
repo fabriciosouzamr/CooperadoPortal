@@ -1,0 +1,96 @@
+[
+  {
+    "id":	1,
+    "guid":	"de3db502-0a33-4e47-a0bb-35b6235503ca",
+    "isActive":	false,
+    "balance":	"$3,489.00",
+    "picture":	"http://placehold.it/32x32",
+    "age":	30,
+    "name":	"Sandoval Mclean",
+    "gender":	"male",
+    "company":	"Zolavo",
+    "email":	"sandovalmclean@zolavo.com",
+    "phone":	"+1 (902) 569-2412",
+    "address": {
+      "street": 317,
+      "city": "Blairstown",
+      "state": "maine",
+      "zip": 390
+    },
+    "about":	"Fugiatiquip laborum qui elit consectetur sit proident adipisicing.",
+    "registered":	"1991-02-21T23:02:31+06:00",
+    "friends": [
+      {
+        "id": 0,
+        "name": "rosanne"
+      },
+      {
+        "id": 1,
+        "name": "rosanne1"
+      }
+    ]
+  },
+  {
+    "id":	2,
+    "guid":	"de3db502-0a33-4e47-a0bb-35b6235503ca",
+    "isActive":	false,
+    "balance":	"$3,489.00",
+    "picture":	"http://placehold.it/32x32",
+    "age":	30,
+    "name":	"Sandoval Mclean",
+    "gender":	"male",
+    "company":	"Zolavo",
+    "email":	"sandovalmclean@zolavo.com",
+    "phone":	"+1 (902) 569-2412",
+    "address": {
+      "street": 317,
+      "city": "Blairstown",
+      "state": "maine",
+      "zip": 390
+    },
+    "about":	"Fugiatiquip laborum qui elit consectetur sit proident adipisicing.",
+    "registered":	"1991-02-21T23:02:31+06:00",
+    "friends": [
+      {
+        "id": 0,
+        "name": "rosanne"
+      },
+      {
+        "id": 1,
+        "name": "rosanne1"
+      }
+    ]
+  },
+  {
+    "id":	3,
+    "guid":	"de3db502-0a33-4e47-a0bb-35b6235503ca",
+    "isActive":	false,
+    "balance":	"$3,489.00",
+    "picture":	"http://placehold.it/32x32",
+    "age":	30,
+    "name":	"Sandoval Mclean",
+    "gender":	"male",
+    "company":	"Zolavo",
+    "email":	"sandovalmclean@zolavo.com",
+    "phone":	"+1 (902) 569-2412",
+    "address": {
+      "street": 317,
+      "city": "Blairstown",
+      "state": "maine",
+      "zip": 390
+    },
+    "about":	"Fugiatiquip laborum qui elit consectetur sit proident adipisicing.",
+    "registered":	"1991-02-21T23:02:31+06:00",
+    "friends": [
+      {
+        "id": 0,
+        "name": "rosanne"
+      },
+      {
+        "id": 1,
+        "name": "rosanne1"
+      }
+    ]
+  }
+]
+  

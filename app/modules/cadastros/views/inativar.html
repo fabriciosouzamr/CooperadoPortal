@@ -1,0 +1,64 @@
+﻿<div class="tray tray-center" ng-controller="cadastrosInativarController">
+
+
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="boxWarn text-left p10">
+                    <h4>Orientações:</h4>
+
+                    <p>
+                        A planilha deve estar no formato xlsx;<br>O arquivo não deve conter células mescladas;<br>
+                        A primeira linha deve conter o cabeçalho das colunas;<br>Deve haver somente uma planilha no arquivo;<br>
+                        As colunas devem estar formatadas/convertidas para DADOS, mesmo as colunas de datas e valores;<br>
+                        Após importação veja o resultado de cada registro clicando nos números processados.
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-right">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-lg btn-default" tabindex="1" ng-click="downloadModelo()">Baixar arquivo modelo</button>
+                </div>
+                <div class="col-sm-12 mt20">
+                    <button ngf-select="uploadFiles($files, $invalidFiles)" single accept="/*" ngf-max-size="2MB" class="btn btn-lg btn-danger">
+                        Selecionar Arquivo
+                    </button>
+
+                    <div class="col-sm-12 mt10">
+                        <ul class="p0" style="text-align:center; list-style:none">
+                            <li ng-repeat="f in files" style="font:smaller; width:200px">
+                                {{f.name}} {{f.$errorParam}}
+                                <span class="progress" ng-show="f.progress >= 0">
+                                    <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                                </span>
+                            </li>
+                            <li ng-repeat="f in errFiles" style="font:smaller; color:#f00">
+                                <strong>Erro:</strong> {{f.name}}
+                                <br />Tamanho máximo do arquivo: {{f.$errorParam}}
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div ng-controller="inativacaoImportTableCntrl">
+                    <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button" style="right:11px">
+                        <i class="fa fa-filter"></i>
+                    </button>
+                    <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns ui-grid-move-columns
+                            ui-grid-selection class="grid">
+                        <div class="no-rows" ng-show="!gridOptions1.data.length">
+                            <div class="msg">
+                                <span>Sem registros</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+            </div>
+        </div>
+
+</div>

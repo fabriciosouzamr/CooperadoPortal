@@ -1,0 +1,66 @@
+<style>
+    .regulamento {
+        min-height: 100vh;
+        padding: 1rem 4rem;
+    }
+
+    .upload-btn {
+        border: none;
+        background: transparent;
+        color: #002C5F;
+        margin-top: 3rem;
+    }
+
+    .save-btn {
+        border: none;
+        background: #002C5F;
+        color: white;
+        margin-top: 1rem;
+        padding: 1rem 4rem;
+    }
+
+    .mg-11 {
+        margin-top: 1rem !important;
+    }
+</style>
+<div class="regulamento" ng-controller="regulamentoController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <h1 class="page-title">Regulamentos</h1>
+            <div class="row" ng-show="usuarioLogado.perfil == 'Administrador'">
+                <div class="col-md-7">
+                    <md-input-container>
+                        <label>Nome do regulamento</label>
+                        <input type="text" ng-model="regulamentoName">
+                    </md-input-container>
+                </div>
+                <div class="col-md-3">
+                    <button class="upload-btn" ngf-select="uploadFiles($files, $invalidFiles)" single accept=".pdf"
+                            ngf-max-size="10MB">
+                        <i class="fa fa-upload mr10"></i>Upload do Regulamento
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <button class="save-btn" ng-click="saveRegulamento()">Salvar</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="grid1"
+                     ui-grid="gridOptions1"
+                     ui-grid-pagination
+                     ui-grid-auto-resize
+                     ui-grid-resize-columns
+                     ui-grid-move-columns
+                     ui-grid-selection
+                     class="grid mg-11 tableregulamento">
+                    <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                        <div class="msg">
+                            <span>Sem registros</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,290 @@
+﻿<style>
+    .bg-grey {
+        background: grey !important;
+    }
+
+    .reprove-reason {
+        display: flex;
+        align-items: center;
+        background: rgb(248, 202, 202);
+        border: 1px solid red;
+        margin: 0.8rem 0.5rem;
+        padding: 1rem;
+        color: #002C5F !important;
+        border-radius: 3px;
+    }
+
+        .reprove-reason i {
+            font-size: 30px !important;
+            padding: 0 0.5rem;
+            color: #002C5F !important;
+        }
+
+    md-checkbox {
+        min-width: 150px;
+    }
+
+        md-checkbox:last-of-type {
+            margin-left: 0;
+            margin-right: 50px;
+        }
+</style>
+<div ng-controller="acaoDetalheController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3>Detalhe Ação</h3>
+                </div>
+                <div class="col-sm-6">
+                    <h3>
+                        Status: <small style="color:red">{{ acao.status }}</small>
+                    </h3>
+                </div>
+                <div ng-if="acao.numNfRef" class="col-sm-4 text-right">
+                    <h4>NF Referencia: {{ acao.numNfRef }}</h4>
+                </div>
+            </div>
+            <div class="row reprove-reason" ng-if="acao.status == 'Inconsistente'">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>{{ acao.motivo }}</span>
+            </div>
+
+            <div class="row mb20 mt20">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>CPF/CNPJ</label>
+                        <input ng-model="acao.documento"
+                               type="text"
+                               class="input-lg"
+                               ui-br-cpfcnpj-mask
+                               ng-disabled="ItemNFAudTipoF.aprovado == true || dealerRole.perfil.id !== acao.roleId" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Fornecedor:</label>
+                        <input ng-model="acao.fornecedor"
+                               type="text"
+                               class="input-lg"
+                               maxlength="100"
+                               autocomplete="off"
+                               ng-disabled="ItemNFAudTipoF.aprovado == true || dealerRole.perfil.id !== acao.roleId" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Valor Pago</label>
+                        <input ng-model="acao.valorPago"
+                        type="text"
+                        class="input-lg"
+                        ui-money-mask
+                        autocomplete="off" 
+                        ng-disabled="ItemNFAudTipoA.aprovado == true || dealerRole.perfil.id !== acao.roleId" />
+                    </md-input-container>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Nº NF:</label>
+                        <input ng-model="acao.num_NF"
+                               type="text"
+                               class="input-lg"
+                               restrict-to="[A-Za-z0-9]"
+                               maxlength="15"
+                               autocomplete="off"
+                               ng-change="removerExcedentesNF()"
+                               ng-disabled="ItemNFAudTipoF.aprovado == true || dealerRole.perfil.id !== acao.roleId" />
+                    </md-input-container>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <label class="labelDate">Data NF:</label>
+                    <md-datepicker-custom ng-model="dataAcaoNf.date"
+                                          md-custom-default-date="{{ dataAcaoNf.default }}"
+                                          md-custom-mask="39/19/9999"
+                                          md-placeholder="Digite uma data"
+                                          md-custom-clean-mask="false"
+                                          md-custom-restrict="reject"
+                                          ng-change="comparaData()"
+                                          ng-disabled="ItemNFAudTipoF.aprovado == true || dealerRole.perfil.id !== acao.roleId">
+                    </md-datepicker-custom>
+                    <div class="md-errors-spacer"></div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Valor NF: </label>
+                        <input ng-model="acao.valorNF"
+                               type="text"
+                               class="input-lg"
+                               autocomplete="off"
+                               ng-disabled="ItemNFAudTipoF.aprovado == true || dealerRole.perfil.id !== acao.roleId"
+                               ui-money-mask />
+                    </md-input-container>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Qtde Veiculações:</label>
+                        <input ng-model="acao.veiculacoes"
+                               type="text"
+                               class="input-lg"
+                               restrict-to="[0-9]"
+                               maxlength="6"
+                               autocomplete="off"
+                               ng-disabled="ItemNFAudTipoE.aprovado == true || dealerRole.perfil.id !== acao.roleId" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Mídia:</label>
+                        <md-select ng-model="acao.tipoMidiaID"
+                                   ng-disabled="ItemNFAudTipoE.aprovado == true || dealerRole.perfil.id !== acao.roleId">
+                            <md-option ng-repeat="state in tipoMidias"
+                                       value="{{ state.tipoMidiaID }}">
+                                {{ state.descricao }}
+                            </md-option>
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <!--<div class="row">
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <p>
+                        <strong>Tem comissão?</strong> (Se sim, é obrigatório enviar as
+                        notas fiscais de comissão e veiculação. Se possível, enviar tabela
+                        com comissões).
+                    </p>
+
+                    <md-radio-group ng-model="acao.comissao"
+                                    style="overflow: hidden;"
+                                    ng-disabled="!canEdit">
+                        <md-radio-button value="true">Sim</md-radio-button>
+                        <md-radio-button value="false">Não</md-radio-button>
+                    </md-radio-group>
+                </div>
+            </div>-->
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h3 class="titleAcaoprincipal mb40">
+                        Linha Incentivada
+                    </h3>
+
+                    <md-container ng-repeat="modelo in modelosIncentivo"
+                                  ng-disabled="acao.itens[0].aprovado == true || dealerRole.perfil.id !== acao.roleId">
+                        <md-checkbox ng-checked="modelo.checked == true" value="{{ modelo.veiculoID}}"
+                                     ng-click="selectModeloID(modelo)">
+                            {{ modelo.descricao }}
+                        </md-checkbox>
+                    </md-container>
+                </div>
+            </div>
+
+            <div class="row mt40">
+                <div class="col-sm-12">
+                    <label>Descrição dos serviços:</label>
+                    <textarea ng-model="acao.descricaoServico"
+                              rows="5"
+                              type="text"
+                              class="form-control"
+                              maxlength="150"
+                              ng-disabled="ItemNFAudTipoF.aprovado == true || dealerRole.perfil.id !== acao.roleId">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="text-center titleAcao ajustesTitulo">Evidências</h3>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-3" ng-repeat="e in listEvidencias">
+                    <div class="boxFeatures">
+                        <div class="head">
+                            {{e.descricao}}<strong ng-show="e.obrigatorio">*</strong>
+                        </div>
+                        <hr class="estiiloHr">
+                        <div class="body">
+                            <div class="buttonAnexo">
+                                <button class="btn btn-block btn-default"
+                                        ngf-select="uploadFiles($files, $invalidFiles, '{{e.tipoEvidenciaID}}')"
+                                        ngf-max-size="15MB"
+                                        single
+                                        accept="*">
+                                    <img src="../assets/img/iconAnexo.png" class="iconAnexo"> &nbsp;&nbsp; Anexar arquivo
+                                </button>
+                                <ul class="up-ul"
+                                    style="text-align:center; list-style:none; padding: 0px;">
+                                    <li ng-repeat="f in files[e.tipoEvidenciaID]" style="font:smaller;">
+                                        <span class="progress"
+                                              ng-show="f.progress >= 0 && f.progress < 100">
+                                            <div style="width:{{ f.progress }}%" ng-bind="f.progress + '%'"></div>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <ul class="docsList">
+                                    <li ng-repeat="item in anexosReembolso[e.tipoEvidenciaID]">
+                                        <div ng-click="openAnexo(item.url)">{{ item.nome }}</div>
+                                        <i class="fa fa-close" ng-click="excluirAnexo(item, e.tipoEvidenciaID)"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt40 mb20">
+                <div class="col-sm-12 text-center">
+                    <button class="btn btn-danger"
+                            ng-click="editarAcao()"
+                            ng-disabled="dealerRole.perfil.id !== acao.roleId"
+                            ng-if="acao.status == 'Pendente' || acao.status == 'Inconsistente'">
+                        Salvar
+                    </button>
+                    <button class="btn btn-primary" ng-click="goback()">
+                        Voltar
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt40 mb20">
+                <div class="col-sm-12 mt20">
+                    <h2>Etapas</h2>
+                </div>
+                <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                    <div ng-controller="etapasAcaoTableCntrl" class="table-responsive">
+                        <button ng-click="toggleFiltering()"
+                                ng-show="gridOptions1.data.length"
+                                class="btn btn-sm ui-grid-filter-button"
+                                style="right:11px">
+                            <i class="fa fa-filter"></i>
+                        </button>
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-auto-resize
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="pd-t-b-10 no-rows"
+                                 ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

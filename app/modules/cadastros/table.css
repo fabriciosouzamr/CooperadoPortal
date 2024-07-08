@@ -1,0 +1,82 @@
+
+@media (max-width: 992px) {
+
+    /*tabela */
+    .table-cadastro-1 .ui-grid-row .ui-grid-cell:nth-of-type(1) .ui-grid-cell-contents:before {
+        content: "Usuários";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-1 .ui-grid-row .ui-grid-cell:nth-of-type(2) .ui-grid-cell-contents:before {
+        content: "Nome";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-1 .ui-grid-row .ui-grid-cell:nth-of-type(3) .ui-grid-cell-contents:before {
+        content: "Email";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+    /*tabela */
+    .table-cadastro-2 .ui-grid-row .ui-grid-cell:nth-of-type(1) .ui-grid-cell-contents:before {
+        content: "Nome";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-2 .ui-grid-row .ui-grid-cell:nth-of-type(2) .ui-grid-cell-contents:before {
+        content: "Telefone";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-2 .ui-grid-row .ui-grid-cell:nth-of-type(3) .ui-grid-cell-contents:before {
+        content: "Email";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-2 .ui-grid-row .ui-grid-cell:nth-of-type(4) .ui-grid-cell-contents:before {
+        content: "Status";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+    /*tabela */
+    .table-cadastro-3 .ui-grid-row .ui-grid-cell:nth-of-type(1) .ui-grid-cell-contents:before {
+        content: "Nome";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-3 .ui-grid-row .ui-grid-cell:nth-of-type(2) .ui-grid-cell-contents:before {
+        content: "Email";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-3 .ui-grid-row .ui-grid-cell:nth-of-type(3) .ui-grid-cell-contents:before {
+        content: "Data Inclusão - Hora";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    .table-cadastro-3 .ui-grid-row .ui-grid-cell:nth-of-type(4) .ui-grid-cell-contents:before {
+        content: "Data Exlcusão - Hora";
+        width: 45%;
+        display: inline-block;
+        padding: 0 10px;
+    }    
+}
+

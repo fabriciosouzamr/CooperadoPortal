@@ -1,0 +1,54 @@
+[
+    {
+      "id": 1,
+      "marca": "Lexus",
+      "codigoDealer": "20182019",
+      "dealer": "DEALER A",
+      "regiao": "São Paulo",
+      "mes/ano": "Fevereiro/2019",
+      "notaDebito": "1111111111",
+      "valor": "R$999,99"
+    },
+    {
+      "id": 2,
+      "marca": "Lexus",
+      "codigoDealer": "20182019",
+      "dealer": "DEALER B",
+      "regiao": "São Paulo",
+      "mes/ano": "Fevereiro/2019",
+      "notaDebito": "1111111111",
+      "valor": "R$999,99"
+      },
+      {
+        "id": 3,
+        "marca": "Lexus",
+        "codigoDealer": "20182019",
+        "dealer": "DEALER C",
+        "regiao": "São Paulo",
+        "mes/ano": "Fevereiro/2019",
+        "notaDebito": "1111111111",
+        "valor": "R$999,99"
+      },
+      {
+        "id": 4,
+        "marca": "Lexus",
+        "codigoDealer": "20182019",
+        "dealer": "DEALER D",
+        "regiao": "São Paulo",
+        "mes/ano": "Fevereiro/2019",
+        "notaDebito": "1111111111",
+        "valor": "R$999,99"
+      },
+      {
+        "id": 5,
+        "marca": "Lexus",
+        "codigoDealer": "20182019",
+        "dealer": "DEALER E",
+        "regiao": "São Paulo",
+        "mes/ano": "Fevereiro/2019",
+        "notaDebito": "1111111111",
+        "valor": "R$999,99"
+      }
+
+    ]
+  

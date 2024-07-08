@@ -1,0 +1,285 @@
+﻿<style>
+    .anexo {
+        float: right;
+        color: #002C5F !important;
+        font-weight: bold;
+        font-size: 17px !important;
+    }
+
+    .btn-lg {
+        padding-left: 30px;
+        padding-right: 30px;
+        padding: 15px;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 39px;
+        padding: 9px 12px;
+        font-size: 13px;
+        line-height: 1.49;
+        color: #000 !important;
+        background-color: #ffffff;
+        background-image: none;
+        border: 1px solid #000;
+        border-radius: 0px;
+        -webkit-transition: border-color ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s;
+        transition: border-color ease-in-out .15s;
+    }
+
+    .btn-danger {
+        background: red !important;
+    }
+
+    .page-title {
+        font-size: 22px;
+        padding: 1rem 0.5rem;
+    }
+
+    .font-18 {
+        font-size: 16px !important;
+        padding: 0 0.5rem;
+    }
+
+        .font-18 strong {
+            color: #000 !important;
+            font-size: 15px;
+            font-family: 'DIN2014-Regular';
+        }
+
+    .triangle-border.right {
+        margin-right: 30px;
+    }
+
+    .triangle-border {
+        position: relative;
+        padding: 15px;
+        margin: 1em 0 3em;
+        border: 2px solid whitesmoke;
+        color: #333;
+        background: whitesmoke !important;
+        border-radius: 0 !important;
+        box-shadow: none;
+    }
+
+        .triangle-border.right:before {
+            top: -2px;
+            bottom: auto;
+            left: auto;
+            right: -30px;
+            border-width: 0 0 15px 30px;
+            border-color: transparent whitesmoke;
+        }
+
+        .triangle-border:before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 40px;
+            border-width: 0px 0px 0;
+            border-style: solid;
+            border-color: transparent whitesmoke !important;
+            display: block;
+            width: 0;
+        }
+
+    .mensagens {
+        height: 175px;
+        overflow-y: scroll;
+    }
+
+    .chatbox.cliente .chatbox-icon {
+        width: 65px !important;
+    }
+
+    .mensagens::-webkit-scrollbar-track {
+        border-radius: 3px;
+        background-color: whitesmoke;
+    }
+
+    .mensagens::-webkit-scrollbar {
+        width: 8px;
+        background-color: whitesmoke;
+    }
+
+    .mensagens::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: #002C5F !important !important;
+    }
+
+    .rodape {
+        float: right;
+        font-weight: 700;
+        font-size: 12px !important;
+    }
+
+    .isAdminMessage {
+        background: white !important;
+    }
+
+        .isAdminMessage::before {
+            border-width: 0 30px 15px 0 !important;
+            left: -30px !important;
+        }
+
+    .col-xs-12.col-sm-12.chatbox.cliente {
+        display: flex;
+        padding: 0 10rem;
+    }
+</style>
+<div ng-controller="faleDetalhesController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="col-sm-12">
+                <h1 class="text-center titulo">Fale Conosco</h1>
+            </div>
+
+            <div class="col-sm-12" style="margin-top:15px">
+                <!--<h2>{{asked.nome}}</h2>-->
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="font-18">
+                            <strong>Categoria de Acesso:</strong> {{ participante.perfil }}
+                        </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="font-18">
+                            <strong>Usuário:</strong> {{ participante.userName }}
+                        </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="font-18">
+                            <strong>Interações:</strong> {{ asked.interacoes }}
+                        </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="font-18">
+                            <strong>Dias na fila:</strong> {{ asked.diasFila }}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="font-18">
+                            <strong>Data da abertura:</strong>
+                            {{ asked.dataInicio | date: "dd/MM/yyyy - HH:mm" }}
+                        </p>
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="font-18">
+                            <strong>Assunto:</strong> {{ asked.descricao }}
+                        </p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p class="font-18"><strong>Título:</strong> {{ asked.titulo }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="font-18"><strong>Nome:</strong> {{ asked.nome }}</p>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <p class="font-18"><strong>E-mail:</strong> {{ asked.email }}</p>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <p class="font-18"><strong>Telefone:</strong> {{ asked.telefone  }}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <button type="button"
+                            class="btn btn-info btn-sm"
+                            ng-show="asked.url"
+                            ng-click="downloadAnexo(asked.url)">
+                        Ver anexo
+                    </button>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 ">
+                        <div class="panel mt10">
+                            <div class="admin-form">
+                                <div class="row mensagens">
+                                    <div ng-repeat="x in interaction">
+                                        <div class="col-xs-12 col-sm-12 chatbox"
+                                             ng-class="{'cliente': x.eu}">
+                                            <div class="chatbox-text triangle-border right" ng-class="{'isAdminMessage': usuarioLogado.id == x.userId}">
+                                                <p>
+                                                    <strong>
+                                                        {{ x.nomeUsuario }}
+                                                    </strong>
+                                                    <span ng-show="x.url">
+                                                        <i title="Ver anexo"
+                                                           class="fa fa-paperclip anexo"
+                                                           ng-click="downloadAnexo(x.url)"></i>
+                                                    </span>
+                                                </p>
+                                                <p>{{ x.mensagem }}</p>
+                                                <small class="rodape">{{ x.dataCriacao | date }} às {{ x.dataCriacao | date: "HH:mm" }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="mt40 mb20">
+                                        <div class="form-group"
+                                             ng-if="asked.faleConoscoStatusId!=3 && participante.perfil != 'Consultor'">
+                                            <label class="custonlabel">Mensagem:</label>
+                                            <textarea ng-model="pergunta.mensagem"
+                                                      class="form-control"
+                                                      rows="5"></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <small ng-if="!pergunta.mensagem && participante.perfil != 'Consultor" style="float: right; padding: 0 .5rem; color: #002C5F !important">* Digite uma mensagem para falar conosco.</small>
+                                        </div>
+                                        <div class="section" ng-if="asked.faleConoscoStatusId!=3 && participante.perfil != 'Consultor">
+                                            <a class="btn btn-default mr20"
+                                               ngf-select="uploadFiles($files, $invalidFiles)"
+                                               single
+                                               accept="*">
+                                                <i class="fas fa-paperclip"></i>Anexar Arquivo
+                                            </a>
+                                            <ul style="text-align:center; list-style:none; padding:0px">
+                                                <li ng-repeat="f in files"
+                                                    style="font:smaller; width:200px">
+                                                    {{ f.name }} {{ f.$errorParam }}
+                                                    <span class="progress" ng-show="f.progress >= 0">
+                                                        <div style="width:{{ f.progress }}%"
+                                                             ng-bind="f.progress + '%'"></div>
+                                                    </span>
+                                                </li>
+                                                <li ng-repeat="f in errFiles"
+                                                    style="font:smaller; color:#f00">
+                                                    <strong>Erro:</strong> {{ f.name }} <br />Tamanho
+                                                    máximo do arquivo: {{ f.$errorParam }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="section text-center" style="margin-top: 20px;">
+                                            <a class="btn btn-danger mr20"
+                                               ng-if="participante.perfilAdministrador"
+                                               ng-click="finish()">Encerrar Contato</a>
+                                            <a class="btn btn-salvareNovo btn-lg ajusteMargem"
+                                               ng-disabled="!pergunta.mensagem"
+                                               ng-click="saveResposta()"
+                                               ng-if="asked.faleConoscoStatusId!=3 && participante.perfil != 'Consultor'">Enviar</a>
+                                            <a class="btn btn-cancelar btn-lg"
+                                               href="javascript:;"
+                                               ui-sref="faleConosco">Voltar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,304 @@
+﻿<div ng-controller="verbaController">
+    <div class="panel" ng-show="flagShowAdm">
+
+        <div class="panel-body" ng-hide="hideGrid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Verba</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="globalnav">
+                        <li class="marcaNav" ng-class="{'active': marcaActive == 'toyota'}">
+                            <a herf="#" ng-click="changeMarca('toyota');"><span class="logo">t</span>TOYOTA</a>
+                        </li>
+                        <li class="marcaNav" ng-class="{'active': marcaActive == 'lexus'}">
+                            <a herf="#" ng-click="changeMarca('lexus');"><span class="logo">l</span>LEXUS</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs">
+                        <li ng-class="{'active': abaActive == 'midia50'}">
+                            <a href="javascript:;" ng-click="changeAba('midia50');">Mídia 50%</a>
+                        </li>
+                        <li ng-class="{'active': abaActive == 'midia100'}">
+                            <a href="javascript:;" ng-click="changeAba('midia100');">Mídia 100%</a>
+                        </li>
+                        <!-- dealer não ve -habilitado para Administrador, Administrador Toyota, Coordenador de Auditoria
+                        <li ng-class="{'active': abaActive == 'importacao'}">
+                            <a href="javascript:;" ng-click="changeAba('importacao');">Importação</a>
+                        </li>
+                        -->
+                    </ul>
+                </div>
+            </div>
+
+            <!--midia 50 e midia 100-->
+            <div class="row mb20 mt20" ng-show="abaActive=='midia50' || abaActive == 'midia100'">
+                <div class="col-sm-12 mt20">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Mês:</label>
+                                <md-select ng-model="filtro.mes">
+                                    <md-option ng-repeat="state in meses" value="{{state.mesId}}">{{state.mes}}</md-option>
+                                </md-select>
+                                <div class="md-errors-spacer"></div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-sm-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Ano Fiscal:</label>
+                                <md-select ng-model="filtro.ano">
+                                    <md-option ng-repeat="state in anoFiscal" value="{{state.anoId}}">{{state.descricao}}</md-option>
+                                </md-select>
+                                <div class="md-errors-spacer"></div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-danger btn-block btn-form">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 table-reponsive-bootstrap mb40">
+                    <table class="table">
+                        <thead>
+                            <tr class="caption">
+                                <th class="btnPlus"></th>
+                                <th></th>
+                                <th>Distribuído</th>
+                                <th>Extra</th>
+                                <th>Total Liberado</th>
+                                <th>Solicitado</th>
+                                <th>Reembolso</th>
+                                <th class="btnAction"></th>
+                            </tr>
+                            <tr class="caption-danger">
+                                <th class="btnPlus"></th>
+                                <th><div>Total Nacional</div></th>
+                                <th><div>{{midia100.resumoNacional.totalDistribuido}}</div></th>
+                                <th><div>{{midia100.resumoNacional.totalExtra}}</div></th>
+                                <th><div>{{midia100.resumoNacional.totalLiberado}}</div></th>
+                                <th><div>{{midia100.resumoNacional.totalSolicitado}}</div></th>
+                                <th><div>{{midia100.resumoNacional.totalReembolso}}</div></th>
+                                <th class="btnAction"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody ng-repeat="regionalItem in midia100.regional track by $index">
+                            <tr class="subCaption">
+                                <td class="btnPlus">
+                                    <button id="btnPlusR_{{$index}}" class="btn btn-default btn-xs btnOpen" ng-click="openListTable($index)"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></button>
+                                </td>
+                                <td><div>{{regionalItem.resumoRegional.descricao}}</div></td>
+                                <td><div>{{regionalItem.resumoRegional.totalDistribuido}}</div></td>
+                                <td><div>{{regionalItem.resumoRegional.totalExtra}}</div></td>
+                                <td><div>{{regionalItem.resumoRegional.totalLiberado}}</div></td>
+                                <td><div>{{regionalItem.resumoRegional.totalSolicitado}}</div></td>
+                                <td><div>{{regionalItem.resumoRegional.totalReembolso}}</div></td>
+                                <td class="btnAction"></td>
+                            </tr>
+
+                            <tr id="listRegiao_{{$index}}" class="hide">
+                                <td colspan="8" style="padding:0px">
+                                    <table class="table" ng-repeat="reg in regionalItem.regioes">
+                                        <thead>
+                                            <tr class="subCaption">
+                                                <th class="btnPlus">
+                                                    <button id="btnPlusD_{{reg.resumoRegiao.id}}" class="btn btn-default btn-xs btnOpen" ng-click="openListDealer(reg.resumoRegiao.id)"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></button>
+                                                </th>
+                                                <th><div>{{reg.resumoRegiao.descricao}}</div></th>
+                                                <th><div>{{reg.resumoRegiao.totalDistribuido}}</div></th>
+                                                <th><div>{{reg.resumoRegiao.totalExtra}}</div></th>
+                                                <th><div>{{reg.resumoRegiao.totalLiberado}}</div></th>
+                                                <th><div>{{reg.resumoRegiao.totalSolicitado}}</div></th>
+                                                <th><div>{{reg.resumoRegiao.totalReembolso}}</div></th>
+                                                <th class="btnAction"></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="listDealer_{{reg.resumoRegiao.id}}" class="hide">
+                                            <tr class="dealer" ng-repeat="dealer in reg.dealers">
+                                                <td class="btnPlus">
+                                                    <input type="checkbox">
+                                                </td>
+                                                <td><div>{{dealer.descricao}}</div></td>
+                                                <td><div>{{dealer.totalDistribuido}}</div></td>
+                                                <td><div>{{dealer.totalExtra}}</div></td>
+                                                <td><div>{{dealer.totalLiberado}}</div></td>
+                                                <td><div>{{dealer.totalSolicitado}}</div></td>
+                                                <td><div>{{dealer.totalReembolso}}</div></td>
+                                                <td class="btnAction">
+                                                    <button class="btn btn-danger btn-sm"><i class="fa fa-edit"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-sm-12 mt20 text-center">
+                    <button class="btn btn-danger">Aprovar</button>
+                    <button class="btn btn-primary">Exportar</button>
+                </div>
+
+                <div class="col-sm-12 mt20">
+                    <div ng-controller="statusDealerTableCntrl" class="table-responsive">
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button"
+                                style="right:11px">
+                            <i class="fa fa-filter"></i>
+                        </button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize
+                             ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--importacao-->
+            <div class="row mb40 mt20" ng-show="abaActive=='importacao'">
+                <div class="col-sm-12">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Mês:</label>
+                                    <md-select ng-model="filtro.mes" ng-change="limpaCampos('mes')">
+                                        <md-option ng-repeat="state in mes" value="{{state.MesId}}">{{state.Descricao}}</md-option>
+                                    </md-select>
+                                    <div class="md-errors-spacer"></div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Ano Fiscal:</label>
+                                    <md-select ng-model="filtro.ano" ng-change="limpaCampos('ano')">
+                                        <md-option ng-repeat="state in ano" value="{{state.AnoId}}">{{state.Descricao}}</md-option>
+                                    </md-select>
+                                    <div class="md-errors-spacer"></div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Tipo:</label>
+                                    <md-select ng-model="filtro.tipo" ng-change="limpaCampos('tipo')">
+                                        <md-option ng-repeat="state in tipo" value="{{state.TipoId}}">{{state.Descricao}}</md-option>
+                                    </md-select>
+                                    <div class="md-errors-spacer"></div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Verba:</label>
+                                    <md-select ng-model="filtro.verba" ng-change="limpaCampos('verba')">
+                                        <md-option ng-repeat="state in verba" value="{{state.VerbaId}}">{{state.Descricao}}</md-option>
+                                    </md-select>
+                                    <div class="md-errors-spacer"></div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4 pd-l-r-0 text-center pd-t-b-10">
+                                <button ngf-select="uploadFiles($files, $invalidFiles)" single accept="/*"
+                                        ngf-max-size="10MB" class="btn btn-cinza m-r-18">
+                                    <i class="fa fa-paperclip"></i>
+                                    Importar Arquivo
+                                </button>
+
+                                <button type="button" class="btn btn-danger" ng-click="downloadModelo()">
+                                    <i class="fa fa-file"></i>
+                                    Baixar Modelo
+                                </button>
+
+                                <div class="col-sm-12">
+                                    <ul class="p0" style="text-align:center; list-style:none">
+                                        <li ng-repeat="f in files" style="font:smaller; width:200px">
+                                            {{f.name}} {{f.$errorParam}}
+                                            <span class="progress" ng-show="f.progress >= 0">
+                                                <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                                            </span>
+                                        </li>
+                                        <li ng-repeat="f in errFiles" style="font:smaller; color:#f00">
+                                            <strong>Erro:</strong> {{f.name}}
+                                            <br />Tamanho máximo do arquivo: {{f.$errorParam}}
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    A planilha deve estar nos formatos <strong>.xlsx</strong> ou <strong>csv</strong>;<br>
+                                    O Arquivo não deve conter células mescladas;<br>
+                                    A primeira linha deve conter o cabeçalho das colunas;<br>
+                                    Deve haver somente uma aba no arquivo;<br>
+                                    As colunas devem estar formadas/convertidas para <strong>TEXTO</strong>,
+                                    mesmo as colunas de data e valores;<br>
+                                    Após importação veja o resultado de cada registro clicando nos
+                                    números processados.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 mt20">
+                    <div ng-controller="importacaoTableCntrl" class="table-responsive">
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button"
+                                style="right:11px">
+                            <i class="fa fa-filter"></i>
+                        </button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize
+                             ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!--altera midia-->
+    <div id="modalAlterar" class="popup-basic mfp-with-anim mfp-hide">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <i class="fa fa-edit"></i>Alterar
+                </span>
+            </div>
+            <div class="panel-body">
+                <div class="section row">
+                    <div class="col-md-12">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

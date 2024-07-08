@@ -1,0 +1,92 @@
+﻿<style>
+    .panel-body {
+        min-height: 85.4vh !important;
+    }
+</style>
+<div ng-controller="faleController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="text-center titulo">Fale Conosco</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 text-center"
+                     ng-show="usuarioLogado.perfil == 'Dealer' || usuarioLogado.perfil == 'Agencia'">
+                    <button class="btn  btn-novaAcao btn-lg" href="javascript:;" ui-sref="faleNovo">
+                        Novo Fale Conosco
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center titleReembolso" style="padding: 3%;">Em aberto</h3>
+                    <div ng-controller="faleAbertoController"
+                         class="table-responsive table-fale-1">
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-auto-resize
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <h3 class="text-center titleReembolso" style="padding: 3%;">Em andamento</h3>
+                    <div ng-controller="faleAndamentoController"
+                         class="table-responsive table-fale-2">
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-auto-resize
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <h3 class="text-center titleReembolso" style="padding: 3%;">Encerrados</h3>
+                    <div ng-controller="faleEncerradosController"
+                         class="table-responsive table-fale-3">
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-auto-resize
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

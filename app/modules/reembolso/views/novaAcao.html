@@ -1,0 +1,302 @@
+﻿<
+<style>
+    .md-select-menu-container {
+        z-index: 900;
+    }
+
+    .table {
+        width: 93%;
+        max-width: 100%;
+        margin-left: 35px;
+        margin-top: 45px;
+    }
+
+    .md-backdrop.md-select-backdrop {
+        z-index: 899;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 39px;
+        padding: 9px 12px;
+        font-size: 13px;
+        line-height: 1.49;
+        color: #000 !important;
+        background-color: #ffffff;
+        background-image: none;
+        border: 1px solid #000;
+        border-radius: 0px;
+        -webkit-transition: border-color ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s;
+        transition: border-color ease-in-out .15s;
+    }
+
+    .table {
+        width: 113%;
+        max-width: 101%;
+        margin-left: -9px;
+        margin-top: 45px;
+    }
+
+        .table > tbody > tr:nth-child(2n) {
+            background-color: #fff;
+        }
+
+    .table-reponsive-bootstrap table > thead > tr, .table-reponsive-bootstrap table > tbody > tr.subCaption, table > thead > tr, table > tbody > tr.subCaption {
+        background: transparent;
+        color: #000;
+        font-size: 16px;
+    }
+
+    .table > tbody > tr:nth-child(2n + 1) {
+        background-color: transparent;
+        color: #000;
+    }
+
+    .btn-default, .btn-default:hover, .btn-default:active {
+        transition: all 0.2s ease-out;
+        text-transform: uppercase !important;
+        text-shadow: none;
+        color: #000 !important;
+        font-size: 15px;
+        border-color: transparent;
+        background: transparent;
+        font-family: 'DIN2014-bold';
+    }
+
+    md-checkbox {
+        min-width: 150px;
+    }
+
+        md-checkbox:last-of-type {
+            margin-left: 0;
+            margin-right: 50px;
+        }
+</style>
+<div ng-controller="acaoController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="text-center titulo">Nova Ação</h1>
+                </div>
+            </div>
+
+            <div class="row mb20 mt20">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>CPF/CNPJ</label>
+                        <input ng-model="acao.documento"
+                               type="text"
+                               class="input-lg"
+                               ui-br-cpfcnpj-mask />
+                    </md-input-container>
+                </div>
+
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Fornecedor:</label>
+                        <input ng-model="acao.fornecedor" type="text" class="input-lg" maxlength="100" autocomplete="off" />
+                    </md-input-container>
+                </div>
+            </div>
+            
+            <div class="row mb20 mt20">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Nº NF:</label>
+                        <input ng-model="acao.num_NF" type="text" class="input-lg" restrict-to="[A-Za-z0-9]" maxlength="15" ng-change="removerExcedentesNF()" autocomplete="off" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <label class="labelDate">Data NF:</label>
+                    <md-datepicker-custom ng-model="dataAcaoNf.date"
+                                          md-custom-default-date="{{ dataAcaoNf.default }}"
+                                          md-custom-mask="39/19/9999"
+                                          md-placeholder="Digite uma data"
+                                          md-custom-clean-mask="false"
+                                          md-custom-restrict="reject"
+                                          ng-change="comparaData()">
+                    </md-datepicker-custom>
+                    <div class="md-errors-spacer"></div>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Valor NF:</label>
+                        <input ng-model="acao.valorNF"
+                               type="text"
+                               class="input-lg"
+                               ui-money-mask
+                               autocomplete="off" />
+                    </md-input-container>
+                </div>
+
+            </div>
+            
+            <div class="row mb20 mt20">
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Valor Pago</label>
+                        <input ng-model="acao.valorPago"
+                        type="text"
+                        class="input-lg"
+                        ui-money-mask
+                        autocomplete="off" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Qtde Inserções:</label>
+                        <input ng-model="acao.veiculacoes"
+                               type="text"
+                               class="input-lg"
+                               restrict-to="[0-9]"
+                               maxlength="6"
+                               autocomplete="off" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Mídia:</label>
+                        <md-select ng-model="acao.tipoMidiaID"
+                                   ng-init="showOptions=true"
+                                   my-on-focus="showOptions"
+                                   md-on-close="showOptions=false">
+                            <md-option ng-repeat="state in tipoMidias"
+                                       value="{{ state.tipoMidiaID }}">{{ state.descricao }}</md-option>
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <!--<div class="row"
+                 ng-if="tipoAcaoNF !== null"
+                 ng-disabled="tipoAcaoNF == 'existente'">
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <p>
+                        <strong>Tem comissão?</strong> (Se sim, é obrigatório enviar as
+                        notas fiscais de comissão e veiculação. Se possível, enviar tabela
+                        com comissões).
+                    </p>
+
+                    <md-radio-group ng-disabled="tipoAcaoNF == 'existente'"
+                                    ng-model="acao.comissao"
+                                    style="overflow: hidden;">
+                        <md-radio-button ng-disabled="tipoAcaoNF == 'existente'"
+                                         value="true">Sim</md-radio-button>
+                        <md-radio-button ng-disabled="tipoAcaoNF == 'existente'"
+                                         value="false">Não</md-radio-button>
+                    </md-radio-group>
+                </div>
+            </div>-->
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h3 class="titleAcaoprincipal mb40">
+                        Linha Incentivada
+                    </h3>
+
+                    <md-container ng-repeat="modelo in modelosIncentivo" ng-disabled="tipoAcaoNF == 'existente'">
+                        <md-checkbox ng-checked="modelo.checked == true" value="{{ modelo.veiculoID}}" 
+                                     ng-click="selectModeloID(modelo)">
+                            {{ modelo.descricao }}
+                        </md-checkbox>
+                    </md-container>
+                </div>
+            </div>
+
+            <div class="row mt40">
+                <div class="col-sm-12">
+                    <label class="custonlabel">Descrição dos serviços:</label>
+                    <textarea ng-model="acao.descricaoServico"
+                              rows="5"
+                              type="text"
+                              class="form-control"
+                              maxlength="150"
+                              autocomplete="off">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="row container"
+                 ng-if="tipoAcaoNF !== null"
+                 ng-disabled="tipoAcaoNF == 'existente'">
+                <div class="col-sm-12">
+                    <h3 class="text-center titleAcao ajustesTitulo">Evidências</h3>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-3" ng-repeat="e in listEvidencias">
+                    <div class="boxFeatures">
+                        <div class="head">
+                            {{e.descricao}}<strong ng-show="e.obrigatorio">*</strong>
+                        </div>
+                        <hr class="estiiloHr">
+                        <div class="body">
+                            <div class="buttonAnexo">
+                                <button class="btn btn-block btn-default"
+                                        ngf-select="uploadFiles($files, $invalidFiles, '{{e.tipoEvidenciaID}}')"
+                                        ngf-max-size="15MB"
+                                        single
+                                        accept="*">
+                                    <img src="../assets/img/iconAnexo.png" class="iconAnexo"> &nbsp;&nbsp; Anexar arquivo
+                                </button>
+                                <ul class="up-ul"
+                                    style="text-align:center; list-style:none; padding: 0px;">
+                                    <li ng-repeat="f in files[e.tipoEvidenciaID]" style="font:smaller;">
+                                        <span class="progress"
+                                              ng-show="f.progress >= 0 && f.progress < 100">
+                                            <div style="width:{{ f.progress }}%" ng-bind="f.progress + '%'"></div>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <ul class="docsList">
+                                    <li ng-repeat="item in anexosReembolso[e.tipoEvidenciaID]">
+                                        <div ng-click="openAnexo(item.url)">{{ item.nome }}</div>
+                                        <i class="fa fa-close" ng-click="excluirAnexo(item, e.tipoEvidenciaID)"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row mt40 mb20">
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-cancelar btn-lg" ui-sref="reembolsoDealer">
+                    Cancelar
+                </button>
+                <button class="btn btn-salvareNovo"
+                        ng-disabled="isLoading == true"
+                        ng-click="salvarAcao(0)">
+                    <span ng-if="!isLoading">Salvar e Novo</span>
+                    <span ng-if="isLoading">
+                        Salvando <i class="fas fa-spinner fa-pulse"></i>
+                    </span>
+                </button>
+                <button class="btn btn-SalvarFechar"
+                        ng-disabled="isLoading == true"
+                        ng-click="salvarAcao(1)">
+                    <span ng-if="!isLoading">Salvar e Fechar</span>
+                    <span ng-if="isLoading">
+                        Salvando <i class="fas fa-spinner fa-pulse"></i>
+                    </span>
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

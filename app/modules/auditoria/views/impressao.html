@@ -1,0 +1,469 @@
+﻿<div ng-controller="impressaoAdminController" id="impressao">
+  <div class="ocultaMenu">
+    <!--<button class="noprint btn btn-danger">close</button>-->
+  </div>
+  <div class="page">
+    <!--logo toyta-->
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <!--<tr>
+        <td height="50" colspan="4" align="right" valign="middle">
+          <img ng-show="impressao.applicationName=='Toyota'" width="170" height="40" src="../assets/img/Rel_Logo.gif"
+            alt="Toyota" />
+          <img ng-show="impressao.applicationName=='Lexus'" width="182" height="40"
+            src="../assets/img/Rel_Logo_lexus.gif" alt="Toyota" />
+        </td>
+      </tr>-->
+    </table>
+    <!--nota de debido-->
+    <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+      <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr class="type02 borda04 borda03">
+              <td colspan="3" align="center" class="type01 CssTitulo">
+                PARECER AUDITORIA DEVPARTNER
+              </td>
+              <td colspan="2" align="center" class="type01 CssTitulo">
+                <span ng-if="impressao.quantidadeNotaAprovada == 0">
+                  REJEITADO
+                </span>
+
+                <span ng-if="impressao.quantidadeNotaAprovada != impressao.quantidadeNotaTotal">
+                  APROVADO PARCIAL
+                </span>
+
+                <span ng-if="impressao.quantidadeNotaAprovada == impressao.quantidadeNotaTotal">
+                  APROVADO
+                </span>
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td width="6" height="22">
+                &nbsp;
+              </td>
+              <td width="298" height="22">
+                <b>NOTA DE DÉBITO NR.:</b>&nbsp;
+                <span class="type03">
+                  {{ impressao.budgetDealerID }}
+                </span>
+              </td>
+              <td width="247" height="22">
+                <span class="TituloMes">Ano Fiscal: {{ impressao.anoFiscal }}</span>
+                <br />
+                <span class="TituloMes">MÊS: {{ mes }}</span>
+              </td>
+              <td width="238" height="22">
+                DATA DE EMISSÃO:
+                <span class="type03">{{ impressao.finalizadoDealer | date: "dd/MM/yyyy" }}</span>
+              </td>
+              <td width="6" height="22">
+                &nbsp;
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+    <!--nome ditribuidor-->
+    <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+      <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr class="type02 borda04 borda03">
+              <td width="6" height="18">
+                &nbsp;
+              </td>
+              <td width="248" height="18">
+                NOME DO DISTRIBUIDOR:
+              </td>
+              <td width="519" height="18" class="type03">
+                {{ impressao.dealer.codigo }} -
+                {{ impressao.dealer.nomeFantasia }}
+              </td>
+              <td width="6" height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                ENDEREÇO:
+              </td>
+              <td height="18" class="type03">
+                {{ impressao.dealer.logradouro }} -
+                {{ impressao.dealer.bairro }} - Cep: {{ impressao.dealer.cep }} -
+                {{ impressao.dealer.cidade }} |
+                {{ impressao.dealer.uf }}
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+
+    <div width="100%" class="borda01">
+      <table>
+        <tr class="CssTitulo type02 borda04 borda03">
+          <td colspan="7" height="22" bgcolor="#CCCCCC" align="center">
+            <strong>SOLICITAÇÃO DE REEMBOLSO DE DESPESAS DE MÍDIA COOPERADA TRIUMPH</strong>
+          </td>
+        </tr>
+      </table>
+
+      <table class="table type02 borda04 borda03" style="text-transform:unset">
+        <tr>
+          <td height="18">
+            FORNECEDOR:
+          </td>
+          <td style="width: 250px" height="22">
+            DESCRIÇÃO DOS SERVIÇOS
+          </td>
+          <td style="width: 130px" height="18">
+            NR. PI
+          </td>
+          <td style="width: 100px" height="18">
+            NR. NF
+          </td>
+          <td style="width: 110px; text-align: center;">
+            VALOR - R$
+          </td>
+          <td colspan="2" style="text-align: center">
+            AUDITORIA
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" />
+          <td style="width: 130px; text-align: center;">A</td>
+          <td style="width: 130px; text-align: center;">R</td>
+        </tr>
+        <tr ng-repeat="nota in impressao.notas">
+          <td class="bordercell">
+            {{ nota.fornecedor }}
+          </td>
+          <td class="bordercell">
+            {{ nota.descricaoServico }}
+          </td>
+          <td class="bordercell">
+            {{ nota.numPI }}
+          </td>
+          <td class="bordercell">
+            {{ nota.num_NF }}
+          </td>
+          <td style="text-align: right;" class="bordercell">
+            {{ nota.valorNF | currency }}
+          </td>
+          <td style="text-align: center;" class="bordercell">
+            <input type="checkbox" ng-checked="nota.aprovado" disabled />
+          </td>
+          <td style="text-align: center;" class="bordercell">
+            <input type="checkbox" ng-checked="nota.reprovado" disabled />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" bgcolor="#CCCCCC">
+            <strong>VALOR TOTAL DAS DESPESAS</strong>
+            <img src="../assets/img/clip_image004.gif" alt="" width="300" height="17" />
+          </td>
+          <td style="text-align: center" bgcolor="#CCCCCC">
+            {{ impressao.valorSolicitadoBruto | currency }}
+          </td>
+          <td colspan="2" style="text-align: center">
+            {{ impressao.valorAprovadoBruto | currency }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">TOTAL POR EXTENSO:</td>
+          <td colspan="2" style="text-align: center">A = APROVADO / R = REPROVADO</td>
+        </tr>
+        <tr>
+          <td colspan="7" class="type02">
+            {{ impressao.valorSolicitadoPorExtenso }}
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <br />
+
+    <table width="100%" cellpadding="5" cellspacing="0" class="table borda01" ng-show="impressao.motivos.length > 0">
+      <tr class="CssTitulo type01">
+        <td colspan="5" style="text-align: center">MOTIVO REPROVAÇÃO</td>
+      </tr>
+
+      <tr class="type02">
+        <td>FORNECEDOR</td>
+        <td>VALOR</td>
+        <td>RESPONSÁVEL</td>
+        <td style="width: 125px">DIAS INCONSISTÊNCIA</td>
+        <td>MOTIVO</td>
+      </tr>
+
+      <tr class="type02" ng-repeat="motivo in impressao.motivos">
+        <td>{{ motivo.fornecedor }}</td>
+        <td>{{ motivo.valorNF | currency }}</td>
+        <td>{{ motivo.usuario }}</td>
+        <td>{{ motivo.diasInconsistencia }}</td>
+        <td>{{ motivo.motivo }}</td>
+      </tr>
+    </table>
+
+    <br />
+
+    <table width="100%" cellpadding="5" cellspacing="0" class="table borda01">
+      <tbody>
+        <tr height="22">
+          <td class="type02" style="width: 80%" bgcolor="#CCCCCC">
+            VALOR APROVADO PELA AUDITORIA DEVPARTNER
+            <span ng-show="impressao.applicationPerc==50">(50% DO TOTAL)</span>
+          </td>
+          <td class="type02" style="text-align: center">
+            {{ impressao.valorAprovadoLiquido | currency }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <!--dados favorecido-->
+    <!--<table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+      <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr class="type02 borda04 borda03">
+              <td colspan="4" align="center" class="type01 CssTitulo">
+                <b>DADOS PARA DEPÓSITO</b>
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td width="6" height="18">
+                &nbsp;
+              </td>
+              <td width="248" height="18">
+                FAVORECIDO&nbsp;&nbsp;&nbsp; =&gt;
+              </td>
+              <td width="508" height="18" class="type03">
+                {{ impressao.favorecido.nomeFantasia }}
+              </td>
+              <td width="6" height="22">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                CNPJ&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                {{ impressao.favorecido.cnpj }}
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                I.E.&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                {{ impressao.favorecido.ie }}
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                BANCO&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                {{ impressao.favorecido.banco }}
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                AGENCIA&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                {{ impressao.favorecido.agencia }}
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                CONTA CORRENTE&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                {{ impressao.favorecido.conta }}
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="borda04 borda03">
+              <td height="10" colspan="4" />
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td width="6" height="18">
+                &nbsp;
+              </td>
+              <td width="248" height="18">
+                SACADO&nbsp;&nbsp;&nbsp; =&gt;
+              </td>
+              <td width="508" height="18" class="type03">
+                TOYOTA DO BRASIL LTDA.
+              </td>
+              <td width="6" height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                ENDEREÇO &nbsp;&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                AV. PIRAPORINHA, 1111 - SÃO BERNARDO DO CAMPO - SBC
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                CNPJ&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                59.104.760/0001-91
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="type02 borda04 borda03">
+              <td height="18">
+                &nbsp;
+              </td>
+              <td height="18">
+                I.E.&nbsp;&nbsp; =&gt;
+              </td>
+              <td height="18" class="type03">
+                635.015.941.112
+              </td>
+              <td height="18">
+                &nbsp;
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>-->
+
+    <!--<br />-->
+
+    <!--<table width="100%" cellpadding="5" cellspacing="0" class="table borda01">
+      <tr class="CssTitulo type01">
+        <td colspan="3" style="text-align: center">ETAPAS</td>
+      </tr>
+
+      <tr class="type02">
+        <td>ETAPA</td>
+        <td>DATA</td>
+        <td>RESPONSÁVEL</td>
+      </tr>
+
+      <tr class="type02" ng-repeat="etapa in impressao.etapas">
+        <td>{{ etapa.descricao }}</td>
+        <td>{{ etapa.dataEvento | date: "dd/MM/yyyy HH:mm" }}</td>
+        <td>{{ etapa.usuario }}</td>
+      </tr>
+    </table>-->
+
+    <br />
+    <!--assinatura-->
+    <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+      <tr>
+        <td>
+          <table border="0" cellpadding="0" cellspacing="0" width="95%" align="center"
+            style="font-size: 10px; text-align:center">
+            <tr>
+              <td colspan="3" style="height: 40px">
+                <p style="padding: 50px 0 0 15px;"></p>
+                <p style="font-size: 12px; padding: 0 0 30px 0; text-align: center;border-top: 1px solid;margin: 0px 30px 0px 30px;">Nome/Assinatura do Responsável</p>
+              </td>
+            </tr>
+            <tr class="type02 borda03">
+              <td width="6" height="18">&nbsp;</td>
+              <td style="text-align: center">&nbsp;</td>
+              <td width="6" height="18">&nbsp;</td>
+            </tr>
+            <tr>
+              <td width="6">&nbsp;</td>
+              <td style="text-align: center">
+                {{ impressao.dealer.razaoSocial }}
+              </td>
+              <td width="6">&nbsp;</td>
+            </tr>
+            <tr>
+              <td width="6">&nbsp;</td>
+              <td style="text-align: center">
+                {{ impressao.dealer.logradouro }}, {{ impressao.dealer.numero }} -
+                {{ impressao.dealer.bairro }} - {{ impressao.dealer.cep }} -
+                {{ impressao.dealer.cidade }} |
+                {{ impressao.dealer.uf }}
+              </td>
+              <td width="6">&nbsp;</td>
+            </tr>
+            <tr>
+              <td width="6">&nbsp;</td>
+              <td style="text-align: center">
+                CNPJ: {{ impressao.favorecido.cnpj }}
+              </td>
+              <td width="6">&nbsp;</td>
+            </tr>
+            <tr>
+              <td width="6">&nbsp;</td>
+              <td style="text-align: center">
+                Fone: {{ impressao.dealer.telefone }} - Fax: {{ impressao.dealer.fax }}
+              </td>
+              <td width="6">&nbsp;</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

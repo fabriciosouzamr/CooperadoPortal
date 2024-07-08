@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "statusId": 1,
+  "limiteReembolso": "55555.99",
+  "gastoAprovado": false,
+  "extra": "33489.00",
+  "totalLiberado": "528288888.88",
+  "totalAprovada": "777777777.88",
+  "totalReprovado": "44.88",
+  "totalNaoUtilizado": "522.88"
+}

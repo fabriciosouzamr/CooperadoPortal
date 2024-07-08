@@ -1,0 +1,109 @@
+﻿<style>
+  .btn-lg {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding: 16px;
+}
+</style>
+<div ng-controller="faleNovoController" ng-show="usuarioLogado.emailConfirmado">
+  <div class="panel">
+    <div class="panel-body">
+      <div class="col-sm-12 text-center tituloAjustepag">
+        <h1>Novo Fale Conosco</h1>
+      </div>
+      <div class="col-sm-12">
+        <h2>{{ asked.nome }}</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <md-input-container>
+              <label>Título:</label>
+              <input type="text" required ng-model="pergunta.titulo" autocomplete="off" />
+            </md-input-container>
+          </div>
+          <div class="col-md-4">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Assunto:</label>
+              <md-select required ng-model="pergunta.assunto">
+                <md-option
+                  required
+                  ng-repeat="state in assunto"
+                  value="{{ state.faleConoscoAssuntoId }}"
+                  >{{ state.descricao }}</md-option
+                >
+              </md-select>
+              <div class="md-errors-spacer"></div>
+            </md-input-container>
+          </div>
+          <div class="col-md-4">
+            <md-input-container>
+              <label>Nome:</label>
+              <input type="text" required ng-model="pergunta.nome" autocomplete="off" />
+            </md-input-container>
+          </div>
+
+          <div class="col-md-12">
+            <div class="col-md-4">
+              <md-input-container>
+                <label>E-mail:</label>
+                <input type="email" required ng-model="pergunta.email" autocomplete="off" />
+              </md-input-container>
+            </div>
+            <div class="col-md-4">
+              <md-input-container>
+                <label>Telefone:</label>
+                <input type="text" required ng-model="pergunta.phone" autocomplete="off" ui-br-phone-number />
+              </md-input-container>
+            </div>
+
+          </div>
+         
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="custonlabel">Mensagem:</label>
+              <textarea required
+                ng-model="pergunta.mensagem"
+                rows="6"
+                class="form-controlarea"
+              ></textarea>
+            </div>
+          </div>
+          <div class="col-md-12 mb20">
+            <a
+              class="btn btn-Anexar "
+              ngf-select="uploadFiles($files, $invalidFiles)"
+              single
+              accept="*"
+            >
+            <img src="../assets/img/iconAnexo.png" class="iconAnexo"> &nbsp;&nbsp;Anexar Arquivo
+            </a>
+            <ul style="text-align:center; list-style:none; padding:0px">
+              <li ng-repeat="f in files" style="font:smaller; width:200px">
+                {{ f.name }} {{ f.$errorParam }}
+                <span class="progress" ng-show="f.progress >= 0">
+                  <div
+                    style="width:{{ f.progress }}%"
+                    ng-bind="f.progress + '%'"
+                  ></div>
+                </span>
+              </li>
+              <li ng-repeat="f in errFiles" style="font:smaller; color:#f00">
+                <strong>Erro:</strong> {{ f.name }} <br />Tamanho máximo do
+                arquivo: {{ f.$errorParam }}
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-12 mt20 mb20 text-center">
+            <a
+              class="btn btn-cancelar btn-lg"
+              href="javascript:;"
+              ui-sref="faleConosco"
+              >Voltar</a  >
+            <a class="btn btn-salvareNovo btn-lg" ng-click="criarChamando()">Enviar</a>
+            
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,378 @@
+<style>
+button#btGerarPDF {
+    z-index: 9999999 !important;
+    color: #002C5F !important;
+    border: 1px solid red;
+    background: transparent;
+    position: absolute;
+}
+#print{
+  position: initial !important;
+}
+
+.print-container{
+  display: flex;
+    flex-direction: column;
+}
+</style>
+<div ng-controller="impressaoVerbaController" id="impressao">     
+ <!--<button id="btGerarPDF">gerar PDF</button>-->
+  <div class="ocultaMenu">
+    <!--<button class="noprint btn btn-danger">close</button>-->
+  </div>
+  <section class="print-container">
+      <div class="page" id="print" ng-repeat="impressao in impressoes">
+          <!--logo toyta-->
+          <!--<table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td height="50" colspan="4" align="right" valign="middle">
+                <img ng-show="impressao.applicationName=='Toyota'" width="170" height="40" src="../assets/img/Rel_Logo.gif"
+                  alt="Toyota" />
+                <img ng-show="impressao.applicationName=='Lexus'" width="182" height="40"
+                  src="../assets/img/Rel_Logo_lexus.gif" alt="Toyota" />
+              </td>
+            </tr>
+          </table>-->
+          <!--nota de debido-->
+          <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0">
+                  <tr class="type02 borda04 borda03">
+                    <td colspan="12" align="center" class="type01 CssTitulo">
+                        NOTA DE DÉBITO - MÍDIA COOPERADA 
+                    </td>                   
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td width="6" height="22">
+                      &nbsp;
+                    </td>
+                    <td width="298" height="22">
+                      <b>NOTA DE DÉBITO NR.:</b>&nbsp;
+                      <span class="type03">
+                        {{ impressao.budgetDealerID }}
+                      </span>
+                    </td>
+                    <td width="247" height="22">
+                      <span class="TituloMes">Ano Fiscal: {{ impressao.anoFiscal }}</span>
+                      <br />
+                      <span class="TituloMes">MÊS: {{ impressao.mes }}</span>
+                    </td>
+                    <td width="238" height="22">
+                      DATA DE EMISSÃO:
+                      <span class="type03">{{ impressao.dataPrevistaPagamento | date: "dd/MM/yyyy" }}</span>
+                    </td>
+                    <td width="6" height="22">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+      
+          <br />
+          <!--nome ditribuidor-->
+          <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0">
+                  <tr class="type02 borda04 borda03">
+                    <td width="6" height="18">
+                      &nbsp;
+                    </td>
+                    <td width="248" height="18">
+                      NOME DO DISTRIBUIDOR:
+                    </td>
+                    <td width="519" height="18" class="type03">
+                      {{ impressao.dealer.codigo }} -
+                      {{ impressao.dealer.nomeFantasia }}
+                    </td>
+                    <td width="6" height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      ENDEREÇO:
+                    </td>
+                    <td height="18" class="type03">
+                      {{ impressao.dealer.logradouro }} -
+                      {{ impressao.dealer.bairro }} - Cep: {{ impressao.dealer.cep }} -
+                      {{ impressao.dealer.cidade }} |
+                      {{ impressao.dealer.uf }}
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+      
+          <br />
+          <!--solicitacao de reembolso-->
+          <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0">
+                  <tr class="type02 borda04 borda03">
+                    <td width="6" bgcolor="#CCCCCC" height="20">
+                      &nbsp;
+                    </td>
+                    <td width="248" class="CssTitulo">
+                      <b>MÊS:</b>
+                      <span class="type03">{{ impressao.mes }}</span>
+                    </td>
+                    <td colspan="3" height="20" class="CssTitulo" ng-show="printType === '1'">
+                      <b>VALOR LIBERADO TDB - R$</b>
+                      <span class="type03">{{ impressao.verbaTotal | currency }}</span>
+                    </td>
+
+                    <td colspan="3" height="20" class="CssTitulo" ng-show="printType === '2'">
+                      <b>VALOR TOTAL DO ESTORNO - R$</b>
+                      <span class="type03">{{ impressao.verbaEstorno | currency }}</span>
+                    </td>
+                    <td width="6" height="20" bgcolor="#CCCCCC" class="CssTitulo">
+                      &nbsp;
+                    </td>
+                    <td width="6" bgcolor="#CCCCCC" height="20">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03" ng-show="printType === '1'">
+                    <td colspan="6" height="10" align="center">{{ impressao.verbaTotalPorExtenso }}</td>
+                  </tr>   
+                  <tr class="type02 borda04 borda03" ng-show="printType === '2'">
+                    <td colspan="6" height="10" align="center">{{ impressao.verbaEstornoPorExtenso }}</td>
+                  </tr> 
+                  <!--<tr>
+                    <td colspan="3" height="20">
+                      <b style="font-size: 10px; text-transform: uppercase; padding: 0 .5rem;">Ringui:</b>
+                      <span class="type03">{{ impressao.ringui}}</span>
+                    </td>
+                  </tr>-->
+                </table>
+              </td>
+            </tr>
+          </table>
+      
+          <!--<br />      
+          <br />-->
+      
+          <!--dados favorecido-->
+          <!--<table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0">
+                  <tr class="type02 borda04 borda03">
+                    <td colspan="4" align="center" class="type01 CssTitulo">
+                      <b>DADOS PARA DEPÓSITO</b>
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td width="6" height="18">
+                      &nbsp;
+                    </td>
+                    <td width="248" height="18">
+                      FAVORECIDO&nbsp;&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td width="508" height="18" class="type03">
+                      {{ impressao.favorecido.nomeFantasia }}
+                    </td>
+                    <td width="6" height="22">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      CNPJ&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      {{ impressao.favorecido.cnpj }}
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      I.E.&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      {{ impressao.favorecido.ie }}
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      BANCO&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      {{ impressao.favorecido.banco }}
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      AGENCIA&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      {{ impressao.favorecido.agencia }}
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      CONTA CORRENTE&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      {{ impressao.favorecido.conta }}
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="borda04 borda03">
+                    <td height="10" colspan="4" />
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td width="6" height="18">
+                      &nbsp;
+                    </td>
+                    <td width="248" height="18">
+                      SACADO&nbsp;&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td width="508" height="18" class="type03">
+                      TOYOTA DO BRASIL LTDA.
+                    </td>
+                    <td width="6" height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      ENDEREÇO &nbsp;&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      AV. PIRAPORINHA, 1111 - SÃO BERNARDO DO CAMPO - SBC
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      CNPJ&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      59.104.760/0001-91
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr class="type02 borda04 borda03">
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                    <td height="18">
+                      I.E.&nbsp;&nbsp; =&gt;
+                    </td>
+                    <td height="18" class="type03">
+                      635.015.941.112
+                    </td>
+                    <td height="18">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>-->
+      
+          <br />      
+          <br />
+          <!--assinatura-->
+          <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+              <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="95%" align="center"
+                  style="font-size: 10px; text-align:center">
+                  <tr>
+                    <td colspan="3" style="height: 40px">&nbsp;</td>
+                  </tr>
+                  <tr class="type02 borda03">
+                    <td width="6" height="18">&nbsp;</td>
+                    <td style="text-align: center">&nbsp;</td>
+                    <td width="6" height="18">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td width="6">&nbsp;</td>
+                    <td style="text-align: center">
+                      {{ impressao.dealer.razaoSocial }}
+                    </td>
+                    <td width="6">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td width="6">&nbsp;</td>
+                    <td style="text-align: center">
+                      {{ impressao.dealer.logradouro }}, {{ impressao.dealer.numero }} -
+                      {{ impressao.dealer.bairro }} - {{ impressao.dealer.cep }} -
+                      {{ impressao.dealer.cidade }} |
+                      {{ impressao.dealer.uf }}
+                    </td>
+                    <td width="6">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td width="6">&nbsp;</td>
+                    <td style="text-align: center">
+                      CNPJ: {{ impressao.favorecido.cnpj }}
+                    </td>
+                    <td width="6">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td width="6">&nbsp;</td>
+                    <td style="text-align: center">
+                      Fone: {{ impressao.dealer.telefone }} - Fax: {{ impressao.dealer.fax }}
+                    </td>
+                    <td width="6">&nbsp;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+  </section>
+</div>

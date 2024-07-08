@@ -1,0 +1,182 @@
+<div ng-controller="admController">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Administrador</h1>
+                </div>
+            </div>
+
+            <div class="row mt20">
+                <div class="col-sm-8">
+                    <h3>Dados Pessoais</h3>
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label>Nome Completo:</label>
+                        <br>
+                        <input ng-model="administrador.nome" class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>CPF:</label>
+                        <br>
+                        <input ng-model="administrador.cpf" class="form-control" type="text" ui-br-cpf-mask>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Telefone:</label>
+                        <br>
+                        <input ng-model="administrador.telefone" class="form-control" type="text" ui-br-phone-number>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Perfil:</label>
+                        <br>
+                        <input class="form-control" type="text" value="Administrador" disabled>
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label>E-mail:</label>
+                        <br>
+                        <input ng-model="administrador.email" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt20">
+                <div class="col-sm-12">
+                    <h3>Dados de Endereço</h3>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Estado:</label>
+                        <br>
+                        <select ng-model="administrador.Endereco.UfId" ng-change="searchCityByUF(administrador.Endereco.UfId)" class="form-control"
+                            type="text">
+                            <option ng-repeat="x in ufs" value="{{x.ufId}}">{{x.sigla}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Cidade:</label>
+                        <br>
+                        <select ng-model="administrador.Endereco.CidadeId" class="form-control" type="text">
+                            <option ng-repeat="x in citys" value="{{x.cidadeId}}">{{x.nome}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>CEP:</label>
+                        <br>
+                        <input ng-model="administrador.Endereco.CEP" class="form-control" type="text" ui-br-cep-mask>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Bairro:</label>
+                        <br>
+                        <input ng-model="administrador.Endereco.Bairro" class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label>Logradouro:</label>
+                        <br>
+                        <input ng-model="administrador.Endereco.Logradouro" class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label>Numero:</label>
+                        <br>
+                        <input ng-model="administrador.Endereco.Numero" class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Complemento:</label>
+                        <br>
+                        <input ng-model="administrador.Endereco.Complemento" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt20">
+                <div class="col-sm-12">
+                    <h3>DADOS DE ACESSO</h3>
+                </div>
+                
+                <div class="col-sm-4" ng-show="flagNewAdm" >
+                    <div class="form-group">
+                        <label>Login:</label>
+                        <br>
+                        <input ng-model="administrador.nomeUsuario" class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Senha:</label>
+                        <br>
+                        <input ng-model="administrador.senha" class="form-control" type="password">
+                    </div>
+                </div>
+
+                <div class="col-sm-4" ng-show="flagNewAdm">
+                    <div class="form-group">
+                        <label>Confirmação de Senha:</label>
+                        <br>
+                        <input ng-model="administrador.confirmacaoSenha" class="form-control" type="password">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 text-center mt20">
+                    <button class="btn btn-xl btn-info" ng-show="flagNewAdm" ng-click="saveNewAdm()">Cadastrar</button>
+                    <button class="btn btn-xl btn-info" ng-show="!flagNewAdm" ng-click="saveUpdateAdm()">Salvar</button>
+                    <button class="btn btn-xl btn-success" ng-click="active()" ng-show="!flagNewAdm">Ativar</button>
+                    <button class="btn btn-xl btn-danger" ng-click="desable()" ng-show="!flagNewAdm">Desativar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function abreModal(modal, effect) {
+            $.magnificPopup.open({
+                removalDelay: 500, //delay removal by X to allow out-animation,
+                items: {
+                    src: modal
+                },
+                // overflowY: 'hidden', //
+                callbacks: {
+                    beforeOpen: function (e) {
+                        this.st.mainClass = effect;
+                    }
+                },
+                midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+            });
+        };
+    </script>
+</div>

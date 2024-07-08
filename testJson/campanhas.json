@@ -1,0 +1,22 @@
+[
+  {
+    "campanhaId": 1,
+    "titulo": "campanha 1"
+  }, 
+  {
+    "campanhaId": 2,
+    "titulo": "campanha 2"
+  },
+  {
+    "campanhaId": 3,
+    "titulo": "campanha 3"
+  },
+  {
+    "campanhaId": 4,
+    "titulo": "campanha 4"
+  },
+  {
+    "campanhaId": 5,
+    "titulo": "campanha 5"
+  }
+]

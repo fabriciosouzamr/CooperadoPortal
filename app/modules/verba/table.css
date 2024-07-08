@@ -1,0 +1,156 @@
+@media (max-width: 992px){
+
+	/*tabela midia*/
+	.table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(1) .ui-grid-cell-contents:before { 
+		content: "Mês";
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px ;
+	}
+	.table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(2) .ui-grid-cell-contents:before { 
+		content: "Ano Fiscal";
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px; 
+	}
+	.table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(3) .ui-grid-cell-contents:before { 
+		content: "Tipo";
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px; 
+	}
+	.table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(4) .ui-grid-cell-contents:before { 
+		content: "Nome do Arvivo" ;
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+	}
+	.table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(5) .ui-grid-cell-contents:before { 
+		content: "Usuário";
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+	}
+	.table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(6) .ui-grid-cell-contents:before { 
+		content: "Data"; 
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+    }
+    
+    .table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(7) .ui-grid-cell-contents:before { 
+		content: "Hora"; 
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+    }
+    .table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(8) .ui-grid-cell-contents:before { 
+		content: "Ok"; 
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+    }
+    .table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(9) .ui-grid-cell-contents:before { 
+		content: "Duplicado"; 
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+    }
+    .table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(10) .ui-grid-cell-contents:before { 
+		content: "Erro"; 
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+    }
+    .table-verba-1 .ui-grid-row .ui-grid-cell:nth-of-type(11) .ui-grid-cell-contents:before { 
+		content: "Status"; 
+		width: 45%;
+		display: inline-block;
+		padding: 0 10px;
+	}
+
+
+    /*****************************/
+    /***** TABELA TREE VIEW ******/
+
+	.table-reponsive-bootstrap table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .table-reponsive-bootstrap thead tr.caption {
+         display:none;
+    }
+    .table-reponsive-bootstrap tr { border: 1px solid #ccc; }
+    .table-reponsive-bootstrap td, th {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+	}
+	.table-reponsive-bootstrap td div, th div {
+        padding-left: 50%;
+	}
+    .table-reponsive-bootstrap td:before, th:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+	}
+    .table-reponsive-bootstrap table > tbody > tr > th.btnAction,
+    .table-reponsive-bootstrap table > tbody > tr > td.btnAction {
+        text-align: left;
+    }
+	.table-reponsive-bootstrap table > thead > tr > th, 
+	.table-reponsive-bootstrap table > thead > tr > td,
+	.table-reponsive-bootstrap table > thead > tr > th.btnPlus, 
+	.table-reponsive-bootstrap table > thead > tr > td.btnPlus,
+	.table-reponsive-bootstrap table > thead > tr > th.btnAction, 
+	.table-reponsive-bootstrap table > thead > tr > td.btnAction {
+		width: 100%;
+	}
+    .table-reponsive-bootstrap table > thead > tr > th.btnAction,
+    .table-reponsive-bootstrap table > tbody > tr.subCaption > td.btnAction,
+    .table-reponsive-bootstrap table > thead > tr.caption-danger > th.btnPlus {
+        display: none;
+    }
+    /*head nacional*/
+    .table-reponsive-bootstrap table thead tr.caption-danger th:nth-of-type(1)::before {content: "";}
+    .table-reponsive-bootstrap table thead tr.caption-danger th:nth-of-type(2)::before {content: "";}
+    .table-reponsive-bootstrap table thead tr.caption-danger th:nth-of-type(3)::before {content: "Distribuído";width: 45%}
+    .table-reponsive-bootstrap table thead tr.caption-danger th:nth-of-type(4)::before {content: "Extra";width: 45%}
+    .table-reponsive-bootstrap table thead tr.caption-danger th:nth-of-type(5)::before {content: "Liberado";width: 45%}
+    .table-reponsive-bootstrap table thead tr.caption-danger th:nth-of-type(6)::before {content: "Solicitado";width: 45%}
+    .table-reponsive-bootstrap table thead tr.caption-danger th:nth-of-type(7)::before {content: "Reembolso";width: 45%}
+    /*Regional*/
+    .table-reponsive-bootstrap table tr.subCaption td:nth-of-type(1)::before {content: "";}
+    .table-reponsive-bootstrap table tr.subCaption td:nth-of-type(2)::before {content: "Regional";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption td:nth-of-type(3)::before {content: "Distribuído";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption td:nth-of-type(4)::before {content: "Extra";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption td:nth-of-type(5)::before {content: "Liberado";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption td:nth-of-type(6)::before {content: "Solicitado";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption td:nth-of-type(7)::before {content: "Reembolso";width: 45%}
+    /*Regiao*/
+    .table-reponsive-bootstrap table tr.subCaption th:nth-of-type(1)::before {content: "";}
+    .table-reponsive-bootstrap table tr.subCaption th:nth-of-type(2)::before {content: "Região";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption th:nth-of-type(3)::before {content: "Distribuído";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption th:nth-of-type(4)::before {content: "Extra";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption th:nth-of-type(5)::before {content: "Liberado";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption th:nth-of-type(6)::before {content: "Solicitado";width: 45%}
+    .table-reponsive-bootstrap table tr.subCaption th:nth-of-type(7)::before {content: "Reembolso";width: 45%}
+    /*Dealer*/
+    .table-reponsive-bootstrap table tr.dealer td:nth-of-type(1)::before {content: "";}
+    .table-reponsive-bootstrap table tr.dealer td:nth-of-type(2)::before {content: "Dealer";width: 45%}
+    .table-reponsive-bootstrap table tr.dealer td:nth-of-type(3)::before {content: "Distribuído";width: 45%}
+    .table-reponsive-bootstrap table tr.dealer td:nth-of-type(4)::before {content: "Extra";width: 45%}
+    .table-reponsive-bootstrap table tr.dealer td:nth-of-type(5)::before {content: "Liberado";width: 45%}
+    .table-reponsive-bootstrap table tr.dealer td:nth-of-type(6)::before {content: "Solicitado";width: 45%}
+    .table-reponsive-bootstrap table tr.dealer td:nth-of-type(7)::before {content: "Reembolso"; width: 45%}
+
+
+/***** TABELA TREE VIEW ******/
+/*****************************/
+
+}

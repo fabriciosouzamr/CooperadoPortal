@@ -1,0 +1,57 @@
+<div ng-controller="admTableController">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Administrador</h1>
+                </div>
+            </div>
+
+            <div class="row mt20">
+                <div class="col-sm-8">
+                    <h3>Lista de Administradores</h3>
+                </div>
+
+                <div class="col-sm-4 text-center mt10">
+                    <button type="button" class="btn btn-info btn-block" ng-click="addNewAdm()">
+                        Cadastrar Novo
+                    </button>
+                </div>
+
+                <div class="col-sm-12 mt10">
+                    <div>
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button" style="right:11px">
+                            <i class="fa fa-filter"></i>
+                        </button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns ui-grid-move-columns
+                            ui-grid-selection class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function abreModal(modal, effect) {
+            $.magnificPopup.open({
+                removalDelay: 500, //delay removal by X to allow out-animation,
+                items: {
+                    src: modal
+                },
+                // overflowY: 'hidden', //
+                callbacks: {
+                    beforeOpen: function (e) {
+                        this.st.mainClass = effect;
+                    }
+                },
+                midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+            });
+        }
+    </script>
+</div>

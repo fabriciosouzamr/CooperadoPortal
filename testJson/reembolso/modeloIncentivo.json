@@ -1,0 +1,25 @@
+[
+  {
+    "modeloId": 1,
+    "descricao": "Modelo A"
+  },
+  {
+    "modeloId": 2,
+    "descricao": "Modelo B"
+  },
+  {
+    "modeloId": 3,
+    "descricao": "Modelo C"
+
+  },
+  {
+    "modeloId": 4,
+    "descricao": "Modelo D"
+
+  },
+  {
+    "modeloId": 5,
+    "descricao": "Modelo E"
+
+  }
+]

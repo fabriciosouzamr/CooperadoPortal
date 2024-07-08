@@ -1,0 +1,21 @@
+{
+  "titulo": "titulo curso 1",
+  "modulos": [
+    {
+      "titulo": "titulo modulo 1",
+      "visualizado": true,
+      "moduloId": 1
+    },
+    {
+      "titulo": "titulo modulo 2",
+      "visualizado": false,
+      "moduloId": 2
+    },
+    {
+      "titulo": "titulo modulo 3",
+      "visualizado": false,
+      "moduloId": 3
+    }
+  ],
+  "id": 1
+}

@@ -1,0 +1,105 @@
+@media (max-width: 992px){
+	/* table inconsistencias */
+	.table-home-1 .ui-grid-row .ui-grid-cell:nth-of-type(1) .ui-grid-cell-contents:before { 
+		content: "Data - Hora";
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px ;
+	}
+	.table-home-1 .ui-grid-row .ui-grid-cell:nth-of-type(2) .ui-grid-cell-contents:before { 
+		content: "Fornecedor";
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px; 
+	}
+	.table-home-1 .ui-grid-row .ui-grid-cell:nth-of-type(3) .ui-grid-cell-contents:before { 
+		content: "Número NF";
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px; 
+	}
+	.table-home-1 .ui-grid-row .ui-grid-cell:nth-of-type(4) .ui-grid-cell-contents:before { 
+		content: "Por" ;
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px;
+	}
+	.table-home-1 .ui-grid-row .ui-grid-cell:nth-of-type(5) .ui-grid-cell-contents:before { 
+		content: "Motivo";
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px;
+	}
+	
+    /* notas enviadas */
+    .table-home-2 .ui-grid-row .ui-grid-cell:nth-of-type(1) .ui-grid-cell-contents:before { 
+			content: "Data - Hora";
+			width: 45%;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-align: center;
+			    -ms-flex-align: center;
+			        align-items: center;
+		padding: 0 10px;
+    }
+    .table-home-2 .ui-grid-row .ui-grid-cell:nth-of-type(2) .ui-grid-cell-contents:before { 
+		content: "Tipo"; 
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px;
+    }
+    .table-home-2 .ui-grid-row .ui-grid-cell:nth-of-type(3) .ui-grid-cell-contents:before { 
+		content: "Nome da nota"; 
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px;
+    }
+    .table-home-2 .ui-grid-row .ui-grid-cell:nth-of-type(4) .ui-grid-cell-contents:before { 
+		content: "Status"; 
+		width: 45%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		    -ms-flex-align: center;
+		        align-items: center;
+		padding: 0 10px;
+    }
+
+}

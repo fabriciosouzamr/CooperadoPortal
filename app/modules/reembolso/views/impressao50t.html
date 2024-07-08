@@ -1,0 +1,485 @@
+﻿<div ng-controller="impressaoT50Controller" id="impressao">
+    <div class="ocultaMenu"><!--<button class="noprint btn btn-danger">close</button>--></div>
+    <div class="page">
+        <!--logo toyta-->
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td height="70" colspan="4" align="right" valign="middle">
+                    <img width="238" height="54" src="../assets/img/Rel_Logo.gif" alt="Toyota" />
+                </td>
+            </tr>
+        </table>
+        <!--nota de debido-->
+        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr class="type02 borda04 borda03">
+                            <td colspan="5" align="center" class="type01 CssTitulo">
+                                NOTA DE DÉBITO - MÍDIA COOPERADA
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                            <td width="298" height="22">
+                                <b>NOTA DE DÉBITO NR.:</b>&nbsp; <span class="type03">
+                                    {{nota.numero}}
+                                </span>
+                            </td>
+                            <td width="247" height="22">
+                                <span class="TituloMes">Ano Fiscal: {{nota.anoFiscal}}</span>
+                                <br />
+                                <span class="TituloMes">MÊS: {{nota.mes}}</span>
+                            </td>
+                            <td width="238" height="22">
+                                DATA DE EMISSÃO:
+                                <span class="type03">{{nota.dataEmissao}}</span>
+                            </td>
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br /> <!--nome ditribuidor-->
+        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr class="type02 borda04 borda03">
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                            <td width="248" height="22">
+                                NOME DO DISTRIBUIDOR:
+                            </td>
+                            <td width="519" height="22" class="type03">
+                                {{nota.distribuidor}}
+                            </td>
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                ENDEREÇO:
+                            </td>
+                            <td height="22" class="type03">
+                                {{nota.endereco}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <!--solicitacao de reembolso-->
+        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr class="type02 borda04 borda03">
+                            <td width="6" bgcolor="#CCCCCC" height="20">
+                                &nbsp;
+                            </td>
+                            <td width="248" class="CssTitulo">
+                                <b>MÊS:</b>
+                                <span class="type03">{{nota.mes}}</span>
+                            </td>
+                            <td colspan="3" height="20" class="CssTitulo">
+                                <b>VALOR LIBERADO TDB - R$</b>
+                                <span class="type03">{{nota.valorLiberado}}</span>
+                            </td>
+                            <td width="6" height="20" bgcolor="#CCCCCC" class="CssTitulo">
+                                &nbsp;
+                            </td>
+                            <td width="6" bgcolor="#CCCCCC" height="20">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td colspan="6" height="2" align="center">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="CssTitulo type02 borda04 borda03">
+                            <td colspan="7" height="22" bgcolor="#CCCCCC" align="center">
+                                <b>SOLICITAÇÃO DE REEMBOLSO DE DESPESAS DE MÍDIA COOPERADA</b>
+                            </td>
+                        </tr>
+
+                        <tr class="type02 borda04 borda03">
+                            <td height="22" style="width: 6px">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                FORNECEDOR:
+                            </td>
+                            <td style="width: 250px" height="22">
+                                DESCRIÇÃO DOS SERVIÇOS
+                            </td>
+                            <td style="width: 130px" height="22">
+                                NR. PI
+                            </td>
+                            <td style="width: 100px" height="22">
+                                NR. NF
+                            </td>
+                            <td style="width: 110px; text-align: center;">
+                                VALOR - R$
+                            </td>
+                            <td height="22" style="width: 6px">
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr class="type02 borda04 borda03">
+                            <!--ng-repeat-->
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td class="bordercell">
+                                {{item.fornecedor}}
+                            </td>
+                            <td class="bordercell">
+                                {{item.descricao}}
+                            </td>
+                            <td class="bordercell">
+                                {{item.nrpi}}
+                            </td>
+                            <td class="bordercell">
+                                {{item.nrnf}}
+                            </td>
+                            <td style="text-align: right;" class="bordercell">
+                                {{item.valor}}
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <!--
+    <tr>
+        <td colspan="6" style="text-align: center">
+            Nenhum Serviço Adicionado
+        </td>
+    </tr>
+    -->
+
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="40" colspan="3" align="left" valign="top" height="22">
+                                <b>VALOR TOTAL DAS DESPESAS</b>
+                                <img src="../assets/img/clip_image004.gif" alt="" width="337" height="17" />
+                            </td>
+                            <td height="22" colspan="2" class="type03" style="text-align: right">
+                                R$ {{nota.totalItens}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td colspan="2" height="22" align="right" nowrap="nowrap" bgcolor="#CCCCCC" class="type02 borda04 borda03">
+                                TOTAL POR EXTENSO:
+                            </td>
+                            <td colspan="4" height="22" nowrap="nowrap" class="type03 borda03">
+                                {{nota.extencil}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr class="type02 borda04 borda03">
+                            <td height="22" colspan="7">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="40" colspan="3" align="left" valign="top" height="22">
+                                <b>VALOR A SER REEMBOLSADO => 50% DO TOTAL</b>
+                                <img src="../assets/img/clip_image006.gif" alt="" width="209" height="18" />
+                            </td>
+                            <td height="22" colspan="2" class="type03" style="text-align: right">
+                                * R$ {{nota.data}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="40" colspan="3" align="left" valign="top" height="22">
+                                <b>PREVISÃO DE PAGAMENTO</b>
+                                <img src="../assets/img/clip_image006.gif" alt="" width="209" height="18" />
+                            </td>
+                            <td height="22" colspan="2" class="type03" style="text-align: right">
+                                * {{nota.data}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td colspan="5">
+                                *Valor sujeito a alteração após a analise Toyota
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="borda01">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td colspan="5">
+                                <img ID="LegendaImagem" src="../assets/img/bullet.gif" />
+                                Nota Físcal não reembolsável.
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+
+        <br /> <!--dados favorecido-->
+        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr class="type02 borda04 borda03">
+                            <td colspan="4" align="center" class="type01 CssTitulo">
+                                <b>DADOS PARA DEPÓSITO</b>
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                            <td width="248" height="22">
+                                FAVORECIDO&nbsp;&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td width="508" height="22" class="type03">
+                                {{nota.favorecido}}
+                            </td>
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                CNPJ&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                {{nota.cnpj}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                I.E.&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                {{nota.ie}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                BANCO&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                {{nota.banco}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                AGENCIA&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                {{nota.agencia}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                CONTA CORRENTE&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                {{nota.contaCorrente}}
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br /> <!--dados do sacado-->
+        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr class="type02 borda04 borda03">
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                            <td width="248" height="22">
+                                SACADO&nbsp;&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td width="508" height="22" class="type03">
+                                TOYOTA DO BRASIL LTDA.
+                            </td>
+                            <td width="6" height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                ENDEREÇO &nbsp;&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                AV. PIRAPORINHA, 1111 - SÃO BERNARDO DO CAMPO - SBC
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                CNPJ&nbsp;&nbsp;&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                59.104.760/0001-91
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr class="type02 borda04 borda03">
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                            <td height="22">
+                                I.E.&nbsp;&nbsp; =&gt;
+                            </td>
+                            <td height="22" class="type03">
+                                635.015.941.112
+                            </td>
+                            <td height="22">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br /> <!--assinatura-->
+        <table width="100%" border="0" cellpadding="5" cellspacing="0" class="borda01">
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="95%" align="center" style="font-size: 10px; text-align:center">
+                        <tr>
+                            <td colspan="3" style="height: 50px">&nbsp;</td>
+                        </tr>
+                        <tr class="type02 borda03">
+                            <td width="6" height="22">&nbsp;</td>
+                            <td style="text-align: center">&nbsp;</td>
+                            <td width="6" height="22">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="6">&nbsp;</td>
+                            <td style="text-align: center">
+                                {{nota.nomeFantasia}}
+                            </td>
+                            <td width="6">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="6">&nbsp;</td>
+                            <td style="text-align: center">
+                                {{nota.endereco}}
+                            </td>
+                            <td width="6">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="6">&nbsp;</td>
+                            <td style="text-align: center">
+                                CNPJ: {{nota.cnpj}}
+                            </td>
+                            <td width="6">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td width="6">&nbsp;</td>
+                            <td style="text-align: center">
+                                Fone: {{nota.fone}}
+                                - Fax: {{nota.fax}}
+                            </td>
+                            <td width="6">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="height: 20px">&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+</div>

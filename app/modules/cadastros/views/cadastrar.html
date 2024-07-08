@@ -1,0 +1,489 @@
+﻿<div ng-controller="cadastrosDealerController" ng-show="usuarioLogado.emailConfirmado">
+  <div class="panel">
+    <div class="panel-body">
+      <div class="container-fluid pd-bottom-20">
+        <h1>Dados cadastrais do Dealer</h1>
+      </div>
+      <div class="container-fluid well">
+        <div class="row">
+          <div class="col-md-6">
+            <md-input-container>
+              <label>Razão Social:</label>
+              <input
+                type="text"
+                ng-model="dealer.razaoSocial"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+          <div class="col-md-6">
+            <md-input-container>
+              <label>Nome Fantasia:</label>
+              <input
+                type="text"
+                ng-model="dealer.nomeFantasia"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container>
+              <label>Códigos:</label>
+              <input type="text" ng-model="dealer.codigo" ng-disabled="true" />
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>AOV:</label>
+              <md-select ng-model="dealer.aov" ng-disabled="true">
+                <md-option
+                  ng-repeat="state in aov"
+                  value="{{ state.regionalID }}"
+                  >{{ state.nome }}</md-option
+                >
+              </md-select>
+              <div class="md-errors-spacer"></div>
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Região:</label>
+              <md-select ng-model="dealer.regiaoID" ng-disabled="true">
+                <md-option
+                  ng-repeat="state in regiaos"
+                  value="{{ state.regiaoID }}"
+                  >{{ state.nome }}</md-option
+                >
+              </md-select>
+              <div class="md-errors-spacer"></div>
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container>
+              <label>Cep:</label>
+              <input
+                type="text"
+                ng-model="dealer.cep"
+                ng-change="loadCep(dealer.cep)"
+                ng-disabled="true"
+                ui-br-cep-mask
+              />
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container>
+              <label>Logradouro:</label>
+              <input
+                type="text"
+                ng-model="dealer.logradouro"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container>
+              <label>Bairro:</label>
+              <input type="text" ng-model="dealer.bairro" ng-disabled="true" />
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>UF:</label>
+              <md-select
+                ng-model="dealer.ufID"
+                ng-change="loadCity(dealer.ufID)"
+                ng-disabled="true"
+              >
+                <md-option
+                  ng-repeat="state in endereco.uf"
+                  value="{{ state.ufId }}"
+                  >{{ state.sigla }}</md-option
+                >
+              </md-select>
+              <div class="md-errors-spacer"></div>
+            </md-input-container>
+          </div>
+          <div class="col-md-3">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Cidade:</label>
+              <md-select
+                ng-model="dealer.cidadeID"
+                name="cidade"
+                ng-change="flagActiveSave=true; flagChangeAdress=true"
+                ng-disabled="true"
+              >
+                <md-option
+                  ng-repeat="city in endereco.cidades"
+                  value="{{ city.cidadeId }}"
+                  >{{ city.nome }}</md-option
+                >
+              </md-select>
+              <div class="md-errors-spacer"></div>
+            </md-input-container>
+          </div>
+
+          <div class="col-md-12">
+            <hr />
+          </div>
+
+          <div class="col-md-12 mb20">
+            <h3>Dados bancários para reembolso</h3>
+          </div>
+          <div class="col-md-4">
+            <md-input-container>
+              <label>Favorecido:</label>
+              <input
+                type="text"
+                ng-model="dealer.favorecido"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+          <div class="col-md-4">
+            <md-input-container>
+              <label>CNPJ Favorecido:</label>
+              <input
+                type="text"
+                ng-model="dealer.favorecidoCnpj"
+                ng-disabled="true"
+                ui-br-cnpj-mask
+              />
+            </md-input-container>
+          </div>
+          <div class="col-md-4">
+            <md-input-container>
+              <label>Inscrição Estadual:</label>
+              <input
+                type="text"
+                ng-model="dealer.favorecidoIE"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+
+          <div class="col-md-3">
+            <md-input-container>
+              <label>Banco:</label>
+              <input
+                type="text"
+                ng-model="dealer.favorecidoBanco"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+
+          <div class="col-md-3">
+            <md-input-container>
+              <label>Agência:</label>
+              <input
+                type="text"
+                ng-model="dealer.favorecidoAgencia"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+
+          <div class="col-md-3">
+            <md-input-container>
+              <label>Conta Corrente:</label>
+              <input
+                type="text"
+                ng-model="dealer.favorecidoConta"
+                ng-disabled="true"
+              />
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+
+      <!--Usuários-->
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Adicionar novo Usuário</h3>
+        </div>
+        <div class="col-md-3">
+          <md-input-container>
+            <label>Usuário:</label>
+            <input type="text" ng-model="cadastroUsuario.login" />
+          </md-input-container>
+        </div>
+
+        <div class="col-md-3">
+          <md-input-container>
+            <label>Nome:</label>
+            <input type="text" ng-model="cadastroUsuario.nome" />
+          </md-input-container>
+        </div>
+
+        <div class="col-md-2">
+          <md-input-container>
+            <label>Senha:</label>
+            <input
+              type="password"
+              ng-model="cadastroUsuario.senha"
+              autocomplete="false"
+            />
+          </md-input-container>
+        </div>
+        <div class="col-md-2">
+          <md-input-container>
+            <label>Confirmar Senha:</label>
+            <input
+              type="password"
+              autocomplete="off"
+              ng-model="cadastroUsuario.senhaConfirmacao"
+            />
+          </md-input-container>
+        </div>
+        <div class="col-md-2">
+          <md-input-container>
+            <label>Email:</label>
+            <input
+              type="email"
+              id="email"
+              ng-model="cadastroUsuario.email"
+              autocomplete="off"
+            />
+          </md-input-container>
+        </div>
+
+        <div class="col-md-12 pd-t-b-10">
+          <button type="button" class="btn btn-primary" ng-click="addUsuario()">
+            Adicionar usuário
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 pd-t-b-10">
+          <h3>Lista de Usuários</h3>
+          <div
+            ng-controller="dealerUsuariosTableCntrl"
+            class="table-responsive table-cadastro-1"
+          >
+            <div
+              id="grid1"
+              ui-grid="gridOptions1"
+              ui-grid-pagination
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-selection
+              class="grid"
+            >
+              <div
+                class="pd-t-b-10 no-rows"
+                ng-show="!gridOptions1.data.length"
+              >
+                <div class="msg">
+                  <span>Sem registros</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hr />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Adicionar novo Contato</h3>
+        </div>
+        <div class="col-md-4">
+          <md-input-container>
+            <label>Nome do contato:</label>
+            <input type="text" ng-model="cadastroContato.nomeContato" />
+          </md-input-container>
+        </div>
+
+        <div class="col-md-2">
+          <md-input-container>
+            <label>Email:</label>
+            <input type="email" ng-model="cadastroContato.email" />
+          </md-input-container>
+        </div>
+        <div class="col-md-2">
+          <md-input-container>
+            <label>Telefone:</label>
+            <input
+              type="text"
+              ng-model="cadastroContato.telefone"
+              ui-br-phone-number
+            />
+          </md-input-container>
+        </div>
+        <div class="col-md-2">
+          <md-input-container>
+            <label>Celular:</label>
+            <input
+              type="text"
+              ng-model="cadastroContato.celular"
+              ui-br-phone-number
+            />
+          </md-input-container>
+        </div>
+
+        <div class="col-md-2">
+          <label>Receber alertas*</label><br />
+          <md-radio-group
+            ng-model="cadastroContato.recebeAlerta"
+            style="overflow: hidden;"
+          >
+            <md-radio-button value="true">Sim</md-radio-button>
+            <md-radio-button value="false">Não</md-radio-button>
+          </md-radio-group>
+        </div>
+
+        <div class="col-md-12 pd-t-b-10">
+          <button type="button" class="btn btn-primary" ng-click="addContato()">
+            Adicionar contato
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hr />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Lista de Contatos</h3>
+          <div
+            ng-controller="dealerContatosTableCntrl"
+            class="table-responsive table-cadastro-2"
+          >
+            <div
+              id="grid1"
+              ui-grid="gridOptions1"
+              ui-grid-pagination
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-selection
+              class="grid"
+            >
+              <div
+                class="pd-t-b-10 no-rows"
+                ng-show="!gridOptions1.data.length"
+              >
+                <div class="msg">
+                  <span>Sem registros</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hr />
+        </div>
+
+        <div class="col-md-12">
+          <h3>Logs de inclusão e exclusão de contatos</h3>
+          <div
+            ng-controller="dealerContatoLogTableCntrl"
+            class="table-responsive table-cadastro-3"
+          >
+            <div
+              id="grid1"
+              ui-grid="gridOptions1"
+              ui-grid-pagination
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-selection
+              class="grid"
+            >
+              <div
+                class="pd-t-b-10 no-rows"
+                ng-show="!gridOptions1.data.length"
+              >
+                <div class="msg">
+                  <span>Sem registros</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="modalExcluirUsuario"
+    class="popup-basic admin-form mfp-with-anim mfp-hide"
+  >
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <i class="fa fa-user"></i>Deletar Usuario
+        </span>
+      </div>
+      <div class="panel-body p25">
+        <div class="section row">
+          <div class="col-md-12">
+            Você tem certeza que deseja deletar este usuario?
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer text-center">
+        <button
+          type="button"
+          class="btn btn-danger"
+          ng-click="deletarUsuario()"
+        >
+          SIM
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="$.magnificPopup.close()"
+        >
+          NÃO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="modalExcluirContato"
+    class="popup-basic admin-form mfp-with-anim mfp-hide"
+  >
+    <div class="panel">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <i class="fa fa-user"></i>Deletar Contato
+        </span>
+      </div>
+      <div class="panel-body p25">
+        <div class="section row">
+          <div class="col-md-12">
+            Você tem certeza que deseja deletar este contato?
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer text-center">
+        <button
+          type="button"
+          class="btn btn-danger"
+          ng-click="deletarContato()"
+        >
+          SIM
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="$.magnificPopup.close()"
+        >
+          NÃO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

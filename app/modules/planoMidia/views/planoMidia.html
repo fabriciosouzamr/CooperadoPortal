@@ -1,0 +1,182 @@
+<style>
+    .prazos {
+        min-height: 88.5vh;
+        padding: 6rem 1rem;
+        box-sizing: border-box;
+    }
+
+    .prazos .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        padding: 2rem 0;
+    }
+
+    .filtros {
+        display: flex;
+        width: 50%;
+        margin-top: 30px;
+    }
+
+    #data-limite {
+        background: transparent;
+        border: none;
+        margin: 1rem 2rem;
+        border-bottom: 2px solid black;
+        outline: 0;
+        text-align: center;
+        width: 250px;
+    }
+
+    #data-limite input {
+        font-size: 25px;
+        text-align: center;
+        padding: 10px 2px 15px 2px;
+    }
+
+    .salvar {
+        width: 150px;
+        padding: 1rem;
+        color: #002C5F !important;
+        background: transparent;
+        border: 1px solid #002C5F;
+        cursor: pointer;
+        transition: .3s all;
+        margin-top: 30px;
+    }
+
+    .salvar:hover {
+        background: #002C5F;
+        color: white !important;
+        transition: .3s all;
+        transform: scale(1.105);
+    }
+</style>
+<div class="prazos">
+    <div class="panel">
+        <div class="panel-body" ng-controller="planoMidiaController">
+            <div class="row">
+                <div class="col-sm-12 text-center tituloAjustepag">
+                    <h1>Plano de Marketing</h1>
+                </div>
+            </div>
+
+            <div class="row mt40">
+                <div class="col-sm-12 text-center">
+                    <ul class="nav nav-tabs text-center">
+                        <li ng-class="{'active': abaActive == apps.applicationId}" ng-repeat="apps in applications" value="{{apps.applicationId}}">
+                            <a href="javascript:;" ng-click="changeAba(apps.applicationId);">{{apps.applicationName}}&nbsp;Mídia&nbsp;{{apps.applicationPerc}}%</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row mb20 mt20">
+                <div class="col-sm-12 col-md-12">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-sm-2">
+                            <md-input-container ng-show="usuarioLogado.perfil !== 'Administrador'" class="md-block" flex-gt-sm>
+                                <label>Ano Fiscal:</label>
+                                <md-select ng-model="filtro.ano" ng-change="changeAno()">
+                                    <md-option ng-repeat="state in anoFiscal"
+                                               value="{{ state.anoFiscal }}">
+                                        {{ state.anoFiscalComNormal }}
+                                    </md-option>
+                                </md-select>
+                                <div class="md-errors-spacer"></div>
+                            </md-input-container>
+                        </div>
+                        <div ng-show="usuarioLogado.perfil !== 'Administrador'" class="col-md-2">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Trimestre:</label>
+                                <md-select ng-model="filtro.periodo">
+                                    <md-option ng-repeat="state in periodos" value="{{state.grupo}}">
+                                        {{state.descricao}}
+                                    </md-option>
+                                </md-select>
+                                <div class="md-errors-spacer"></div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-2" >
+                            <!-- <button class="btn btn-danger btn-sm"
+                                    ng-click="novaMidia()">
+                                Upload
+                            </button> -->
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Dealer:</label>
+                                <md-select ng-model="filtro.dealerID" ng-change="filter()" >
+                                    <md-option ng-repeat="dealer in dealers" value="{{ dealer.dealerID }}">
+                                        {{ dealer.nomeFantasia }}
+                                    </md-option>
+                                </md-select>
+                                <div class="md-errors-spacer"></div>
+                            </md-input-container>
+                            
+                        </div>
+                        <div ng-show="usuarioLogado.perfil !== 'Administrador'" class="col-md-2">
+                            <br />
+                            <button class="btn btn-danger btn-sm"
+                                        ngf-select="uploadFiles($files, $invalidFiles)"
+                                        ngf-max-size="15MB"
+                                        single
+                                        accept="*">
+                                    upload
+                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-12 mt20">
+                        <h2>Planos</h2>
+                    </div>
+
+                    <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                        <div ng-controller="planosTableCntrl">
+                            <button ng-click="toggleFiltering()"
+                                    ng-show="gridOptions1.data.length"
+                                    class="btn btn-sm ui-grid-filter-button"
+                                    style="right:11px">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                            <div id="grid1"
+                                 ui-grid="gridOptions1"
+                                 ui-grid-pagination
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid-selection
+                                 class="grid">
+                                <div class="pd-t-b-10 no-rows"
+                                     ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <hr />
+                <br />
+            <!-- Botões -->
+            <div class="col-md-11"></div>
+            <div class="col-md-1">
+                <button ng-click="reportExport()" class="export-btn">
+                    <i class="fas fa-file-download"></i>
+                    Exportar
+                </button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>

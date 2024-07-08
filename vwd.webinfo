@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<!-- 
+  Visual Studio global web project settings.
+-->
+<VisualWebDeveloper>
+
+  <Globals>
+    <UserProperties testJson_4verba_4meses_1json__JSONSchema="http://json.schemastore.org/bungee-plugin"/>
+  </Globals>
+</VisualWebDeveloper>

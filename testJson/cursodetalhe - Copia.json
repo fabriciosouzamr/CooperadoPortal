@@ -1,0 +1,68 @@
+{
+  "curso": "Formação de Garçom",
+  "imagem": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+  "modulos": [
+    {
+      "titulo": "titulo do modulo 1",
+      "imagem": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+      "id": 1,
+      "resumo": "Desenvolver o aluno para servir clientes em restaurantes, bares e similares.",
+      "subtitulo": "Público-alvo",
+      "imagemTwo": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+      "descricao": "Para profissionais que desejam atuar na área de Turismo, Hospitalidade e Alimentação e que trabalhem com serviços de alimentos e bebidas.",
+      "arquivos": [
+        {
+          "nome": "Video Aula",
+          "tipoArquivo": "1",
+          "tipoArquivoSigla": "Video Youtube",
+          "url": "https://www.youtube.com/embed/B65ghzKoFUE",
+          "urlThumb": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+          "arquivoId": 1
+        },
+        {
+          "nome": "Apostila 1",
+          "tipoArquivo": "2",
+          "tipoArquivoSigla": "Arquivo",
+          "url": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+          "urlThumb": "",
+          "arquivoId": 2
+        },
+        {
+          "nome": "Apostila 2",
+          "tipoArquivo": "2",
+          "tipoArquivoSigla": "Arquivo",
+          "url": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+          "urlThumb": "",
+          "arquivoId": 3
+        }
+      ]
+    }, {
+      "titulo": "titulo do modulo 2",
+      "imagem": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+      "id": 2,
+      "resumo": "texto resumo 4 paragrafos",
+      "subtitulo": "Subtitulo do modulo 2",
+      "imagemTwo": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+      "descricao": "descrição do curso texto descritivo",
+      "arquivos": [
+        {
+          "nome": "titulo do arquivo",
+          "tipoArquivo": "1",
+          "url": "https://www.youtube.com/embed/B65ghzKoFUE",
+          "urlThumb": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+          "arquivoId": 1
+        }
+      ]
+    }, {
+      "titulo": "titulo do modulo 3",
+      "imagem": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+      "id": 3,
+      "resumo": "texto resumo 4 paragrafos",
+      "subtitulo": "Subtitulo do modulo 2",
+      "imagemTwo": "http://img.youtube.com/vi/B65ghzKoFUE/maxresdefault.jpg",
+      "descricao": "descrição do curso texto descritivo",
+      "arquivos": []
+    }
+  ]
+  
+}

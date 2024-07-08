@@ -1,0 +1,270 @@
+﻿<style>
+    .alert-msg{
+        color: #002C5F !important;
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+    }
+    .btn[disabled]{
+        background: grey;
+        color: #333;
+        border: none;
+        cursor: not-allowed !important;
+    }
+    .btn-upload {
+        background: transparent;
+        color: #002C5F !important;
+        border: 1px solid #002C5F;
+        transition: .5s all;
+    }
+
+    /* .btn-upload>i {
+        padding: 0 .5rem;
+    } */
+
+    .btn-upload:hover {
+        /* transition: .5s all; */
+        background: #002C5F;
+        color: white !important;
+        /* transform: scale(1.03); */
+    }
+
+    span.erro {
+        width: 15px;
+        height: 15px;
+        background: rgb(245, 0, 0);
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    span.sucesso {
+        width: 15px;
+        height: 15px;
+        background: rgb(3, 241, 42);
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    span.duplicado {
+        width: 15px;
+        height: 15px;
+        background: rgb(255, 141, 0);
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    span.duplicado {
+        width: 15px;
+        height: 15px;
+        background: rgb(255, 141, 0);
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    b.duplicado{
+        color: rgb(255, 141, 0) !important;
+        padding: 0 .5rem !important;
+        font-size: 12px;
+        font-weight: 100;
+    }
+
+    b.sucesso{
+        color: rgb(3, 241, 42) !important;
+        padding: 0 .5rem !important;
+        font-size: 12px;
+        font-weight: 100;
+    }
+
+    b.erro {
+        color: #002C5F !important !important;
+        padding: 0 .5rem !important;
+        font-size: 12px;
+        font-weight: 100;
+    }
+
+    .table-reponsive-bootstrap table>thead>tr.caption,
+    table>thead>tr.caption {
+        background: #002C5F !important;
+        color: #ffffff;
+    }
+
+    .table-reponsive-bootstrap table>thead>tr.caption-danger {
+        color: #333;
+        background: #efefef;
+    }
+
+    .table-reponsive-bootstrap table>thead>tr,
+    .table-reponsive-bootstrap table>tbody>tr.subCaption,
+    table>thead>tr,
+    table>tbody>tr.subCaption {
+        color: #333;
+        background: white;
+    }
+
+    .btn-default {
+        transition: all 0.2s ease-out;
+        text-transform: uppercase !important;
+        font-family: "toyota_displaybold";
+        text-shadow: none;
+        color: #002C5F !important !important;
+        font-size: 14px;
+        border: none;
+        background: transparent !important;
+        outline: 0;
+        transition: .3s all;
+    }
+
+    .btn-sm {
+        color: #002C5F !important;
+        background-color: transparent;
+        font-family: "toyota_displayregular";
+        text-transform: uppercase !important;
+        font-size: 20px;
+        padding: 0 0 0 1.4rem;
+        transition: .3s all;
+    }
+
+    .btn-sm:hover {
+        color: #002C5F !important;
+        background: transparent;
+        transform: scale(1.1);
+        transition: .3s all;
+        border: none !important;
+        outline: none;
+    }
+
+    .btn-default:hover {
+        transition: .3s all;
+        transform: scale(1.1);
+    }
+
+    .table-reponsive-bootstrap table>thead>tr.subCaption,
+    table>thead>tr.subCaption {
+        background: #efefef;
+        color: #333;
+    }
+
+    .table-reponsive-bootstrap table>tbody>tr>td.btnAction {
+        text-align: right;
+        position: absolute;
+        padding: 0;
+    }
+
+    md-checkbox {
+        margin: 0 !important;
+    }
+</style>
+<div ng-controller="verbaController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Verba</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs">
+                        <li>Importação</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--importacao-->
+            <div class="row mb40 mt20">
+                <div class="col-sm-12">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Ano Fiscal:</label>
+                                    <md-select ng-model="filtro.ano" ng-change="limpaCampos('ano');dropPeriodos();">
+                                        <md-option ng-repeat="state in anoFiscal" value="{{state.anoFiscal}}">
+                                            {{state.anoFiscalComNormal}}
+                                        </md-option>
+                                    </md-select>
+                                    <div class="md-errors-spacer"></div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Trimestre:</label>
+                                    <md-select ng-model="filtro.periodo" ng-change="limpaCampos('periodo')">
+                                        <md-option ng-repeat="state in periodos" value="{{state.grupo}}">
+                                            {{state.descricao}}
+                                        </md-option>
+                                    </md-select>
+                                    <div class="md-errors-spacer"></div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4 pd-l-r-0 text-center pd-t-b-10">
+                                <button ngf-select="uploadFiles($files, $invalidFiles)" single accept="/*"
+                                        ngf-max-size="10MB" class="btn btn-upload m-r-18">
+                                    <i class="fa fa-paperclip"></i>
+                                    Importar Arquivo
+                                </button>
+
+                                <button class="btn btn-danger" ng-click="exportarModeloClick()">
+                                    <i style="margin: 0 .5rem" class="fas fa-file-download"></i>
+                                    Baixar Modelo
+                                </button>
+
+                                <div class="col-sm-12">
+                                    <ul class="p0" style="text-align:center; list-style:none">
+                                        <li ng-repeat="f in files" style="font:smaller; width:200px">
+                                            {{f.name}} {{f.$errorParam}}
+                                            <span class="progress" ng-show="f.progress >= 0">
+                                                <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                                            </span>
+                                        </li>
+                                        <li ng-repeat="f in errFiles" style="font:smaller; color:#f00">
+                                            <strong>Erro:</strong> {{f.name}}
+                                            <br />Tamanho máximo do arquivo: {{f.$errorParam}}
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    A planilha deve estar nos formatos <strong>.xlsx</strong> ou
+                                    <strong>csv</strong>;<br>
+                                    O Arquivo não deve conter células mescladas;<br>
+                                    A primeira linha deve conter o cabeçalho das colunas;<br>
+                                    Deve haver somente uma aba no arquivo;<br>
+                                    As colunas devem estar formadas/convertidas para <strong>TEXTO</strong>,
+                                    mesmo as colunas de data e valores;<br>
+                                    Após importação veja o resultado de cada registro clicando nos
+                                    números processados.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mt20 table-responsive">
+                    <div ng-controller="importacaoTableCntrl">
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length"
+                                class="btn btn-sm ui-grid-filter-button" style="right:11px">
+                            <i class="fa fa-filter"></i>
+                        </button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize
+                             ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

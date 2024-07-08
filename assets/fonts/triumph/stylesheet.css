@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-Regular.eot');
+    src: url('DIN-Regular.eot?#iefix') format('embedded-opentype'),
+        url('DIN-Regular.woff2') format('woff2'),
+        url('DIN-Regular.woff') format('woff'),
+        url('DIN-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+@font-face{
+    font-family:DIN2014-Regular;
+    src:url(DIN2014-Regular.eot);
+    src:url(DIN2014-Regular.eot) format("embedded-opentype"),
+        url(DIN2014-Regular.woff) format("woff"),
+        url(DIN2014-Regular.woff2) format("woff2")
+}
+
+@font-face{
+    font-family:DIN2014-Bold;
+    src:url(DIN2014-Bold.ttf);
+    src:url(DIN2014-Bold.woff) format("embedded-opentype"),
+        url(DIN2014-Bold.woff) format("woff"),
+        url(DIN2014-Bold.woff2) format("woff2")
+}
+ @font-face {
+    font-family: 'DIN2014-Regular';
+    src:	url('../triumph/DIN2014-Regular.eot');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+
+
+  @font-face{
+    font-family:DIN-Regular;
+    src:url(DIN-Regular.eot);
+    src:url(DIN-Regular.eot) format("embedded-opentype"),
+        url(DIN-Regular.ttf) format("ttf"),
+        url(DIN-Regular.woff) format("woff")
+}
+
+
+
+
+
+  @font-face {
+    font-family: 'DIN2014-Regular';
+    src:	url('../triumph/DIN2014-Regular.eot');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+
+
+@font-face {
+    font-family: 'DIN';
+    src: url('DIN-MediumItalic.eot');
+    src: url('DIN-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('DIN-MediumItalic.woff2') format('woff2'),
+        url('DIN-MediumItalic.woff') format('woff'),
+        url('DIN-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DIN2014';
+    src: url('DIN2014-Regular.eot');
+    src: url('DIN2014-Regular.eot?#iefix') format('embedded-opentype'),
+        url('DIN2014-Regular.woff2') format('woff2'),
+        url('DIN2014-Regular.woff') format('woff'),
+        url('DIN2014-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DIN2014-Demi';
+    src: url('DIN2014-Demi.eot');
+    src: url('DIN2014-Demi.eot?#iefix') format('embedded-opentype'),
+        url('DIN2014-Demi.woff2') format('woff2'),
+        url('DIN2014-Demi.woff') format('woff'),
+        url('DIN2014-Demi.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DIN2014';
+    src: url('DIN2014-Bold.eot');
+    src: url('DIN2014-Bold.eot?#iefix') format('embedded-opentype'),
+        url('DIN2014-Bold.woff2') format('woff2'),
+        url('DIN2014-Bold.woff') format('woff'),
+        url('DIN2014-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+

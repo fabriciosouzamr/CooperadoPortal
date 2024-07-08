@@ -1,0 +1,202 @@
+﻿<style>
+  .btn-export {
+    background: white;
+    color: #002C5F !important;
+    border: 1px solid #002C5F;
+    transition: 0.3s all;
+  }
+
+  .btn-export:hover {
+    color: white !important;
+    background: #002C5F;
+    transition: 0.3s all;
+  }
+  .mt-1r {
+    margin-top: 1rem !important;
+  }
+  .user-ativo {
+    color: rgb(29, 192, 29);
+    font-weight: bold;
+  }
+  .user-inativo {
+    color: rgb(245, 1, 1);
+    font-weight: bold;
+  }
+  .dealer-active {
+    color: rgb(29, 192, 29);
+    font-weight: bold;
+  }
+  .dealer-inactive {
+    color: rgb(245,1,1);
+    font-weight: bold;
+  }
+</style>
+<div ng-controller="cadastrosController" ng-show="usuarioLogado.emailConfirmado">
+  <div class="panel">
+    <div class="panel-body">
+      <div class="container-fluid pd-bottom-20">
+        <h1>Cadastros</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="nav nav-tabs">
+            <li
+              ng-repeat="aba in abas"
+              ng-class="{'active': abaActive == aba.value}">
+              <a
+                href="javascript:;"
+                ng-if="aba.show"
+                ng-click="changeAba(aba.value);"
+                 class="col-sm-6" style="width: 47.5%;">{{ aba.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!--abas user-->
+
+      <div class="row mb20 mt20" ng-show="abaActive=='user'">
+        <div class="col-sm-12 mt5 table-responsive">
+          <div class="well mt20">
+            <div class="row">
+              <div class="col-sm-8 col-md-8 col-lg-8">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Nome ou Login do usuário</label>
+                  <input ng-model="nomeBusca" type="text" class="input-lg" />
+                </md-input-container>
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-2 mt-1r">
+                <button class="btn btn-primary col-lg-12" ng-click="search()">
+                    <i class="fas fa-search" style="padding: 0 .5rem"></i>
+                  Buscar
+                </button>
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-2 mt-1r">
+                <button
+                  class="btn btn-primary col-lg-12"
+                  ng-click="searchClear()"
+                >
+                <i class="fas fa-broom"></i>
+                  Limpar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 mb20 text-center">
+              <button class="btn btn-danger" ng-click="novoUsuario()">
+                  <i class="fas fa-user-plus" style="padding: 0 .5rem"></i>Cadastrar novo usuário
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div
+              id="grid1"
+              ui-grid="gridOptions1"
+              ui-grid-pagination
+              ui-grid-auto-resize
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-selection
+              class="grid"
+            >
+              <div
+                class="pd-t-b-10 no-rows"
+                ng-show="!gridOptions1.data.length"
+              >
+                <div class="msg">
+                  <span>Nenhum usuário encontrado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 mt20 text-center">
+            <button class="btn btn-export" ng-click="exportarClickHandler()">
+              <i class="fas fa-file-alt"></i> Exportar
+            </button>
+            <button class="btn btn-export" ng-click="exportarLog()">
+              <i class="fas fa-file-alt"></i> Log de Acesso
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!--abas dealer-->
+
+      <div class="row mb20 mt20" ng-show="abaActive=='dealer'">
+        <div class="col-sm-12 mt5 table-responsive">
+          <div class="well mt20">
+            <div class="row">
+              <div class="col-sm-12 col-md-4 col-lg-2">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Cod. Dealer</label>
+                  <input ng-model="codigoDealer" type="text" class="input-lg" />
+                </md-input-container>
+              </div>
+              <div class="col-sm-12 col-md-4 col-lg-3">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Nome Fantasia ou Razão social</label>
+                  <input ng-model="nomeFantasia" type="text" class="input-lg" />
+                </md-input-container>
+              </div>             
+              <div class="col-sm-12 col-md-4 col-lg-2">
+                <button
+                  class="btn btn-primary col-lg-12"
+                  ng-click="searchDealer()"
+                >
+                <i class="fas fa-search" style="padding: 0 .5rem"></i>
+                  Buscar
+                </button>
+              </div>
+              <div class="col-sm-12 col-md-4 col-lg-2" ng-if="userPerfil.perfil != 'Consultor'">
+                <button
+                  class="btn btn-danger col-lg-12"
+                  ng-click="newDealer()"
+                >
+                <i class="fas fa-plus-circle" style="padding: 0 .5rem"></i> Novo Dealer
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              id="grid2"
+              ui-grid="gridOptions2"
+              ui-grid-pagination
+              ui-grid-auto-resize
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-selection
+              class="grid"
+            >
+              <div
+                class="pd-t-b-10 no-rows"
+                ng-show="!gridOptions2.data.length"
+              >
+                <div class="msg">
+                  <span>Sem registros</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 mt20 text-center" ng-if="userPerfil.perfil != 'Consultor'">
+            <button
+              class="btn btn-primary"
+              ng-click="exportarClickDealerHandler($event)"
+            >
+              Exportar
+            </button>
+            <button class="btn btn-primary" ng-click="logClickHandler($event)">
+              Log de Acesso
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

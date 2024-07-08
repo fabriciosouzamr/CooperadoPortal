@@ -1,0 +1,37 @@
+[
+    {
+      "id": 1,
+      "nome": "José Manuel",
+      "email": "jose@mail.com",
+      "telefone": "(11) 11111.1111",
+      "celular": "(13) 11113.1111",
+      "receber": "Sim"
+    },
+    {
+      "id": 2,
+      "nome": "Carlos Manuel",
+      "email": "carlos@mail.com",
+      "telefone": "(11) 11111.1111",
+      "celular": "(13) 11113.1111",
+      "receber": "Sim"
+      },
+      {
+        "id": 3,
+        "nome": "João Manuel",
+        "email": "joao@mail.com",
+        "telefone": "(11) 11111.1111",
+        "celular": "(13) 11113.1111",
+        "receber": "Sim"
+      },
+      {
+        "id": 4,
+        "nome": "Martins Manuel",
+        "email": "martins@mail.com",
+        "telefone": "(11) 11111.1111",
+        "celular": "(13) 11113.1111",
+        "receber": "Sim"
+  
+      }
+
+    ]
+  

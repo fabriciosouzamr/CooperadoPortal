@@ -1,0 +1,199 @@
+{
+  "resumoNacional": {
+    "id":	1,
+    "descricao": "Total Nacional",
+    "totalDistribuido":	"9999999",
+    "totalExtra":	"9999999",
+    "totalLiberado":	"999999",
+    "totalSolicitado":	"999999",
+    "totalReembolso":	"999999"
+  },
+  "regional": [
+    {
+      "resumoRegional": {
+        "id": 1,
+        "descricao": "São paulo",
+        "totalDistribuido":	"9999999",
+        "totalExtra":	"9999999",
+        "totalLiberado":	"999999",
+        "totalSolicitado":	"999999",
+        "totalReembolso":	"999999"
+      },
+      "regioes": [
+        {
+          "resumoRegiao": {
+            "id":	1,
+            "descricao": "Região 1",
+            "totalDistribuido":	"9999999",
+            "totalExtra":	"9999999",
+            "totalLiberado":	"999999",
+            "totalSolicitado":	"999999",
+            "totalReembolso":	"999999"
+          },
+          "dealers": [
+            {
+              "id":	1,
+              "descricao": "Dealer 1",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	2,
+              "descricao": "Dealer 2",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	2,
+              "descricao": "Dealer 3",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            }
+          ]
+        },
+        {
+          "resumoRegiao": {
+            "id":	2,
+            "descricao": "Região 2",
+            "totalDistribuido":	"9999999",
+            "totalExtra":	"9999999",
+            "totalLiberado":	"999999",
+            "totalSolicitado":	"999999",
+            "totalReembolso":	"999999"
+          },
+          "dealers": [
+            {
+              "id":	4,
+              "descricao": "Dealer 4",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	5,
+              "descricao": "Dealer 5",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	6,
+              "descricao": "Dealer 6",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resumoRegional": {
+        "id": 2,
+        "descricao": "Sul",
+        "totalDistribuido":	"9999999",
+        "totalExtra":	"9999999",
+        "totalLiberado":	"999999",
+        "totalSolicitado":	"999999",
+        "totalReembolso":	"999999"
+      },
+      "regioes": [
+        {
+          "resumoRegiao": {
+            "id":	3,
+            "descricao": "Região 3",
+            "totalDistribuido":	"9999999",
+            "totalExtra":	"9999999",
+            "totalLiberado":	"999999",
+            "totalSolicitado":	"999999",
+            "totalReembolso":	"999999"
+          },
+          "dealers": [
+            {
+              "id":	7,
+              "descricao": "Dealer 7",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	8,
+              "descricao": "Dealer 8",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	9,
+              "descricao": "Dealer 9",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            }
+          ]
+        },
+        {
+          "resumoRegiao": {
+            "id":	4,
+            "descricao": "Região 4",
+            "totalDistribuido":	"9999999",
+            "totalExtra":	"9999999",
+            "totalLiberado":	"999999",
+            "totalSolicitado":	"999999",
+            "totalReembolso":	"999999"
+          },
+          "dealers": [
+            {
+              "id":	10,
+              "descricao": "Dealer 10",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	11,
+              "descricao": "Dealer 11",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            },
+            {
+              "id":	12,
+              "descricao": "Dealer 12",
+              "totalDistribuido":	"9999999",
+              "totalExtra":	"9999999",
+              "totalLiberado":	"999999",
+              "totalSolicitado":	"999999",
+              "totalReembolso":	"999999"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+[
+  {
+
+    "data": "2011-10-05T14:48:00.000Z",
+    "nomeArquivo": "titulo curso 1",
+    "nome": "nome",
+    "qtdeArquivo": 5,
+    "qtdeImportado": 4,
+    "importacaoLogId": 1
+  },
+  {
+    "nomeCampanha": "titulo curso 1",
+    "dataDe": "2011-10-05T14:48:00.000Z",
+    "dataAte": "2011-10-05T14:48:00.000Z",
+    "id": 2
+  }
+]

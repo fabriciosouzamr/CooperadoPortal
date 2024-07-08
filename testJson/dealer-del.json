@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "nome": "José Manuel",
+      "email": "jose@mail.com",
+      "inclusao": "20/02/2019",
+      "exclusao": " "
+    },
+    {
+      "id": 2,
+      "nome": "Carlos Manuel",
+      "email": "carlos@mail.com",
+      "inclusao": "20/02/2019",
+      "exclusao": "23/02/2019"
+      }
+    ]
+  

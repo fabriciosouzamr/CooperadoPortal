@@ -1,0 +1,490 @@
+﻿<style type="text/css">
+    .col-sm-12.mt20.table-responsive.table-reembolso-2 {
+        height: 200px;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        font-family: 'DIN2014-Bold';
+    }
+
+    .reembolso-line {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        margin: 1rem 0;
+    }
+
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        color: #000;
+        text-transform: uppercase;
+        font-size: 15px;
+    }
+
+    .reembolso-line:nth-child(odd) {
+        background: #efefef;
+    }
+
+    .reembolso-line span {
+        width: 67%;
+        font-family: 'DIN2014-Regular';
+        color: #969696;
+    }
+
+    .reembolso-line b {
+        width: 20%;
+    }
+
+    .reembolso-line i {
+        display: flex;
+        justify-content: center;
+        width: 10%;
+        transition: .3s all;
+    }
+
+        .reembolso-line i:hover {
+            transform: scale(1.1);
+            transition: .3s all;
+            color: #002C5F !important;
+        }
+
+    .total-item {
+        background: red !important;
+    }
+
+    .aditional-infos {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .fas {
+        font-size: 17px !important;
+        color: #000;
+    }
+</style>
+
+<div ng-controller="reembolsoController">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 text-center tituloAjustepag">
+                    <h1>Solicitar Reembolso</h1>
+                </div>
+            </div>
+
+            <div class="row mt40">
+                <div class="col-sm-12 text-center">
+                    <ul class="nav nav-tabs text-center">
+                        <li ng-class="{'active': abaActive == apps.applicationId}" ng-repeat="apps in applications" value="{{apps.applicationId}}">
+                            <a href="javascript:;" ng-click="changeAba(apps.applicationId);">{{apps.applicationName}}&nbsp;Mídia&nbsp;{{apps.applicationPerc}}%</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div ng-show="abaActive">
+                    <div class="row mb20 mt20">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-sm-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano Fiscal:</label>
+                                        <md-select ng-model="filtro.ano" ng-change="changeAno()">
+                                            <md-option ng-repeat="state in anoFiscal"
+                                                       value="{{ state.anoFiscal }}">
+                                                {{ state.anoFiscalComNormal }}
+                                            </md-option>
+                                        </md-select>
+                                        <div class="md-errors-spacer"></div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Trimestre:</label>
+                                        <md-select ng-model="filtro.periodo" ng-change="changePeriodo()">
+                                            <md-option ng-repeat="state in periodos" value="{{state.grupo}}">
+                                                {{state.descricao}}
+                                            </md-option>
+                                        </md-select>
+                                        <div class="md-errors-spacer"></div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Mês:</label>
+                                        <md-select ng-model="filtro.mes" ng-change="filtrar()">
+                                            <md-option value="null">Todos</md-option>
+                                            <md-option ng-repeat="state in meses"
+                                                       value="{{ state.mesId }}">{{ state.descricao }}</md-option>
+                                        </md-select>
+                                        <div class="md-errors-spacer"></div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row mb20 mt20">
+                            <div class="titles">
+                                <div class="col-sm-6">
+                                    <h3 class="text-center titleReembolso">DETALHE</h3>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <h3 class="text-center titleReembolso">RESUMO</h3>
+                                </div>
+                            </div>
+
+                            <!-- Detalhe -->
+                            <div class="mt20 col-sm-6 borderReembolso">
+
+                                <div class="reembolso-linecolor">
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor adicional."></i>
+                                    <span>Previsão de Verba:</span>
+                                    <b style="color: rgb(37, 180, 37)">{{ verbaGeral.verbaExtra | currency }}</b>
+                                </div>
+                                <div class="reembolso-line">
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor pago pela montadora."></i>
+                                    <span>Valor Liberado Teto:</span>
+                                    <b style="color: rgb(37, 180, 37)">{{ verbaGeral.verbaOriginal | currency }}</b>
+                                </div>
+                            </div>
+
+                            <!-- Resumo  -->
+                            <div class="mt20 col-sm-6 borderReembolsoResumo">
+                                <div class="reembolso-line">
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Total comprovado pelo Dealer."></i>
+                                    <span>Total Comprovado:</span>
+                                    <b style="color: orange">{{ verbaGeral.valorSolicitadoBruto | currency }}</b>
+                                </div>
+
+                                <div class="reembolso-linecolor">
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Total aprovado pela auditoria."></i>
+                                    <span>Total Aprovado:</span>
+                                    <b style="color: rgb(37, 180, 37)">{{ verbaGeral.valorAprovadoLiquido | currency }}</b>
+                                </div>
+
+                                <div class="reembolso-line">
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Total reprovado pela auditoria."></i>
+                                    <span>Total Reprovado:</span>
+                                    <b style="color:red">{{ verbaGeral.valorReprovadoLiquido | currency }}</b>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="aditional-infos mt40">
+                                    <p class="valorReembolso">
+                                        <strong>Valor Solicitado pelo Dealer:</strong>
+                                        {{ verbaGeral.valorSolicitadoBruto| currency }}
+                                    </p>
+                                    <p class="valorReembolso">
+                                        <strong>Valor do Reembolso:</strong>
+                                        {{ verbaGeral.valorSolicitadoLiquido | currency }}
+                                    </p>
+                                    <p class="valorReembolso">
+                                        <strong> Previsão de Pagamento:</strong>
+                                        {{ verbaGeral.dataPrevistaPagamento | date: "dd/MM/yyyy" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-12 mt20">
+                        <h2>Notas Cadastradas</h2>
+                    </div>
+                
+                    <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                        <div ng-controller="notasCadastradasTableCntrl">
+                            <!-- <button ng-click="novaNota()"
+                                    class="btn btn-danger"
+                                    style="right:11px; margin-top: 20px; margin-bottom: 20px;">
+                                CADASTRAR NOTA
+                            </button>
+                            <br />
+                            <br /> -->
+                            <button ng-click="toggleFiltering()"
+                                    ng-show="gridOptions1.data.length"
+                                    class="btn btn-sm ui-grid-filter-button"
+                                    style="right:11px">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                            <div id="grid1"
+                                ui-grid="gridOptions1"
+                                ui-grid-pagination
+                                ui-grid-auto-resize
+                                ui-grid-resize-columns
+                                ui-grid-move-columns
+                                ui-grid-selection
+                                class="grid">
+                                <div class="pd-t-b-10 no-rows"
+                                    ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div> 
+                            
+                            <div class="col-sm-12 mt20" style="margin-top: 20px; margin-bottom: 20px;">
+                                <button ng-click="zerarNota()"
+                                        class="btn btn-danger"
+                                        style="right:11px">
+                                    Voltar
+                                </button>
+                            </div>
+                            
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 text-center" style="margin-top: 20px; margin-bottom: 20px;" ng-show="canCreateActions">
+                                <!-- <button class="btn btn-novaAcao btn-lg"
+                                        ng-if="nota.status==0 || nota.status==1 || nota.status==2 || nota.status==6"
+                                        ng-click="novaAcaoBudgetDealerId({{budgetDealerID}})">
+                                    Nova Ação
+                                </button> -->
+                                <button class="btn btn-novaAcao btn-lg"
+                                        ng-click="novaAcaoBudgetDealerId()">
+                                    Nova Ação
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div ng-show="budgetDealerID > 0">
+                        <div class="col-sm-12 mt20">
+                            <h2>Ações Realizadas</h2>
+                        </div>
+                    
+                        <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                            
+                        <div ng-controller="acoesRealizadasTableCntrl">
+
+                            <button ng-click="toggleFiltering()"
+                                    ng-show="gridOptions1.data.length"
+                                    class="btn btn-sm ui-grid-filter-button"
+                                    style="right:11px">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                            <div id="grid1"
+                                 ui-grid="gridOptions1"
+                                 ui-grid-pagination
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid-selection
+                                 class="grid">
+                                <div class="pd-t-b-10 no-rows"
+                                     ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-sm-12 mt40 text-center">
+                        <button ng-show="canCreateActions"
+                                class="btn btn-default mr20"
+                                ng-if="status==1 || status==2 || status==21"
+                                onclick="abreModal('#modalGerarNota', 'mfp-sign')">
+                            Enviar para Auditoria
+                        </button>
+
+                        <button ng-show="canCreateActions"
+                                class="btn btn-default mr20"
+                                ng-if="status==6"
+                                onclick="abreModal('#modalReenviarNota', 'mfp-sign')">
+                            Reenviar para Auditoria
+                        </button>
+                        <!--<button class="btn btn-primary mr20"
+                                ng-if="verba.status!=1 && verba.status!=2 && verba.status!=undefined"
+                                ng-click="reImpressao()">
+                            Re Impressão
+                        </button>-->
+                        </div>
+
+                        <div class="col-sm-12">
+                        <div class="col-sm-12 mt20">
+                            <h2>Ações Excluídas</h2>
+                        </div>
+
+                        <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                            <div ng-controller="acoesExcluidasTableCntrl">
+                                <button ng-click="toggleFiltering()"
+                                        ng-show="gridOptions1.data.length"
+                                        class="btn btn-sm ui-grid-filter-button"
+                                        style="right:11px">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                                <div id="grid1"
+                                     ui-grid="gridOptions1"
+                                     ui-grid-pagination
+                                     ui-grid-auto-resize
+                                     ui-grid-resize-columns
+                                     ui-grid-move-columns
+                                     ui-grid-selection
+                                     class="grid">
+                                    <div class="pd-t-b-10 no-rows"
+                                         ng-show="!gridOptions1.data.length">
+                                        <div class="msg">
+                                            <span>Sem registros</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                        <div class="col-sm-12 mt20">
+                            <h2>Etapas</h2>
+                        </div>
+
+                        <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                            <div ng-controller="etapasTableCntrl" class="table-responsive">
+                                <button ng-click="toggleFiltering()"
+                                        ng-show="gridOptions1.data.length"
+                                        class="btn btn-sm ui-grid-filter-button"
+                                        style="right:11px">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                                <div id="grid1"
+                                     ui-grid="gridOptions1"
+                                     ui-grid-pagination
+                                     ui-grid-auto-resize
+                                     ui-grid-resize-columns
+                                     ui-grid-move-columns
+                                     ui-grid-selection
+                                     class="grid">
+                                    <div class="pd-t-b-10 no-rows"
+                                         ng-show="!gridOptions1.data.length">
+                                        <div class="msg">
+                                            <span>Sem registros</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                        <div class="col-sm-12 mt20">
+                            <h2>Atenção</h2>
+                        </div>
+
+                        <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                            <div ng-controller="atencaoTableCntrl" class="table-responsive">
+                                <button ng-click="toggleFiltering()"
+                                        ng-show="gridOptions1.data.length"
+                                        class="btn btn-sm ui-grid-filter-button"
+                                        style="right:11px">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                                <div id="grid1"
+                                     ui-grid="gridOptions1"
+                                     ui-grid-pagination
+                                     ui-grid-auto-resize
+                                     ui-grid-resize-columns
+                                     ui-grid-move-columns
+                                     ui-grid-selection
+                                     class="grid">
+                                    <div class="pd-t-b-10 no-rows"
+                                         ng-show="!gridOptions1.data.length">
+                                        <div class="msg">
+                                            <span>Sem registros</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--altera midia-->
+<div id="modalExcluirAcao" class="popup-basic mfp-with-anim mfp-hide">
+    <div class="panel" ng-controller="acoesRealizadasTableCntrl">
+        <div class="panel-heading">
+            <span class="panel-title">
+                Deseja realmente excluir esta ação? - {{ dealerNFID }}
+            </span>
+        </div>
+        <div class="panel-body">
+            <div class="section row">
+                <div class="col-md-12">
+                    <button ng-click="removeAcao()">Sim</button>
+                    <button ng-click="closeModal()">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalGerarNota" class="popup-basic mfp-with-anim mfp-hide">
+    <div class="panel" ng-controller="gerarNotaController">
+        <div class="panel-heading">
+            <span class="panel-title">
+                <i class="fa fa-file"></i>Enviar Nota de Débito
+            </span>
+        </div>
+        <div class="panel-body">
+            <div class="section row">
+                <div class="col-md-12">
+                    <p>
+                        Tem certeza de que deseja gerar a nota?
+                    </p>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-danger" ng-click="gerarNotaDebito()">
+                        Sim
+                    </button>
+                    <button class="btn btn-primary" ng-click="closeModal()">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalReenviarNota" class="popup-basic mfp-with-anim mfp-hide">
+    <div class="panel" ng-controller="gerarNotaController">
+        <div class="panel-heading">
+            <span class="panel-title">
+                <i class="fa fa-file"></i>Reenviar Nota de Débito
+            </span>
+        </div>
+        <div class="panel-body">
+            <div class="section row">
+                <div class="col-md-12">
+                    <p>
+                        Tem certeza que deseja reenviar a nota de débito
+                    </p>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-danger" ng-click="reenviarNotaDebido()">
+                        Sim
+                    </button>
+                    <button class="btn btn-primary" ng-click="closeModal()">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

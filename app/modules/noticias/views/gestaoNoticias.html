@@ -1,0 +1,51 @@
+<div ng-controller="gestaoNoticiasController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <h1 class="title">Gestão de notícias</h1>
+            <md-input-container class="col-xs-12 col-sm-12 no-padding">
+                <button ng-show="addNews == false" class="add-btn" ng-click="showForm()">Adicionar uma nova notícia</button>
+                <i ng-show="addNews == true" ng-click="showForm()" class="far fa-times-circle"></i>
+            </md-input-container>
+            <!-- Form para adicionar notícia -->
+            <md-input-container class="col-xs-12 col-sm-12">
+                <div ng-show="addNews">
+                    <md-input-container class="col-xs-12 col-sm-12">
+                        <label>Título:</label>
+                        <input ng-model="newsTitle" type="text" aria-label="Título">
+                    </md-input-container>
+                    <md-input-container class="col-xs-12 col-sm-12">
+                        <label>Descrição:</label>
+                        <textarea ng-model="newsDescription" rows="5"></textarea>
+                    </md-input-container>
+                    <button ng-disabled="!newsTitle || !newsDescription " class="createNews" ng-click="createNews()">Criar Notícia</button>
+                </div>
+                <small ng-show="addNews == true" ng-if="!newsTitle || !newsDescription" class="alert-msg">*Preencha Título e descrição para prosseguir.</small>
+                <div class="col-sm-12 mt20 table-responsive">
+                    <div>
+                        <button ng-click="toggleFiltering()"
+                                ng-show="gridOptions1.data.length"
+                                class="btn btn-sm ui-grid-filter-button"
+                                style="right:11px">
+                            <i class="fa fa-filter"></i>
+                        </button>
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-auto-resize
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="pd-t-b-10 no-rows"
+                                 ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+    </div>
+</div>

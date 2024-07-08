@@ -1,0 +1,518 @@
+<style>
+  b {
+    color: #002C5F !important;
+  }
+
+  .btn-danger {
+    font-size: 12px;
+    padding: 0.5rem 2rem;
+  }
+
+  small.required {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #002C5F !important;
+  }
+
+  .search-btn {
+    border: solid 1px red;
+    background: transparent;
+    color: #002C5F !important;
+    padding: 0.5rem 2rem;
+    transition: 0.3s all;
+    outline: none;
+  }
+
+  .search-btn i {
+    padding: 0 0.5rem;
+    font-size: 12px !important;
+  }
+
+  .search-btn:hover {
+    color: white;
+    background: red;
+    transform: scale(1.03);
+    transition: 0.3s all;
+  }
+
+  .well {
+    position: relative;
+  }
+
+  .required-items {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #002C5F !important;
+  }
+
+  .btn-paymentclose {
+    background: transparent;
+    color: #002C5F !important;
+    border: #002C5F 1px solid;
+    transition: 0.3s all;
+  }
+
+  .btn-paymentclose:hover {
+    background: #002C5F;
+    color: white !important;
+    transform: scale(1.05);
+    transition: 0.3s all;
+  }
+
+  .reopen-btn {
+    background: transparent;
+    border: transparent;
+    color: #002C5F !important;
+    transition: 0.3s all;
+  }
+
+  .print-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    float: right;
+    margin: 1rem;
+  }
+
+  .reopen-btn:hover {
+    transition: 0.3s all;
+    transform: scale(1.1);
+  }
+
+  button[disabled],
+  html input[disabled] {
+    background: rgb(173, 173, 173) !important;
+    color: #333 !important;
+    border: 1px solid grey;
+    cursor: not-allowed !important;
+  }
+
+  .popup-basic {
+    max-width: 800px !important;
+  }
+
+  span.alert-msg {
+    color: orangered;
+    float: right;
+  }
+
+  .save_button {
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+    background: red;
+    border: none;
+  }
+
+  .abaActive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 0 !important;
+    outline: 0 !important;
+    opacity: 1 !important;
+  }
+
+  .abaActive > .box-badge-green > h2 {
+    opacity: 1 !important;
+  }
+
+  .border-bottom-lighter {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 0 !important;
+    margin-left: 1rem;
+  }
+
+  .h2-badge {
+    font-size: 15px;
+    font-weight: 300;
+    opacity: 0.5;
+  }
+
+  .pd-l0 {
+    padding-left: 0 !important;
+  }
+</style>
+<div ng-controller="financeiroController" ng-show="usuarioLogado.emailConfirmado">
+  <div class="panel">
+    <div class="panel-body" ng-hide="hideGrid">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Financeiro</h1>
+        </div>
+      </div>
+
+      <div class="row col-sm-12 pd-l0">
+        <div class="col-sm-12 border-bottom-lighter">
+          <div
+            class="col-md-2 col-badge"
+            ng-class="{'abaActive': abaActive == 'Pagamentos'}"
+            ng-click="changeAba('Pagamentos'); getAllPayments()"
+          >
+            <div class="box-badge-green">
+              <h2 class="text-center fff h2-badge">Pagamentos</h2>
+            </div>
+          </div>
+          <!-- Não exibiremos no momento a aba de estornos-->
+          <!-- <div 
+            class="col-md-2 col-badge"
+            ng-class="{'abaActive': abaActive == 'Estornos'}"
+            ng-click="changeAba('Estornos'); getAllEstornos()"
+          >
+            <div class="box-badge-green">
+              <h2 class="text-center fff h2-badge">Estornos</h2>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 pd-t-b-10">
+          <div class="container-fluid well">
+            <div class="col-md-2">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Ano Fiscal:</label>
+                <md-select ng-model="filtro.anoFiscal">
+                  <md-option
+                    ng-repeat="state in listaAno "
+                    value="{{ state.anoFiscal }}"
+                    >{{ state.anoFiscalComNormal }}
+                  </md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+              </md-input-container>
+            </div>
+            <div class="col-md-2">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Mês:</label>
+                <md-select ng-model="filtro.mes" ng-change="filter(filtro.mes)">
+                    <md-option value="0">Todos</md-option>
+                    <md-option ng-repeat="state in meses"
+                               value="{{ state.mesId }}">
+                        {{ state.descricao }}
+                    </md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+              </md-input-container>
+            </div>
+            <div class="col-md-2">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>AOV:</label>
+                <md-select ng-model="filtro.aov" ng-change="limpaCampos('aov')">
+                  <md-option value="0">Todos</md-option>
+                  <md-option
+                    ng-repeat="state in listaRegionais"
+                    value="{{ state.regionalId }}"
+                    >{{ state.nome }}
+                  </md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+              </md-input-container>
+            </div>
+            <div class="col-md-2">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Região:</label>
+                <md-select
+                  ng-model="filtro.regiao"
+                  ng-change="limpaCampos('regiao')"
+                >
+                  <md-option
+                    ng-repeat="state in listaRegioes"
+                    value="{{ state.regiaoId }}"
+                    >{{ state.nome }}</md-option
+                  >
+                </md-select>
+                <div class="md-errors-spacer"></div>
+              </md-input-container>
+            </div>
+            <div class="col-md-2">
+              <md-input-container class="md-block" flex-gt-sm>
+                <button
+                ng-show="abaActive == 'Pagamentos'"
+                  class="btn btn-danger col-lg-12"
+                  ng-click="getFilter()"
+                >
+                  Pesquisar 
+                </button>
+                <button
+                ng-show="abaActive == 'Estornos'"
+                  class="btn btn-danger col-lg-12"
+                  ng-click="getFilterEstorno()"
+                >
+                  Pesquisar 
+                </button>
+                <div class="md-errors-spacer"></div>
+              </md-input-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagamentos e Estornos Disponíveis -->
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>
+            {{
+              abaActive == "Pagamentos"
+                ? "Pagamentos Disponíveis"
+                : "Estornos
+            Disponíveis"
+            }}
+          </h2>
+          <div class="table-responsive">
+            <button
+              ng-click="toggleFiltering()"
+              ng-show="gridOptions1.data.length"
+              class="btn btn-sm ui-grid-filter-button"
+              style="right:11px"
+            >
+              <i class="fa fa-filter"></i>
+            </button>
+            <div
+              id="grid1"
+              ui-grid="gridOptions1"
+              ui-grid-pagination
+              ui-grid-auto-resize
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-selection
+              class="grid"
+            >
+              <div
+                class="pd-t-b-10 no-rows"
+                ng-show="!gridOptions1.data.length"
+              >
+                <div class="msg">
+                  <span>Sem registros</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="container-fluid well">
+            <!-- <div class="col-sm-3">
+              <md-input-container>
+                <label>Ringi <b>*</b></label>
+                <input
+                  ng-model="textBuscaRingi"
+                  ng-blur="showAutoDropList()"
+                  ng-focus="showAutoComplete=true"
+                />
+              </md-input-container>
+              <div class="seachInput" ng-show="showAutoComplete">
+                <ul>
+                  <li ng-repeat="item in ringi" ng-click="selecionaRingi(item)">
+                    {{ item.descricao }}
+                  </li>
+                </ul>
+              </div>
+            </div> -->
+            <div class="col-sm-3">
+              <label style="margin: 0; padding: 0"
+                >Data para pagamento <b>*</b></label
+              >
+              <md-datepicker-custom
+                ng-model="textBuscaDataPrevista"
+                md-custom-default-date="{{ ctrl.defaultDateInicio }}"
+                md-placeholder="Digite uma data"
+                md-custom-required="true"
+                md-custom-mask="39/19/9999"
+                md-custom-clean-mask="false"
+                md-custom-restrict="reject"
+              >
+              </md-datepicker-custom>
+              <div class="seachInput" ng-show="showAutoComplete">
+                <ul>
+                  <li
+                    ng-repeat="item in dataPrevista"
+                    ng-click="selecionaDataPrevista(item)"
+                  >
+                    {{ item.descricao }}
+                  </li>
+                </ul>
+              </div>
+            </div>           
+            <div class="col-sm-3">
+              <button
+                ng-if="abaActive == 'Pagamentos'"
+                type="button"
+                class="btn btn-paymentclose"
+                ng-disabled="!textBuscaDataPrevista "
+                ng-click="fecharPagamento()"
+              >
+                Fechar Pagamento
+              </button>
+              <button
+                ng-if="abaActive == 'Estornos'"
+                type="button"
+                class="btn btn-paymentclose"
+                ng-disabled="!textBuscaRingi || !textBuscaDataPrevista "
+                ng-click="fecharEstorno()"
+              >
+                Fechar pagamento
+              </button>
+            </div>
+            <small class="required-items">* Itens obrigatórios</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notas Fechadas e Reembolsos realizados -->
+      <div class="row" ng-show="abaActive != 'Pagamentos'">
+        <div class="col-sm-12">
+          <h2>
+            {{
+              abaActive == "Pagamentos"
+                ? "Notas Fechadas"
+                : "Estornos Realizados"
+            }}
+          </h2>
+          <div class="table-responsive">
+            <button
+              ng-click="toggleFiltering()"
+              ng-show="gridOptions2.data.length"
+              class="btn btn-sm ui-grid-filter-button"
+              style="right:11px"
+            >
+              <i class="fa fa-filter"></i>
+            </button>
+            <div
+              id="grid2"
+              ui-grid="gridOptions2"
+              ui-grid-pagination
+              ui-grid-auto-resize
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-selection
+              class="grid"
+            >
+              <div
+                class="pd-t-b-10 no-rows"
+                ng-show="!gridOptions2.data.length"
+              >
+                <div class="msg">
+                  <span>Sem registros</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<button class="print-btn" ng-click="print()">
+          Imprimir
+        </button>-->
+      </div>
+
+      <div id="modalAlertas" class="popup-basic mfp-with-anim mfp-hide">
+        <div class="panel">
+          <div class="panel-heading">
+            <span class="panel-title">Motivo da Reabertura: </span>
+          </div>
+          <div class="panel-body">
+            <div class="section row">
+              <div class="col-md-12">
+                <input
+                  style="height: 80px; margin: 0 0 1rem 0;"
+                  ng-model="reopenReason"
+                  class="col-md-12"
+                  type="text"
+                  name=""
+                  id=""
+                />
+                <span class="alert-msg" ng-if="!reopenReason"
+                  >Preencha o motivo para prosseguir.</span
+                >
+                <button
+                  ng-show="abaActive !== 'Estornos'"
+                  class="save_button"
+                  ng-disabled="!reopenReason"
+                  ng-click="saveReopen()"
+                >
+                  Salvar
+                </button>
+                <button
+                  ng-show="abaActive == 'Estornos'"
+                  class="save_button"
+                  ng-disabled="!reopenReason"
+                  ng-click="saveReopenEstorno()"
+                >
+                  Salvar
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <span class="panel-title">Histórico de reaberturas:</span>
+            </div>
+            <div class="section row">
+              <div class="table-responsive">
+                <button
+                  ng-click="toggleFiltering()"
+                  ng-show="gridOptions3.data.length"
+                  class="btn btn-sm ui-grid-filter-button"
+                  style="right:11px"
+                >
+                  <i class="fa fa-filter"></i>
+                </button>
+                <div
+                  id="grid1"
+                  ui-grid="gridOptions3"
+                  ui-grid-pagination
+                  ui-grid-auto-resize
+                  ui-grid-resize-columns
+                  ui-grid-move-columns
+                  ui-grid-selection
+                  class="grid"
+                >
+                  <div
+                    class="pd-t-b-10 no-rows"
+                    ng-show="!gridOptions3.data.length"
+                  >
+                    <div class="msg">
+                      <span>Sem registros</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        id="auditarView"
+        ui-view="auditar"
+        class="auditar-container hidden"
+      ></div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <button
+      type="button"
+      class="btn btn-paymentclose"
+      ng-click="reportExport()"
+    >
+      Exportar
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript">
+  window.appData = {};
+
+  function abreModal(modal, effect) {
+    $.magnificPopup.open({
+      removalDelay: 500, //delay removal by X to allow out-animation,
+      items: {
+        src: modal
+      },
+      // overflowY: 'hidden', //
+      callbacks: {
+        beforeOpen: function(e) {
+          this.st.mainClass = effect;
+        }
+      },
+      midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+    });
+  }
+</script>

@@ -1,0 +1,192 @@
+[
+    {
+      "id": 1,
+      "mes": "janeiro",
+      "anoFiscal": "20182019",
+      "tipo": "Mídia 50%",
+      "verba": "Antecipada",
+      "NomeArquivo": "arquivo.xls",
+      "usuario": "usuario@admin.com.br",
+      "data": "18/02/2019",
+      "hora": "12h30",
+      "total": 300,
+      "ok": 255,
+      "duplicado": 10,
+      "erro": 35,
+      "statusId": 1
+
+    },
+    {
+        "id": 2,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 3,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 4,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 5,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 6,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 7,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 8,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 9,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 10,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      },
+      {
+        "id": 11,
+        "mes": "janeiro",
+        "anoFiscal": "20182019",
+        "tipo": "Mídia 50%",
+        "verba": "Antecipada",
+        "NomeArquivo": "arquivo.xls",
+        "usuario": "usuario@admin.com.br",
+        "data": "18/02/2019",
+        "hora": "12h30",
+        "total": 300,
+        "ok": 255,
+        "duplicado": 10,
+        "erro": 35,
+        "statusId": 1
+  
+      }
+
+
+    ]
+  

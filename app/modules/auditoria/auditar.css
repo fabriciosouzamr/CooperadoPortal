@@ -1,0 +1,226 @@
+.auditar-container {
+  background-color: white;
+}
+
+.hasexcessao {
+  color: #002C5F !important;
+}
+
+.auditar-content {
+  position: relative;
+  background-color: white;
+  min-height: 200vh;
+}
+
+@media (max-width: 400px) {
+  .auditar-content {
+    overflow: auto;
+  }
+}
+
+md-checkbox.md-default-theme.md-checked .md-icon,
+md-checkbox.md-checked .md-icon {
+  background-color: #12c512 !important;
+}
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.evidencia-docs {
+  list-style: none;
+  color: #333;
+}
+
+.evidencia-docs i {
+  color: #333;
+  padding: 0 0.5rem;
+}
+
+.evidencia-docs a {
+  color: #333;
+}
+
+.boxFeatures {
+  border-radius: 5px 5px 0 0;
+}
+
+.boxFeatures .head {
+  display: flex;
+  align-items: center;
+  padding: 5px !important;
+  background: #efefef;
+  border-radius: 5px 5px 0 0;
+  color: #333;
+}
+
+.right-icon {
+  color: rgb(18, 197, 18) !important;
+  font-weight: bold;
+}
+
+.boxFeatures .body {
+  padding: 10px 0;
+  min-height: 45px;
+}
+
+.evidencia-docs {
+  padding-left: 10px;
+}
+
+ul.docsList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+ul.docsList li {
+  display: flex;
+  align-items: center;
+  background: none;
+}
+
+.auditar-evidencia {
+  background-color: white;
+  position: relative;
+  height: 75vh;
+  margin: 1rem 0 0 0;
+}
+
+.auditar-evidencia > .bottom {
+  width: 100%;
+  height: 50vh;
+}
+
+.row.options-list {
+  height: 120vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.auditar-options {
+  display: flex;
+  flex-direction: row !important;
+}
+
+.actions-btn {
+  padding: 2rem 0;
+}
+
+.auditar-buttons {
+  display: block;
+  width: 100%;
+}
+
+.auditoria-textarea {
+  height: 60vh;
+  margin-top: 20px;
+  width: 100%;
+  padding: 15px;
+}
+
+.auditoria-motivo {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  padding: 20px;
+  background-color: white;
+}
+
+.auditar-buttons div {
+  top: 45%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  cursor: pointer;
+  outline: 0 !important;
+}
+
+.auditar-buttons .right {
+  right: 0px;
+}
+
+.auditar-buttons div i {
+  line-height: 50px;
+  color: #002C5F !important;
+  font-size: 35px;
+  outline: 0 !important;
+}
+
+.auditar-file {
+  height: 100%;
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message {
+  color: #002C5F !important;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col b {
+  color: #002C5F !important;
+}
+
+.col b i {
+  color: #002C5F !important;
+}
+
+.auditar-selected {
+  text-align: center;
+  padding: 5px;
+  margin: 10px 40px;
+  line-height: 40px;
+  font-size: 15px;
+}
+
+.motivo-reprovacao {
+  display: flex;
+  align-items: center;
+  color: #002C5F !important !important;
+  padding: 0.5rem 0;
+}
+
+.auditar-selected button {
+  float: right;
+  margin-right: 10px;
+}
+
+.auditar-image {
+  display: flex;
+  justify-content: center;
+  width: auto;
+  height: 100%;
+  position: relative;
+}
+
+.auditar-image img {
+  width: 90%;
+  height: 100%;
+  display: block;
+}
+
+.auditar-nfreferencia {
+  width: 100%;
+  padding: 15px;
+  background-color: rgb(18, 197, 18);
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  position: fixed;
+  z-index: 9999;
+}

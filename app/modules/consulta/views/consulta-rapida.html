@@ -1,0 +1,138 @@
+<style>
+  .consulta-rapida {
+    padding: 1rem;
+    min-height: 87vh;
+  }
+  .active {
+    background: red;
+    color: white;
+  }
+</style>
+<div class="consulta-rapida" ng-controller="consultaRapidaController" ng-show="usuarioLogado.emailConfirmado">
+  <div class="panel">
+    <div class="panel-body" ng-hide="hideGrid">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1 class="page-title">Consulta Rápida</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Mês:</label>
+            <md-select ng-model="filter.mes">
+              <md-option ng-repeat="state in meses" value="{{ state.mesId }}">
+                {{ state.descricao }}
+              </md-option>
+            </md-select>
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+        </div>
+
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Ano Fiscal:</label>
+            <md-select ng-model="filter.ano">
+              <md-option
+                ng-repeat="state in years"
+                value="{{ state.anoFiscal }}">
+                {{ state.anoFiscal }}
+              </md-option>
+            </md-select>
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+        </div>
+
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>AOV:</label>
+            <md-select ng-model="filter.regional">
+              <md-option
+                ng-repeat="state in aovs"
+                value="{{ state.regionalId }}"
+                ng-click="getRegiao(state.regionalId)">
+                {{ state.nome }}
+              </md-option>
+            </md-select>
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+        </div>
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <md-input-container class="md-block" flex-gt-sm >
+            <label>Região:</label>
+            <md-select ng-model="filter.regiao" >
+              <md-option
+              ng-disabled="!filter.regional"
+                ng-repeat="state in regioes"
+                value="{{ state.regiaoId }}"
+                ng-click="getRegionId(state.regiaoId)">
+                {{ state.nome }}
+              </md-option>
+            </md-select>
+            <div class="md-errors-spacer">
+              <span ng-show="!filter.regional" style="color: red; padding-right: 136px; font-size: 12px">*Selecione um AOV para habilitar este campo</span>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Dealer:</label>
+            <md-select ng-model="filter.dealer">
+              <md-option
+                ng-repeat="state in dealers"
+                value="{{ state.dealerID }}">
+                {{ state.nomeFantasia }}
+              </md-option>
+            </md-select>
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+        </div>
+
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Código do Dealer:</label>
+            <input type="text" ng-model="filter.codigoDealer">
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+        </div>
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Número da nota de débito:</label>
+            <input type="text" ng-model="filter.notaDebito">
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+        </div>
+
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <button ng-click="handleSearch()" style="outline: 0;width: 100%; color: white; background: #002C5F; border: 0; height: 35px;margin-top: 1rem">Buscar</button>
+        </div>    
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <button ng-click="clearSearch()" style="outline: 0;width: 100%; color: #002C5F; background: transparent; border: 1px solid #002C5F; height: 35px;margin-top: 1rem">Limpar</button>
+        </div>        
+        
+      </div>
+      <div class="result-table">
+          <div
+            id="grid1"
+            ui-grid="gridOptions1"
+            ui-grid-pagination
+            ui-grid-auto-resize
+            ui-grid-resize-columns
+            ui-grid-move-columns
+            ui-grid-selection
+            class="grid"
+          >
+            <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+              <div class="msg">
+                <span>Sem registros</span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

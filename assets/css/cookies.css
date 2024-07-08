@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'VWHead-Bold';
+  src: url('fonts/VWHead-Bold.eot');
+  src: url('fonts/VWHead-Bold.woff2') format('woff2'),
+       url('fonts/VWHead-Bold.woff') format('woff'),
+       url('fonts/VWHead-Bold.ttf') format('truetype'),
+       url('fonts/VWHead-Bold.svg#VWHead-Bold') format('svg'),
+       url('fonts/VWHead-Bold.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWHeadOffice-Regular';
+  src: url('fonts/VWHeadOffice-Regular.eot');
+  src: url('fonts/VWHeadOffice-Regular.woff2') format('woff2'),
+       url('fonts/VWHeadOffice-Regular.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}

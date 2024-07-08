@@ -1,0 +1,879 @@
+<div ng-controller="auditoriaController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="container-fluid pd-bottom-20">
+                <h1>Auditoria</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs">
+                        <li ng-repeat="aba in abas" ng-class="{'active': abaActive == aba.value}">
+                            <a href="javascript:;" ng-if="aba.show && ((aba.label !== 'Processos') || (usuarioLogado.perfil !== 'Auditor'))" ng-click="changeAba(aba.value);" class="col-sm-2" style="width: 15%;">
+                                {{ aba.label }}
+                                <span ng-if="aba.showQuota">( {{ aba.quota }} )</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ABA RECEBIMENTO -->
+
+            <div class="row mb20 mt20" ng-if="abaActive=='recebimento'">
+                <div ng-controller="auditoriaRecebimentoController" class="">
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1">
+                        <div class="well mt20">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer</label>
+                                        <input ng-model="buscaData.dealer" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ND</label>
+                                        <input ng-model="buscaData.nota" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano</label>
+                                        <input ng-model="buscaData.ano" type="text" class="input-lg" maxlength="4" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button ng-click="onBuscaClick($event)"
+                                            ng-disabled="buscaData.dealer.length == 0 && buscaData.nota.length == 0 && buscaData.ano.length == 3"
+                                            class="btn btn-danger col-lg-6">
+                                        Buscar
+                                    </button>
+                                    <button ng-click="onBuscaClick($event, true)" class="btn btn-primary col-lg-6">
+                                        Limpar
+                                    </button>
+                                    <!--
+                                      -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Ações Recebidas</h2>
+                        <div>
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt20 text-center">
+                        <button ng-disabled="acaoRecebidaSelected == null" ng-click="onReceberClick($event)" class="btn btn-danger">
+                            Receber
+                        </button>
+                    </div>
+                    <h2>Ações Reabertas</h2>
+                    <div>
+                        <div id="grid1" ui-grid="gridOptions2" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                             ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="pd-t-b-10 no-rows" ng-show="!gridOptions2.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA VALIDAÇÃO -->
+
+            <div class="row mb20 mt20" ng-if="abaActive=='validacao'">
+                <div ng-controller="auditoriaValidacaoController" class="">
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='validacao'">
+                        <div class="well mt20">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer</label>
+                                        <input ng-model="buscaData.dealer" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ND</label>
+                                        <input ng-model="buscaData.nota" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano</label>
+                                        <input ng-model="buscaData.ano" type="text" class="input-lg" maxlength="4" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button ng-click="onBuscaClick($event)"
+                                            ng-disabled="buscaData.dealer.length == 0 && buscaData.nota.length == 0 && buscaData.ano.length == 0"
+                                            class="btn btn-danger col-lg-6">
+                                        Buscar
+                                    </button>
+                                    <button ng-click="onBuscaClick($event, true)" class="btn btn-primary col-lg-6">
+                                        Limpar
+                                    </button>
+                                    <!--
+                                      -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='detalhe'">
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer:</label>
+                                        <input ng-model="detalheData.dealer" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Nota de Débito:</label>
+                                        <input ng-model="detalheData.budgetDealerID" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-container class="md-block" flex-gt-sm>
+                                        <small>Data de Emissão:</small>
+                                        <!-- <input
+                                          ng-model="detalheData.dataEmissao"
+                                          ng-disabled="'true'"
+                                          type="text"
+                                          class="input-lg"
+                                        /> -->
+                                        <div>
+                                            {{ detalheData.dataEmissao | date: 'dd/MM/yyyy HH:mm' }}
+                                        </div>
+                                    </md-container>
+                                </div>
+                                <div class="col-md-1">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Mês:</label>
+                                        <input ng-model="detalheData.mes" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano Fiscal:</label>
+                                        <input ng-model="detalheData.anoFiscalComNormal" ng-disabled="'true'" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Valor Liberado:</label>
+                                        <input ng-model="detalheData.verbaOriginal | currency" ng-disabled="'true'" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Ações Realizadas</h2>
+
+                        <div class="mb20">
+                            <div id="grid2" ui-grid="gridOptions2" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions2.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="well col-sm-12 mt20">
+                            <div class="row">
+                                <label class="col-md-6 text-center detalhe-total">TOTAL:</label>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="detalhe-total">Valor Comprovado:</label>
+                                        <input ng-model="detalheData.valorSolicitadoBruto | currency" ng-disabled="'true'" type="text"
+                                               class="input-lg detalhe-total" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="detalhe-total">Valor Aprovado:</label>
+                                        <input ng-model="detalheData.valorAprovadoLiquido | currency" ng-disabled="'true'" type="text"
+                                               class="input-lg detalhe-total" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt20 text-center">
+                            <button class="btn btn-danger" ng-click="onSalvarClickValidacoes()">
+                                Salvar
+                            </button>
+                            <!-- <button class="btn btn-danger" ng-click="onSalvarLiberarClick()">
+                              Salvar e Liberar para Dealer
+                            </button> -->
+                            <button class="btn btn-primary" ng-click="onDetalheVoltarClick()">
+                                Voltar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='parecer'">
+                        <h2>Exceções</h2>
+                        <textarea class="md-textarea form-control" ng-model="parecerData.contato"></textarea>
+                        <div class="row no-gutters mt20 mb20">
+                            <h3>Evidência:</h3>
+
+                            <button class="btn btn-default col-sm-3" ngf-select="uploadFiles($files, $invalidFiles)" single accept="*"
+                                    ng-if="!fileToUpload">
+                                <i class="fa fa-upload mr10"></i>Escolher Arquivo
+                            </button>
+
+                            <button class="btn btn-block btn-default col-sm-3" ng-click="removeEvidenciaFile()"
+                                    ng-if="fileToUpload && fileToUpload.progress > 99">
+                                <i class="fa fa-upload mr10"></i>Remover
+                            </button>
+                            <span class="progress  col-sm-2"
+                                  ng-show="fileToUpload != null && fileToUpload.progress >= 0 && fileToUpload.progress < 100">
+                                <div style="width:{{ fileToUpload.progress }}%" ng-bind="fileToUpload.progress + '%'"></div>
+                            </span>
+
+                            <label class="col-sm-5">{{ parecerData.fileName }}</label>
+                            <button class="btn btn-danger col-sm-2" ng-disabled="!parecerData.url" ng-click="onParecerSalvarClick()">
+                                Salvar
+                            </button>
+                            <button class="btn btn-primary col-sm-2" ng-click="onParecerVoltarClick()">
+                                Voltar
+                            </button>
+                        </div>
+                        <div class="mb20" ng-controller="auditoriaInconsistenciaController">
+                            <div id="grid3" ui-grid="gridOptions3" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions3.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA INCONSISTENCIA -->
+
+            <div class="row mb20 mt20" ng-if="abaActive=='inconsistencia'">
+                <div ng-controller="auditoriaInconsistenciaController" class="">
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='validacao'">
+                        <div class="well mt20">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer</label>
+                                        <input ng-model="buscaData.dealer" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ND</label>
+                                        <input ng-model="buscaData.nota" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano</label>
+                                        <input ng-model="buscaData.ano" type="text" class="input-lg" maxlength="4" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button ng-click="onBuscaClick($event)"
+                                            ng-disabled="buscaData.dealer.length == 0 && buscaData.nota.length == 0 && buscaData.ano.length == 0"
+                                            class="btn btn-danger col-lg-6">
+                                        Buscar
+                                    </button>
+                                    <button ng-click="onBuscaClick($event, true)" class="btn btn-primary col-lg-6">
+                                        Limpar
+                                    </button>
+                                    <!--
+                                      -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='detalhe'">
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer:</label>
+                                        <input ng-model="detalheData.dealer" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Nota de Débito:</label>
+                                        <input ng-model="detalheData.budgetDealerID" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Data de Emissão:</label>
+                                        <input ng-model="detalheData.dataEmissao | date: dd/mm/yyyy" ng-disabled="'true'" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-1">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Mês:</label>
+                                        <input ng-model="detalheData.mes" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano Fiscal:</label>
+                                        <input ng-model="detalheData.anoFiscalComNormal" ng-disabled="'true'" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Valor Liberado:</label>
+                                        <input ng-model="detalheData.verbaOriginal | currency" ng-disabled="'true'" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Ações Realizadas</h2>
+
+                        <div class="mb20">
+                            <div id="grid2" ui-grid="gridOptions2" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions2.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="well col-sm-12 mt20">
+                            <div class="row">
+                                <label class="col-md-6 text-center detalhe-total">TOTAL:</label>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="detalhe-total">Valor Comprovado:</label>
+                                        <input ng-model="detalheData.valorSolicitadoBruto | currency" ng-disabled="'true'" type="text"
+                                               class="input-lg detalhe-total" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="detalhe-total">Valor Aprovado:</label>
+                                        <input ng-model="detalheData.valorAprovadoLiquido | currency" ng-disabled="'true'" type="text"
+                                               class="input-lg detalhe-total" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt20 text-center">
+                            <button class="btn btn-danger" ng-click="onSalvarClickInconsistencia()">
+                                Salvar
+                            </button>
+                            <!-- <button class="btn btn-danger" ng-click="onSalvarLiberarClick()">
+                              Liberar para Dealer
+                            </button> -->
+                            <button class="btn btn-danger" ng-click="onFechamentoVoltarClick()">
+                                Fechamento
+                            </button>
+                            <button class="btn btn-primary" ng-click="onDetalheVoltarClick()">
+                                voltar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='parecer'">
+                        <h2>Parecer</h2>{{ parecer }}
+                        <textarea class="md-textarea form-control" ng-model="parecerData.contato"></textarea>
+                        <div class="row no-gutters mt20 mb20">
+                            <label>Evidência:</label>
+
+                            <button class="btn btn-block btn-default col-2" ngf-select="uploadFiles($files, $invalidFiles)" single
+                                    accept="*" ng-if="!fileToUpload">
+                                <i class="fa fa-upload mr10"></i>Escolher Arquivo
+                            </button>
+
+                            <button class="btn btn-block btn-default col-2" ng-click="removeEvidenciaFile()"
+                                    ng-if="fileToUpload && fileToUpload.progress > 99">
+                                <i class="fa fa-upload mr10"></i>Remover
+                            </button>
+                            <span class="progress  col-sm-2"
+                                  ng-show="fileToUpload != null && fileToUpload.progress >= 0 && fileToUpload.progress < 100">
+                                <div style="width:{{ fileToUpload.progress }}%" ng-bind="fileToUpload.progress + '%'"></div>
+                            </span>
+
+                            <label class="col-sm-6">{{ parecerData.fileName }}</label>
+                            <button class="btn btn-danger col-sm-2" ng-disabled="!parecerData.url" ng-click="onParecerSalvarClick()">
+                                Salvar
+                            </button>
+                            <button class="btn btn-primary col-sm-2" ng-click="onParecerVoltarClick()">
+                                Voltar
+                            </button>
+                        </div>
+                        <div class="mb20">
+                            <div id="grid3" ui-grid="gridOptions3" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions3.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA TRATATIVA DE INCONSISTENCIA -->
+
+            <div class="row mb20 mt20" ng-if="abaActive=='tratativa'">
+                <div ng-controller="auditoriaTratativaController" class="">
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='validacao'">
+                        <div class="well mt20">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer</label>
+                                        <input ng-model="buscaData.dealer" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ND</label>
+                                        <input ng-model="buscaData.nota" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano</label>
+                                        <input ng-model="buscaData.ano" type="text" class="input-lg" maxlength="4" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button ng-click="onBuscaClick($event)"
+                                            ng-disabled="buscaData.dealer.length == 0 && buscaData.nota.length == 0 && buscaData.ano.length == 0"
+                                            class="btn btn-danger col-lg-6">
+                                        Buscar
+                                    </button>
+                                    <button ng-click="onBuscaClick($event, true)" class="btn btn-primary col-lg-6">
+                                        Limpar
+                                    </button>
+                                    <!--
+                                            -->
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='detalhe'">
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer:</label>
+                                        <input ng-model="detalheData.dealer" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Nota de Débito:</label>
+                                        <input ng-model="detalheData.budgetDealerID" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Data de Emissão:</label>
+                                        <input ng-model="detalheData.dataEmissao | date: dd/mm/yyyy" ng-disabled="'true'" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-1">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Mês:</label>
+                                        <input ng-model="detalheData.mes" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano Fiscal:</label>
+                                        <input ng-model="detalheData.anoFiscalComNormal" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Valor Liberado:</label>
+                                        <input ng-model="detalheData.verbaOriginal | currency" ng-disabled="'true'" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Ações Realizadas</h2>
+
+                        <div class="mb20">
+                            <div id="grid2" ui-grid="gridOptions2" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions2.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="well col-sm-12 mt20">
+                            <div class="row">
+                                <label class="col-md-6 text-center detalhe-total">TOTAL:</label>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Valor Comprovado:</label>
+                                        <input ng-model="detalheData.valorSolicitadoBruto | currency" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Valor Aprovado:</label>
+                                        <input ng-model="detalheData.valorAprovadoLiquido | currency" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt20 text-center">
+                            <button class="btn btn-danger" ng-click="onSalvarClick()">Salvar</button>
+                            <!-- <button class="btn btn-danger">
+                                    Liberar para Dealer
+                                  </button> -->
+                            <button class="btn btn-danger" ng-click="onFechamentoVoltarClick()">
+                                Fechamento
+                            </button>
+                            <button class="btn btn-primary" ng-click="onDetalheVoltarClick()">
+                                voltar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='parecer'">
+                        <h2>Parecer</h2>{{ parecer }}
+                        <textarea class="md-textarea form-control" ng-model="parecerData.contato"></textarea>
+                        <div class="row no-gutters mt20 mb20">
+                            <label>Evidência:</label>
+
+                            <button class="btn btn-block btn-default col-2" ngf-select="uploadFiles($files, $invalidFiles)" single
+                                    accept="*" ng-if="!fileToUpload">
+                                <i class="fa fa-upload mr10"></i>Escolher Arquivo
+                            </button>
+
+                            <button class="btn btn-block btn-default col-2" ng-click="removeEvidenciaFile()"
+                                    ng-if="fileToUpload && fileToUpload.progress > 99">
+                                <i class="fa fa-upload mr10"></i>Remover
+                            </button>
+                            <span class="progress  col-sm-2"
+                                  ng-show="fileToUpload != null && fileToUpload.progress >= 0 && fileToUpload.progress < 100">
+                                <div style="width:{{ fileToUpload.progress }}%" ng-bind="fileToUpload.progress + '%'"></div>
+                            </span>
+
+                            <label class="col-sm-6">{{ parecerData.fileName }}</label>
+                            <button class="btn btn-danger col-sm-2" ng-disabled="!parecerData.url" ng-click="onParecerSalvarClick()">
+                                Salvar
+                            </button>
+                            <button class="btn btn-primary col-sm-2" ng-click="onParecerVoltarClick()">
+                                Voltar
+                            </button>
+                        </div>
+                        <div class="mb20">
+                            <div id="grid3" ui-grid="gridOptions3" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions3.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA FECHAMENTO -->
+
+            <div class="row mb20 mt20" ng-if="abaActive=='fechamento'">
+                <div ng-controller="auditoriaFechamentoController" class="">
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1">
+                        <div class="well mt20">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer</label>
+                                        <input ng-model="buscaData.dealer" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ND</label>
+                                        <input ng-model="buscaData.nota" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano</label>
+                                        <input ng-model="buscaData.ano" type="text" class="input-lg" maxlength="4" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button ng-click="onBuscaClick($event)"
+                                            ng-disabled="buscaData.dealer.length == 0 && buscaData.nota.length == 0 && buscaData.ano.length == 0"
+                                            class="btn btn-danger col-lg-6">
+                                        Buscar
+                                    </button>
+                                    <button ng-click="onBuscaClick($event, true)" class="btn btn-primary col-lg-6">
+                                        Limpar
+                                    </button>
+                                    <!--
+                                          -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 mt20 text-center">
+                            <button class="btn btn-danger" ng-disabled="acaoRecebidaSelected == null"
+                                    ng-click="onFechamentoLoteClick()">
+                                Fechar Lote
+                            </button>
+                        </div>
+
+                        <h2>Reabertura</h2>
+                        <div>
+                            <div id="gridReabertura" ui-grid="gridOptionsReabertura" ui-grid-pagination ui-grid-auto-resize
+                                 ui-grid-resize-columns ui-grid-move-columns class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptionsReabertura.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="modalReabrirLote" class="popup-basic-big mfp-with-anim mfp-hide">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <span class="panel-title">
+                                    <i class="fa fa-edit"></i>Confirmação
+                                </span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Motivo: *</label>
+                                        <textarea ng-model="reabertura.motivo" rows="3" type="text" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col-sm-12 mt10 text-center">
+                                        <button class="btn btn-danger" ng-click="onReabrirLoteConfirmarClick()">Reabrir</button>
+                                        <button class="btn btn-primary" ng-click="onReabrirLoteCancelarClick()">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA PROCESSOS -->
+
+            <div class="row mb20 mt20" ng-if="abaActive=='processos'">
+                <div ng-controller="auditoriaProcessosController" class="">
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='processos'">
+                        <div class="well mt20">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4 col-lg-8">
+                                    <!-- ng-disabled="'true'" -->
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Número da Nota de Débito</label>
+                                        <input ng-model="searchvalues.nota" type="text" class="input-lg" restrict-to="[0-9]" maxlength="10" />
+                                    </md-input-container>
+                                </div>
+
+                                <div class="col-sm-12 col-md-4 col-lg-4 text-right">
+                                    <button class="btn btn-primary col-lg-5 mr20" ng-click="clearNf()"
+                                            ng-disabled="searchvalues.nota.length < 1">
+                                        Limpar
+                                    </button>
+                                    <button class="btn btn-danger col-lg-6" ng-click="searchNf()"
+                                            ng-disabled="searchvalues.nota.length < 1">
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 ng-show="searched == true">Resultado da Busca</h2>
+
+                        <div ng-show="searched == true">
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mt5 table-responsive table-verba-1" ng-if="abaActive=='detalhe'">
+                        <h2>Detalhes da Nota de Débito</h2>
+
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Dealer:</label>
+                                        <input ng-model="selectedNF.dealer" type="text" class="input-lg" ng-disabled="'true'" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Nota de Débito:</label>
+                                        <input ng-model="selectedNF.budgetDealerID" type="text" class="input-lg" ng-disabled="'true'" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Data de Emissão:</label>
+                                        <input ng-model="selectedNF.dataEmissao | date: dd/mm/yyyy" type="text" ng-disabled="'true'"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-1">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Mês:</label>
+                                        <input ng-model="selectedNF.mes" ng-disabled="'true'" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ano Fiscal:</label>
+                                        <input ng-disabled="'true'" ng-model="selectedNF.anoFiscalComNormal" type="text" class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Valor Liberado:</label>
+                                        <input ng-disabled="'true'" ng-model="selectedNF.verbaOriginal | currency" type="text"
+                                               class="input-lg" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Retornar Processo</h2>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Voltar processo para:</label>
+                                <md-select ng-model="selectedActions.status" ng-init="showOptions=true" my-on-focus="showOptions"
+                                           md-on-close="showOptions=false">
+                                    <md-option ng-repeat="state in listStatus" value="{{ state.budgetDealerStatusID }}">
+                                        {{ state.descricao }}
+                                    </md-option>
+                                </md-select>
+                                <div class="md-errors-spacer"></div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-sm-12 no-gutters">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Motivo:</label>
+                                <textarea ng-model="selectedActions.motivo" class="md-textarea form-control"></textarea>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-sm-12 mt20 mb20 text-center">
+                            <button class="btn btn-danger" ng-click="onParecerSalvarClick()"
+                                    ng-disabled="selectedActions.status == null || selectedActions.motivo.length < 4">
+                                Salvar
+                            </button>
+                            <button class="btn btn-primary" ng-click="onParecerVoltarClick()">
+                                Voltar
+                            </button>
+                        </div>
+
+                        <h2>Histórico de Modificações</h2>
+
+                        <div>
+                            <div id="grid1" ui-grid="gridOptions2" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions2.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

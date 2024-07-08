@@ -1,0 +1,105 @@
+<style>
+    .prazos {
+        min-height: 88.5vh;
+        padding: 6rem 1rem;
+        box-sizing: border-box;
+    }
+
+    .prazos .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        padding: 2rem 0;
+    }
+
+    .filtros {
+        display: flex;
+        width: 50%;
+        margin-top: 30px;
+    }
+
+    #data-limite {
+        background: transparent;
+        border: none;
+        margin: 1rem 2rem;
+        border-bottom: 2px solid black;
+        outline: 0;
+        text-align: center;
+        width: 250px;
+    }
+
+    #data-limite input {
+        font-size: 25px;
+        text-align: center;
+        padding: 10px 2px 15px 2px;
+    }
+
+    .salvar {
+        width: 150px;
+        padding: 1rem;
+        color: #002C5F !important;
+        background: transparent;
+        border: 1px solid #002C5F;
+        cursor: pointer;
+        transition: .3s all;
+        margin-top: 30px;
+    }
+
+    .salvar:hover {
+        background: #002C5F;
+        color: white !important;
+        transition: .3s all;
+        transform: scale(1.105);
+    }
+</style>
+<div class="prazos" ng-controller="gestaoPrazosController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="content">
+
+        <h3>
+            <span class="far fa-calendar-alt" style="padding: 0 .5rem; font-size: 25px; color:#002C5F"></span>
+            Selecione o período:
+        </h3>
+
+        <div class="filtros">
+            <md-input-container>
+                <label>Ano Fiscal:</label>
+                <md-select ng-model="filtro.anoFiscal" ng-change="getPeriodo()">
+                    <md-option ng-repeat="ano in anos" value="{{ ano.anoFiscal }}">
+                        {{ ano.anoFiscalComNormal }}
+                    </md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+            </md-input-container>
+
+            <md-input-container>
+                <label>Mês:</label>
+                <md-select ng-model="filtro.mes" ng-change="getPeriodo()">
+                    <md-option ng-repeat="mes in meses" value="{{ mes.mesId }}">{{ mes.descricao }}</md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+            </md-input-container>
+
+            <md-input-container>
+                <label>Dealer:</label>
+                <md-select ng-model="filtro.dealer" ng-change="getPeriodo()">
+                    <md-option value="0">Todos</md-option>
+                    <md-option ng-repeat="dealer in dealers" value="{{ dealer.dealerID }}">{{ dealer.nomeFantasia }}</md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+            </md-input-container>
+        </div>
+
+        <h3 class="instrucao">
+            Digite a data limite:
+        </h3>
+
+        <div id="data-limite">
+            <md-datepicker-custom ng-model="dataLimite" md-custom-mask="99/99/9999" md-custom-clean-mask="false"
+                md-custom-restrict="reject" id="#data-limite"></md-datepicker-custom>
+        </div>
+
+        <button class="salvar" ng-click="salvar()">Salvar</button>
+    </div>
+</div>

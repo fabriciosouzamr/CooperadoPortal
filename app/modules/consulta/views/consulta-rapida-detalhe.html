@@ -1,0 +1,293 @@
+<style>
+    .col-sm-12.mt20.table-responsive.table-reembolso-2 {
+        height: 200px;
+    }
+
+    .reembolso-line {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        margin: 1rem 0;
+    }
+
+        .reembolso-line:nth-child(odd) {
+            background: #efefef;
+        }
+
+        .reembolso-line span {
+            width: 50%;
+        }
+
+        .reembolso-line b {
+            width: 20%;
+        }
+
+        .reembolso-line i {
+            display: flex;
+            justify-content: center;
+            width: 10%;
+            transition: .3s all;
+        }
+
+            .reembolso-line i:hover {
+                transform: scale(1.1);
+                transition: .3s all;
+                color: #002C5F !important;
+            }
+
+    .total-item {
+        background: red !important;
+    }
+
+    .aditional-infos {
+        display: flex;
+        justify-content: space-around;
+    }
+
+        .aditional-infos strong {
+            color: #002C5F !important;
+        }
+
+    .backbutton {
+        display: flex;
+        justify-content: flex-start;
+        padding: 0 0 0 6rem;
+        font-size: 20px !important;
+        align-items: center;
+        position: absolute;
+        right: -100px;
+        width: 200px;
+        border-radius: 5px 1px 0px 129px;
+        background: red;
+        height: 100px;
+        top: -23px !important;
+        color: white;
+    }
+
+        .backbutton i {
+            font-size: 25px !important;
+        }
+
+    .topbar {
+        width: 160px;
+        background: #002C5F !important;
+        color: white;
+        padding: .5rem 1rem;
+        border-radius: 5px 5px 0 0;
+    }
+
+        .topbar h1 {
+            font-size: 20px;
+        }
+</style>
+<div ng-controller="consultaRapidaDetalheController">
+    <div class="panel">
+        <div class="panel-body">
+
+            <div class="col-sm-12">
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ano Fiscal:</label>
+                            <md-select ng-model="ano" ng-disabled="true">
+                                <md-option ng-repeat="state in anoFiscal"
+                                           value="{{ state.anoFiscal }}">
+                                    {{ state.anoFiscalComNormal }}
+                                </md-option>
+                            </md-select>
+                            <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                    </div>
+                    <div class="col-sm-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Mês:</label>
+                            <md-select ng-model="mes" ng-disabled="true">
+                                <md-option ng-repeat="state in meses"
+                                           value="{{ state.mesId }}">{{ state.descricao }}</md-option>
+                            </md-select>
+                            <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="backbutton">
+                    <i ng-click="goBack()" class="fas fa-arrow-left"></i>
+                </div>
+                <div class="alert alert-default">
+                    <p>
+                        Esta tela é utilizada somente para consulta, <span class="strong">
+                            não será possível realizar
+                            nenhuma alteração.
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mb20 mt20">
+                <div class="col-sm-12">
+                    <div class="titles">
+                        <div class="col-sm-6">
+                            <h3 style="padding-left: 1rem">
+                                DETALHE
+                            </h3>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <h3 style="padding-left: 1rem">
+                            RESUMO
+                        </h3>
+                    </div>
+                    <!-- Detalhe  -->
+                    <div class="mt20 col-sm-6">
+
+                        <div class="reembolso-line">
+                            <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom"
+                               title="Valor pago pela montadora."></i>
+                            <span>Valor Liberado Teto:</span>
+                            <b style="color: rgb(37, 180, 37)">{{ verbaGeral.verbaOriginal | currency }}</b>
+                        </div>
+
+                        <div class="reembolso-line">
+                            <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom"
+                               title="Valor adicional."></i>
+                            <span>Verba Extra:</span>
+                            <b style="color: rgb(37, 180, 37)">{{ verbaGeral.verbaExtra | currency }}</b>
+                        </div>
+
+                    </div>
+
+                    <!-- Resumo  -->
+                    <div class="col-sm-6">
+                        <div class="mt20 col-sm-12">
+                            <div class="reembolso-line">
+                                <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom"
+                                   title="Total comprovado pelo Dealer."></i>
+                                <span>Total Comprovado:</span>
+                                <b style="color: orange">{{ verbaGeral.valorSolicitadoBruto | currency }}</b>
+                            </div>
+                            <div class="reembolso-line">
+                                <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom"
+                                   title="Total aprovado pela auditoria."></i>
+                                <span>Total Aprovado:</span>
+                                <b style="color: rgb(37, 180, 37)">{{ verbaGeral.valorAprovadoLiquido | currency }}</b>
+                            </div>
+                            <div class="reembolso-line">
+                                <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom"
+                                   title="Total reprovado pela auditoria."></i>
+                                <span>Total Reprovado:</span>
+                                <b style="color:red">{{ verbaGeral.valorReprovadoLiquido | currency }}</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="aditional-infos col-sm-12 mt40">
+                        <p>
+                            <strong><i class="fas fa-dollar-sign"></i> Valor Solicitado pelo Dealer:</strong>
+                            {{ verbaGeral.valorSolicitadoBruto| currency }}
+                        </p>
+                        <p>
+                            <strong><i class="fas fa-dollar-sign"></i> Valor do Reembolso:</strong>
+                            {{ verbaGeral.valorSolicitadoLiquido | currency }}
+                        </p>
+                        <p>
+                            <strong><i class="far fa-calendar-alt" style="font-size: 18px"></i> Previsão de Pagamento:</strong>
+                            {{ verbaGeral.dataPrevistaPagamento | date: "dd/MM/yyyy" }}
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12 mt20">
+                        <h2>Ações Realizadas </h2>
+                    </div>
+
+                    <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                        <div>
+                            <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length"
+                                    class="btn btn-sm ui-grid-filter-button" style="right:11px">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="col-sm-12 mt20">
+                        <h2>Ações Excluídas </h2>
+                    </div>
+
+                    <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                        <div>
+                            <button ng-click="toggleFiltering()" ng-show="gridOptions11.data.length"
+                                    class="btn btn-sm ui-grid-filter-button" style="right:11px">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                            <div id="grid1" ui-grid="gridOptions11" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions11.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="col-sm-12 mt20">
+                        <h2>Etapas</h2>
+                    </div>
+
+                    <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                        <div class="table-responsive">
+                            <button ng-click="toggleFiltering()" ng-show="gridOptions2.data.length"
+                                    class="btn btn-sm ui-grid-filter-button" style="right:11px">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                            <div id="grid1" ui-grid="gridOptions2" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions2.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mt20">
+                        <h2>Atenção</h2>
+                    </div>
+
+                    <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                        <div class="table-responsive">
+                            <button ng-click="toggleFiltering()" ng-show="gridOptions3.data.length"
+                                    class="btn btn-sm ui-grid-filter-button" style="right:11px">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                            <div id="grid1" ui-grid="gridOptions3" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                                 ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

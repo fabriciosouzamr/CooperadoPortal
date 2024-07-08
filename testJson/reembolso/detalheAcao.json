@@ -1,0 +1,73 @@
+{
+  "budgetDealerNFID": 0,
+  "documento": "23159390896",
+  "fornecedor": "string",
+  "numPI": "string",
+  "num_NF": "string",
+  "dataNF": "2019-03-09T03:31:50.969Z",
+  "valor": 0,
+  "qtdeVeic": 0,
+  "tipoMidiaID": 2,
+  "comissao": true,
+  "gancho": "string",
+  "descricaoServico": "string",
+  "applicationId": "string",
+  "modelosIncentivo": [
+    {
+      "descricao": "Corolla",
+      "entrada": 100,
+      "qtdParcelas": 100,
+      "relevancia": 1,
+      "valor": 10,
+      "valorParcela": 10,
+      "veiculoID": 1
+    },
+    {
+      "descricao": "RAV",
+      "entrada": 100,
+      "qtdParcelas": 100,
+      "relevancia": 2,
+      "valor": 10,
+      "valorParcela": 10,
+      "veiculoID": 4
+    },
+    {
+      "descricao": "Camry",
+      "entrada": 100,
+      "qtdParcelas": 100,
+      "relevancia": 2,
+      "valor": 10,
+      "valorParcela": 10,
+      "veiculoID": 5
+    }
+  ],
+  "evidenciasAutorizacoes": [
+    {
+      "nome": "string",
+      "url": "https://toyota-cooperado-api-vld.azurewebsites.net/index.html",
+      "id": 0
+    }
+  ],
+  "evidenciasEvidencias": [
+    {
+      "nome": "string",
+      "url": "https://toyota-cooperado-api-vld.azurewebsites.net/index.html",
+      "id": 0
+    }
+  ],
+  "evidenciasFiscal": [
+    {
+      "nome": "string",
+      "url": "https://toyota-cooperado-api-vld.azurewebsites.net/index.html",
+      "id": 0
+    }
+  ],
+  "evidenciasOutros": [
+    {
+      "nome": "string",
+      "descricao": "string",
+      "url": "https://toyota-cooperado-api-vld.azurewebsites.net/index.html",
+      "id": 0
+    }
+  ]
+}

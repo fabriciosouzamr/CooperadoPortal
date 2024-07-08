@@ -1,0 +1,183 @@
+﻿   
+    <div class="tray tray-center" ng-controller="usuariosController">
+        <div class="panel">
+            <div class="panel-body" ng-hide="hideGrid">               
+                <div class="row mt50">
+                    <div class="col-sm-12">
+                        <div ng-controller="usuariosTableCntrl">
+                            <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button" style="right:11px"><i class="fa fa-filter"></i></button>
+                            <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                                <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt20">
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-primary" ng-click="abreModal('#modalNovo','mfp-sign');">Novo</button>
+            </div>
+        </div>
+
+        <div id="modalNovo" class="popup-basic admin-form mfp-with-anim mfp-hide">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <i class="fa fa-user"></i>Novo Usuário</span>
+                </div>
+                <div class="panel-body p25">
+                    <div class="section row">
+                        <div class="col-md-6">
+                            <label for="nome" class="field prepend-icon">
+                                <input  maxlength="50" type="text" name="nome" id="nome" class="gui-input" placeholder="Nome" ng-model="userNew.nome">
+                                <label for="nome" class="field-icon">
+                                    <i class="fa fa-user"></i>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cpf" class="field prepend-icon">
+                                <input type="text" name="cpf" id="cpf" class="gui-input" placeholder="CPF/CNPJ" ng-model="userNew.documentoParticipante">
+                                <label for="cpf" class="field-icon">
+                                    <i class="fa fa-user"></i>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="section row">
+                        <div class="col-md-6">
+                            <label for="email" class="field prepend-icon">
+                                <input type="email" name="email" id="email" class="gui-input" placeholder="E-mail" ng-model="userNew.email">
+                                <label for="email" class="field-icon">
+                                    <i class="fa fa-envelope"></i>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefone" class="field prepend-icon">
+                                <input type="phone" name="telefone" id="telefone" class="gui-input" placeholder="Telefone" ng-model="userNew.telefone">
+                                <label for="telefone" class="field-icon">
+                                    <i class="fa fa-phone"></i>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="section row">
+                        <div class="col-md-6">
+                            <label for="cpf" class="field prepend-icon">
+                                <input type="password" name="password" id="password" class="gui-input" placeholder="Senha" ng-model="userNew.senha">
+                                <label for="password" class="field-icon">
+                                    <i class="fa fa-unlock-alt"></i>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="passwordConfirm" class="field prepend-icon">
+                                <input type="password" name="passwordConfirm" id="passwordConfirm" class="gui-input" placeholder="Confirmação de Senha" ng-model="userNew.confirmacaoSenha">
+                                <label for="passwordConfirm" class="field-icon">
+                                    <i class="fa fa-unlock-alt"></i>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="button btn-primary" ng-click="newUser();">Criar</button>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div id="modalEditar" class="popup-basic admin-form mfp-with-anim mfp-hide">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <i class="fa fa-user"></i>Editar Usuário</span>
+                </div>
+                <div class="panel-body p25">
+                    <div class="section row">
+                        <div class="col-md-6">
+                            <label for="nome" class="field prepend-icon">
+                                <input type="text" maxlength="50"  name="nome" id="nome" class="gui-input" placeholder="Nome" ng-model="user.nome">
+                                <label for="nome" class="field-icon">
+                                    <i class="fa fa-user"></i>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cpf" class="field prepend-icon">
+                                <input type="disable" name="cpf" id="cpf" class="gui-input" placeholder="CPF/Nome" ng-model="user.documentoParticipante">
+                                <label for="cpf" class="field-icon">
+                                    <i class="fa fa-user"></i>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="section row">
+                        <div class="col-md-6">
+                            <label for="email" class="field prepend-icon">
+                                <input type="email" name="email" id="email" class="gui-input" placeholder="E-mail" ng-model="user.email">
+                                <label for="email" class="field-icon">
+                                    <i class="fa fa-envelope"></i>
+                                </label>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefone" class="field prepend-icon">
+                                <input type="phone" name="telefone" id="telefone" class="gui-input" placeholder="Telefone" ng-model="user.telefone">
+                                <label for="telefone" class="field-icon">
+                                    <i class="fa fa-phone"></i>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="button btn-primary" ng-click="alterarUser();">Alterar</button>
+                </div>
+            </div>
+        </div>
+        -->
+        <div id="modalDelete" class="popup-basic admin-form mfp-with-anim mfp-hide">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <i class="fa fa-user"></i>Deletar Usuário</span>
+                </div>
+                <div class="panel-body p25">
+                    <div class="section row">
+                        <div class="col-md-12">
+                            Você tem certeza que deseja deletar o usuário?
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="button btn-danger" ng-click="deletarUser();">SIM</button>
+                    <button type="button" class="button btn-warning" onclick="$.magnificPopup.close();">NÃO</button>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function abreModal(modal,effect){
+                $.magnificPopup.open({
+                    removalDelay: 500, //delay removal by X to allow out-animation,
+                    items: {
+                        src: modal
+                    },
+                    // overflowY: 'hidden', // 
+                    callbacks: {
+                        beforeOpen: function (e) {
+                            this.st.mainClass = effect;
+                        }
+                    },
+                    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+                });
+            }
+        </script>
+    
+    </div>

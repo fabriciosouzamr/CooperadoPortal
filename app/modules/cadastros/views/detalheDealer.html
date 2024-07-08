@@ -1,0 +1,451 @@
+﻿<style>
+    span.errormessage {
+        position: absolute;
+        right: 15px;
+        bottom: 65px;
+        color: #002C5F !important;
+    }
+
+    md-input-container md-select {
+        color: white;
+        margin-top: 2px;
+    }
+
+    .alert {
+        color: #002C5F !important;
+        outline: 0;
+        border: 0;
+        font-size: 11px;
+        margin: 0;
+        padding: 0;
+    }
+
+    [disabled] md-input-container.md-default-theme .md-input, [disabled] md-input-container .md-input, md-input-container.md-default-theme .md-input[disabled], md-input-container .md-input[disabled] {
+        /* border-bottom-color: transparent; */
+        color: black;
+        background-image: none;
+        background-image: none;
+        margin-top: 15px;
+        border-bottom: 1.6px solid #000 !important;
+    }
+
+    .titleReembolso {
+        font-family: 'DIN2014-Regular';
+        color: #000;
+        text-transform: uppercase;
+        font-size: 20px;
+        font-weight: normal;
+        padding: 5%;
+    }
+
+    md-input-container .md-input {
+        font-size: 14px;
+        margin-top: 19px;
+        border-bottom: 1.6px solid #000 !important;
+    }
+</style>
+<div ng-controller="cadastrosDealerController" ng-show="usuarioLogado.emailConfirmado && !usuarioLogado.acessoSecundario">
+    <div class="container">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="container-fluid ngposicion">
+                    <h1 class="text-center titulo">Dados cadastrais do Dealer</h1>
+                </div>
+                <div class="container-fluid well">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <md-input-container>
+                                <label>Razão Social:</label>
+                                <input type="text"
+                                       ng-model="dealer.razaoSocial"
+                                       ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-4">
+                            <md-input-container>
+                                <label>Nome Fantasia:</label>
+                                <input type="text"
+                                       ng-model="dealer.nomeFantasia"
+                                       ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-2">
+                            <md-input-container>
+                                <label>CNPJ:</label>
+                                <input type="text"
+                                       ng-model="dealer.cnpj"
+                                       ui-br-cnpj-mask
+                                       ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-2">
+                            <md-input-container>
+                                <label>Código:</label>
+                                <input type="text" ng-model="dealer.codigo" restrict-to="[0-9]" maxlength="8" ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-2">
+                            <md-input-container>
+                                <label>Telefone:</label>
+                                <input type="text" ng-model="dealer.telefone" ui-br-phone-number />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-2">
+                            <md-input-container>
+                                <label>Cep:</label>
+                                <input type="text"
+                                       ng-model="dealer.cep"
+                                       ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'"
+                                       ui-br-cep-mask />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-4">
+                            <md-input-container>
+                                <label>Logradouro:</label>
+                                <input type="text"
+                                       ng-model="dealer.logradouro"
+                                       ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-4">
+                            <md-input-container>
+                                <label>Bairro:</label>
+                                <input type="text" ng-model="dealer.bairro" ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-2">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>UF:</label>
+                                <md-select ng-model="dealer.uf" ng-disabled="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Dealer'">
+                                    <md-option ng-repeat="uf in ufs" value="{{ uf.ufId }}" ng-click="getUFID(uf.ufId)">
+                                        {{ uf.sigla }}
+                                    </md-option>
+                                </md-select>
+                                <div class="md-errors-spacer"></div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-2">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Cidade:</label>
+                                <md-select ng-model="dealer.cidade" ng-disabled="!cities">
+                                    <md-option ng-repeat="citie in cities" value="{{ citie.cidadeId }}">
+                                        {{ citie.nome }}
+                                    </md-option>
+                                </md-select>
+                                <div class="md-errors-spacer">
+                                    <span class="alert" ng-show="!cities">*Selecione uma UF para habilitar este campo</span>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-md-8"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 pd-t-b-10 text-center">
+                        <button ng-if="usuarioLogado.perfil === 'Administrador' || usuarioLogado.perfil === 'Dealer'"
+                                type="button"
+                                class="btn btn-salvareNovo"
+                                ng-click="totalUpdateDealer()">
+                            Atualizar
+                        </button>
+                        <button ng-show="usuarioLogado.perfil == 'Administrador'"
+                                type="button"
+                                class="btn btn-cancelar"
+                                ng-click="back()">
+                            Voltar
+                        </button>
+                        <button ng-show="dealer.ativo == false && usuarioLogado.perfil == 'Administrador'"
+                                type="button"
+                                class="btn btn-salvareNovo"
+                                ng-click="activeDealer()">
+                            Ativar
+                        </button>
+                        <button ng-show="dealer.ativo == true && usuarioLogado.perfil == 'Administrador'"
+                                type="button"
+                                class="btn btn-salvareNovo"
+                                ng-click="inactiveDealer()">
+                            Inativar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Senha -->
+            <div class="row" ng-if="usuarioLogado.perfil === 'Dealer'" style="position: relative">
+                <div class="col-md-12">
+                    <h3 class="text-center titleReembolso">Alterar minha senha</h3>
+                </div>
+                <div class="col-md-4">
+                    <md-input-container>
+                        <label>Senha atual:</label>
+                        <input type="password"
+                               ng-model="meuCadastro.senhaAtual"
+                               autocomplete="new-password" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-4">
+                    <md-input-container>
+                        <label>Nova senha:</label>
+                        <input type="password"
+                               ng-model="meuCadastro.senhaNova"
+                               autocomplete="false" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-4">
+                    <md-input-container>
+                        <label>Confirmar nova Senha:</label>
+                        <input type="password"
+                               autocomplete="off"
+                               ng-model="meuCadastro.senhaConfirmacao" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-12 pd-t-b-10 text-center">
+                    <button type="button" class="btn btn-salvareNovo" ng-click="resetSenha()">
+                        Atualizar senha
+                    </button>
+                </div>
+            </div>
+
+            <!--Usuários-->
+            <div class="row well" ng-if="usuarioLogado.perfil === 'Dealer'">
+                <div class="col-md-12">
+                    <h3 class="text-center titleReembolso">Adicionar novo Usuário</h3>
+                </div>
+                <div class="col-md-2">
+                    <md-input-container>
+                        <label>Usuário:</label>
+                        <input type="text" ng-model="cadastroUsuario.login" autocomplete="off" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-md-3">
+                    <md-input-container>
+                        <label>Nome:</label>
+                        <input type="text" ng-model="cadastroUsuario.nome" autocomplete="off" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-md-2">
+                    <md-input-container>
+                        <label>Senha:</label>
+                        <input type="password"
+                               ng-model="cadastroUsuario.senha"
+                               autocomplete="new-password" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-2">
+                    <md-input-container>
+                        <label>Confirmar Senha:</label>
+                        <input autocomplete="off"
+                               type="password"
+                               ng-model="cadastroUsuario.senhaConfirmacao" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-3">
+                    <md-input-container>
+                        <label>Email:</label>
+                        <input ng-model="cadastroUsuario.email"
+                               type="email"
+                               autocomplete="off" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-md-12 pd-t-b-10 text-center">
+                    <button type="button" class="btn btn-salvareNovo" ng-click="addUsuario()">
+                        Adicionar usuário
+                    </button>
+                </div>
+            </div>
+
+            <div class="row" ng-if="usuarioLogado.perfil === 'Dealer'">
+                <div class="col-md-12 pd-t-b-10">
+                    <h3 class="text-center titleReembolso">Lista de Usuários</h3>
+                    <div ng-controller="dealerUsuariosTableCntrl"
+                         class="table-responsive table-cadastro-1">
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="pd-t-b-10 no-rows"
+                                 ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-if="userPerfil.perfil != 'Administrador'">
+                <div class="col-md-12 text-center">
+                    <h3 class="titleReembolso">Adicionar novo Contato</h3>
+                </div>
+                <div class="col-md-4">
+                    <md-input-container>
+                        <label>Nome do contato:</label>
+                        <input type="text" ng-model="cadastroContato.nomeContato" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-md-2">
+                    <md-input-container>
+                        <label>Email:</label>
+                        <input type="email" ng-model="cadastroContato.email" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-2">
+                    <md-input-container>
+                        <label>Telefone:</label>
+                        <input type="text"
+                               ng-model="cadastroContato.telefone"
+                               ui-br-phone-number />
+                    </md-input-container>
+                </div>
+                <div class="col-md-2">
+                    <md-input-container>
+                        <label>Celular:</label>
+                        <input type="text"
+                               ng-model="cadastroContato.celular"
+                               ui-br-phone-number />
+                    </md-input-container>
+                </div>
+
+                <div class="col-md-2">
+                    <label>Receber alertas*</label><br />
+                    <md-radio-group ng-model="cadastroContato.recebeAlerta"
+                                    style="overflow: hidden;">
+                        <md-radio-button value="true">Sim</md-radio-button>
+                        <md-radio-button value="false">Não</md-radio-button>
+                    </md-radio-group>
+                </div>
+
+                <div class="col-md-12 pd-t-b-10 text-center">
+                    <button type="button" class="btn btn-salvareNovo" ng-click="addContato()">
+                        Adicionar contato
+                    </button>
+                </div>
+            </div>
+
+            <div class="row" ng-if="userPerfil.perfil != 'Administrador'">
+                <div class="col-md-12 text-center">
+                    <h3 class="titleReembolso">Lista de Contatos</h3>
+                    <div ng-controller="dealerContatosTableCntrl"
+                         class="table-responsive table-cadastro-2">
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="pd-t-b-10 no-rows"
+                                 ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-if="userPerfil.perfil != 'Administrador'">
+                <div class="col-md-12 text-center">
+                    <h3 class="titleReembolso">Logs de inclusão e exclusão de contatos</h3>
+                    <div ng-controller="dealerContatoLogTableCntrl"
+                         class="table-responsive table-cadastro-3">
+                        <div id="grid1"
+                             ui-grid="gridOptions1"
+                             ui-grid-pagination
+                             ui-grid-resize-columns
+                             ui-grid-move-columns
+                             ui-grid-selection
+                             class="grid">
+                            <div class="pd-t-b-10 no-rows"
+                                 ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalExcluirUsuario"
+     class="popup-basic admin-form mfp-with-anim mfp-hide">
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-title">
+                <i class="fa fa-user"></i>Deletar Usuario
+            </span>
+        </div>
+        <div class="panel-body p25">
+            <div class="section row">
+                <div class="col-md-12">
+                    Você tem certeza que deseja deletar este usuario?
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            <button type="button"
+                    class="btn btn-danger"
+                    ng-click="deletarUsuario()">
+                SIM
+            </button>
+            <button type="button"
+                    class="btn btn-primary"
+                    onclick="$.magnificPopup.close()">
+                NÃO
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modalExcluirContato"
+     class="popup-basic admin-form mfp-with-anim mfp-hide">
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-title">
+                <i class="fa fa-user"></i>Deletar Contato
+            </span>
+        </div>
+        <div class="panel-body p25">
+            <div class="section row">
+                <div class="col-md-12">
+                    Você tem certeza que deseja deletar este contato?
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            <button type="button"
+                    class="btn btn-danger"
+                    ng-click="deletarContato()">
+                SIM
+            </button>
+            <button type="button"
+                    class="btn btn-primary"
+                    onclick="$.magnificPopup.close()">
+                NÃO
+            </button>
+        </div>
+    </div>
+</div>

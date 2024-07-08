@@ -1,0 +1,48 @@
+﻿<div class="tray tray-center" ng-controller="cadastrosAtivarController">
+
+    <div class="panel">
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 mb40">
+                    <h2>Ativar Cadastro</h2>
+                </div>
+            </div>
+            <div class="row mb40">
+                <div class="col-sm-12">
+                    <div ng-controller="inativosTableCntrl">
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button" style="right:11px"><i class="fa fa-filter"></i></button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div id="modal-formAtivar" class="popup-basic admin-form mfp-with-anim mfp-hide">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <i class="fa fa-rocket"></i>Ativar Cadastro
+                </span>
+            </div>
+            <div class="panel-body p25">
+                <div class="section row">
+                    <div class="col-md-12">
+                        <p>Tem certeza que deseja ativar este cadastro?</p>
+                    </div>                     
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <button type="button" class="button btn-success" ng-click="ativaCadastro()">Sim</button>
+            </div>      
+        </div>
+    </div>
+
+</div>

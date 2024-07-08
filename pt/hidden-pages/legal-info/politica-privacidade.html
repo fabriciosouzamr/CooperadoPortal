@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="sysLogin" ng-controller="appController">
+
+<head>
+    <title>Acelera SKY Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="keywords" content="" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <base href="/" />
+    <meta charset="utf-8" />
+
+    <!--BOOTSTRAP-->
+    <link href="../../../assets/libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../assets/libs/bootstrap/bootstrap-theme.min.css" rel="stylesheet" />
+
+    <!--FONTS-->
+    <link href="../../../assets/fonts/font-awesome/font-awesome.css" rel="stylesheet" />
+    <link href="../../../assets/fonts/glyphicons/glyphicons.css" rel="stylesheet" />
+    <link href="../../../assets/css/cookies.css" rel="stylesheet" />
+    <link href="../../../assets/css/warning.css" rel="stylesheet" />
+
+    <!--LIBS-->
+    <!--JQUERY-->
+    <script src="../../../assets/libs/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../../assets/libs/jquery/jquery_ui/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+    <!-- Page Plugins -->
+    <script src="../../../assets/libs/magnific/jquery.magnific-popup.js"></script>
+
+    <!-- VARIAVEIS GLOBAIS -->
+    <script src="globals.js"></script>
+    <script src="../../../assets/js/js.cookie.js"></script>
+    <script src="../../../assets/js/warning.js"></script>
+
+    <!--ANGULAR-->
+    <script src="../../../assets/libs/angularjs/angular1.5.9.min.js"></script>
+    <script src="../../../assets/libs/angularjs/angular-cookies1.5.9.min.js"></script>
+    <script src="../../../assets/libs/angular-ui-router/angular-ui-router0.4.2.min.js"></script>
+    <script src="../../../assets/libs/angularjs/angular-sanitize1.5.9.min.js"></script>
+
+    <!--COMPONENTES PARA O APP, APOS ANGULAR-->
+    <script src="../../../assets/libs/angularjs/moment.min.js"></script>
+
+    <!--LOADER-->
+    <link href="../../../assets/libs/loader/loading-bar.css" rel="stylesheet">
+    <script src="../../../assets/libs/loader/loading-bar.min.js"></script>
+    <script src="../../../assets/libs/loader/loader.js"></script>
+
+    <!--NOTIFY-->
+    <link href="../../../assets/libs/ngNotify/ng-notify.min.css" rel="stylesheet">
+    <script src="../../../assets/libs/ngNotify/ng-notify.min.js"></script>
+
+    <!--ANGULAR INPUT MASK-->
+    <script src="../../../assets/libs/angularInputMasks/angular-input-masks-standalone.min.js"></script>
+
+    <!-- DEVICE DETECTOR -->
+    <script src="../../../assets/libs/deviceDetector/ng-device-detector.js"></script>
+    <script src="../../../assets/libs/deviceDetector/re-tree.js"></script>
+
+    <!--CUSTOM STYLES-->
+    <link href="../../../assets/css/theme.css" rel="stylesheet" />
+    <link href="../../../assets/css/admin-forms.css" rel="stylesheet" />
+    <link href="../../../assets/css/custom.css" rel="stylesheet" />
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" type="text/css" href="../../../assets/libs/magnific/magnific-popup.css">
+
+    <!--APP: CONFIG-->
+    <script src="login/app.module.js?v=1.1"></script>
+    <script src="login/app.services.js?v=1.1"></script>
+    <script src="login/app.controllers.js?v=1.1"></script>
+    <script src="login/app.routes.js?v=1.1"></script>
+
+
+    <link rel="shortcut icon" href="../../../assets/img/favicon.png?v=3">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="external-page external-alt sb-l-c sb-r-c ">
+    <div id="main" class="animated fadeIn">
+        <section id="content_wrapper">
+            <section id="content">
+
+                <div class="admin-form theme-info" id="login">
+                    <div class="row table-layout">
+                        <img src="../../../assets/img/logo2x.png" title="AdminDesigns Logo" class="center-block img-responsive" style="max-width: 275px;">
+                    </div>
+                    <div>
+                        <h2>Política de privacidade para
+                            <a href='#'>Acelera Sky</a>
+                        </h2>
+                        <p>Todas as suas informações pessoais recolhidas, serão usadas para o ajudar a tornar a sua visita no
+                            nosso site o mais produtiva e agradável possível.</p>
+                        <p>A garantia da confidencialidade dos dados pessoais dos utilizadores do nosso site é importante para
+                            o Acelera Sky.</p>
+                        <p>Todas as informações pessoais relativas a membros, assinantes, clientes ou visitantes que usem o
+                            Acelera Sky serão tratadas em concordância com a Lei da Proteção de Dados Pessoais de 26 de outubro
+                            de 1998 (Lei n.º 67/98).</p>
+                        <p>A informação pessoal recolhida pode incluir o seu nome, e-mail, número de telefone e/ou telemóvel,
+                            morada, data de nascimento e/ou outros.</p>
+                        <p>O uso do Acelera Sky pressupõe a aceitação deste Acordo de privacidade. A equipa do Acelera Sky reserva-se
+                            ao direito de alterar este acordo sem aviso prévio. Deste modo, recomendamos que consulte a nossa
+                            política de privacidade com regularidade de forma a estar sempre atualizado.</p>
+                        <h2>Os anúncios</h2>
+                        <p>Tal como outros websites, coletamos e utilizamos informação contida nos anúncios. A informação contida
+                            nos anúncios, inclui o seu endereço IP (Internet Protocol), o seu ISP (Internet Service Provider,
+                            como o Sapo, Clix, ou outro), o browser que utilizou ao visitar o nosso website (como o Internet
+                            Explorer ou o Firefox), o tempo da sua visita e que páginas visitou dentro do nosso website.</p>
+                        <h2>Cookie DoubleClick Dart</h2>
+                        <p>O Google, como fornecedor de terceiros, utiliza cookies para exibir anúncios no nosso website;</p>
+                        <p>Com o cookie DART, o Google pode exibir anúncios com base nas visitas que o leitor fez a outros websites
+                            na Internet;</p>
+                        <h2>Os Cookies e Web Beacons</h2>
+                        <p>Utilizamos cookies para armazenar informação, tais como as suas preferências pessoas quando visita
+                            o nosso website. Isto poderá incluir um simples popup, ou uma ligação em vários serviços que
+                            providenciamos, tais como fóruns.</p>
+                        <p>Em adição também utilizamos publicidade de terceiros no nosso website para suportar os custos de
+                            manutenção. Alguns destes publicitários, poderão utilizar tecnologias como os cookies e/ou web
+                            beacons quando publicitam no nosso website, o que fará com que esses publicitários (como o Google
+                            através do Google AdSense) também recebam a sua informação pessoal, como o endereço IP, o seu
+                            ISP, o seu browser, etc. Esta função é geralmente utilizada para geotargeting (mostrar publicidade
+                            de Lisboa apenas aos leitores oriundos de Lisboa por ex.) ou apresentar publicidade direcionada
+                            a um tipo de utilizador (como mostrar publicidade de restaurante a um utilizador que visita sites
+                            de culinária regularmente, por ex.).</p>
+                        <p>Você detém o poder de desligar os seus cookies, nas opções do seu browser, ou efetuando alterações
+                            nas ferramentas de programas Anti-Virus, como o Norton Internet Security. No entanto, isso poderá
+                            alterar a forma como interage com o nosso website, ou outros websites. Isso poderá afetar ou
+                            não permitir que faça logins em programas, sites ou fóruns da nossa e de outras redes.</p>
+                        <h2>Ligações a Sites de terceiros</h2>
+                        <p>O Acelera Sky possui ligações para outros sites, os quais, a nosso ver, podem conter informações
+                            / ferramentas úteis para os nossos visitantes. A nossa política de privacidade não é aplicada
+                            a sites de terceiros, pelo que, caso visite outro site a partir do nosso deverá ler a politica
+                            de privacidade do mesmo.</p>
+                        <p>Não nos responsabilizamos pela política de privacidade ou conteúdo presente nesses mesmos sites.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <footer id="content-footer" class="loginFooter blurish">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p style="color:white; font-size:18px; margin-top:15px">© 2019 Toyota | Todos os direitos reservados</p>
+                    </div>
+                    <div class="col-xs-6" style="text-align:right">
+                        <div>
+                            <img src="../assets/img/logoRodape.jpg" alt="aq" style="height:60px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div id="modal-form" class=" popup-basic admin-form mfp-with-anim mfp-hide">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <i class="fa fa-rocket"></i>Recuperação de Senha</span>
+                </div>
+                <form method="post" action="/" id="comment">
+                    <div class="panel-body p25">
+                        <div class="section row">
+                            <div class="col-md-12">
+                                <label for="cpf" class="field prepend-icon">
+                                    <input type="text" name="cpf" id="cpf" class="gui-input" placeholder="CPF" ng-model="recuperaCpf" ui-br-cpf-mask>
+                                    <label for="cpf" class="field-icon">
+                                        <i class="fa fa-user"></i>
+                                    </label>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <button type="button" class="button btn-danger" ng-click="recuperaSenha();">Recuperar Senha</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function abreModal(modal, effect) {
+            $.magnificPopup.open({
+                removalDelay: 500, //delay removal by X to allow out-animation,
+                items: {
+                    src: modal
+                },
+                // overflowY: 'hidden', // 
+                callbacks: {
+                    beforeOpen: function (e) {
+                        this.st.mainClass = effect;
+                    }
+                },
+                midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+            });
+        }
+    </script>
+</body>
+
+</html>

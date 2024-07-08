@@ -1,0 +1,116 @@
+﻿<style>
+    .alert {
+        color: #002C5F !important;
+        outline: 0;
+        border: 0;
+        font-size: 11px;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<div ng-controller="cadastrosDealerController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="container-fluid pd-bottom-20">
+                <h1>Dados cadastrais do Dealer</h1>
+            </div>
+            <div class="container-fluid well">
+                <div class="row">
+                    <div class="col-md-4">
+                        <md-input-container>
+                            <label>Razão Social:</label>
+                            <input type="text" ng-model="dealer.razaoSocial" maxlength="150" autocomplete="off" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-4">
+                        <md-input-container>
+                            <label>Nome Fantasia:</label>
+                            <input type="text" ng-model="dealer.nomeFantasia" maxlength="100" autocomplete="off" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-2">
+                        <md-input-container>
+                            <label>CNPJ:</label>
+                            <input type="text" ng-model="dealer.cnpj" ui-br-cnpj-mask />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-2">
+                        <md-input-container>
+                            <label>Código:</label>
+                            <input type="text" ng-model="dealer.codigo" restrict-to="[0-9]" maxlength="8" autocomplete="off" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-2">
+                        <md-input-container>
+                            <label>Telefone:</label>
+                            <input type="text" ng-model="dealer.telefone" ui-br-phone-number />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-2">
+                        <md-input-container>
+                            <label>Cep:</label>
+                            <input type="text" ng-model="dealer.cep"
+                                   ui-br-cep-mask />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-4">
+                        <md-input-container>
+                            <label>Logradouro:</label>
+                            <input type="text" ng-model="dealer.logradouro" maxlength="150" autocomplete="off" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-4">
+                        <md-input-container>
+                            <label>Bairro:</label>
+                            <input type="text" ng-model="dealer.bairro" maxlength="50" autocomplete="off" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>UF:</label>
+                            <md-select ng-model="dealer.uf">
+                                <md-option ng-repeat="uf in ufs" value="{{ uf.ufId }}" ng-click="getUFID(uf.ufId)">
+                                    {{ uf.sigla }}
+                                </md-option>
+                            </md-select>
+                            <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cidade:</label>
+                            <md-select ng-model="dealer.cidade" ng-disabled="!cities">
+                                <md-option ng-repeat="citie in cities" value="{{ citie.cidadeId }}">
+                                    {{ citie.nome }}
+                                </md-option>
+                            </md-select>
+                            <div class="md-errors-spacer">
+                                <span class="alert" ng-show="!cities">*Selecione uma UF para habilitar este campo</span>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-8"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 pd-t-b-10">
+                        <button type="button" class="btn btn-primary" ng-click="createDealer()">
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

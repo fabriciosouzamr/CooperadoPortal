@@ -1,0 +1,255 @@
+<style>
+    .administrator {
+        min-height: 46.8vh;
+    }
+
+    #content-footer.loginFooter {
+        width: 100%;
+        left: unset;
+        background-color: #fff;
+        border-top: 1.5px solid #E5E5E5;
+        height: 65px;
+        position: inherit;
+        bottom: 0px;
+        padding: 6px;
+        color: #000;
+        padding: 7px;
+        margin-top: 14%;
+    }
+
+    .remove-icon {
+        color: #002C5F !important !important;
+        cursor: pointer;
+        transition: 0.3s all;
+    }
+
+        .remove-icon:hover {
+            transform: scale(1.1);
+            transition: 0.3s all;
+        }
+
+    h2 {
+        font-weight: 100;
+    }
+
+    b {
+        color: #002C5F !important;
+    }
+
+    @font-face {
+        font-family: 'DIN2014-Regular';
+        src: url('../triumph/DIN2014-Regular.eot');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .notice {
+        padding: 0;
+        margin: 3rem 0 0 0;
+        list-style: none;
+        border-radius: 5px;
+        min-height: 100px;
+        max-height: 150px;
+        background: white;
+        box-shadow: 3px 3px 3px rgba(0,0,0,.005);
+        position: relative;
+    }
+
+        .notice h1 {
+            padding: .5rem;
+            background: #002C5F !important;
+            color: white;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 5px 0px 0 1px;
+        }
+
+        .notice p {
+            padding: 0 .5rem;
+        }
+
+        .notice small {
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            color: #002C5F !important;
+        }
+
+    .emailconfirmation {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: -62px;
+    }
+
+        .emailconfirmation p {
+            font-size: 18px;
+        }
+
+        .emailconfirmation form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .emailconfirmation form input {
+                outline: none;
+                border: none;
+                margin: 1rem;
+                width: 350px;
+                background: transparent;
+                border-bottom: 1px solid grey !important;
+            }
+
+            .emailconfirmation form button {
+                background: red;
+                color: white;
+                border: none;
+                padding: 1rem 3rem;
+            }
+
+                .emailconfirmation form button:disabled {
+                    background: grey !important;
+                    cursor: not-allowed;
+                }
+
+    .titleHome {
+        font-family: 'DIN2014-Regular';
+        color: #000;
+        text-transform: uppercase;
+        padding: 25px;
+        font-size: 22px;
+    }
+</style>
+<div ng-controller="homeController">
+    <!-- Carousel -->
+    <div ng-if="usuarioLogado.emailConfirmado == true" id="myCarousel" class="carousel slide" data-interval="2500">
+        <div class="carousel-inner">
+            <div ng-repeat="slide in slider"
+                 ng-class="{'active': slide.id == 0}"
+                 class="item"
+                 style="background: url('{{ slide.img }}') no-repeat center; background-size: cover; height: 40vh;"></div>
+        </div>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+
+    <!-- Confirmação de Email-->
+    <div ng-show="showConfirmation && usuarioLogado.emailConfirmado !== true" class="emailconfirmation">
+        <h1>Olá {{ usuarioLogado.nome }} !</h1>
+        <p>Para continuar acessando o portal, por favor informe o e-mail atualizado:</p>
+        <form>
+            <input ng-model="email"
+                   type="email"
+                   placeholder="E-mail"
+                   required />
+            <input ng-model="confirmacaoEmail"
+                   type="email"
+                   placeholder="Confirmação de e-mail"
+                   required />
+            <small ng-show="email !== confirmacaoEmail || !email || !confirmacaoEmail" style="color: red;">*E-mail e Confirmação de e-mail devem ser iguais.</small>
+            <button ng-click="confirmEmail()"
+                    ng-disabled="email !== confirmacaoEmail || !email || !confirmacaoEmail">
+                Enviar
+            </button>
+        </form>
+    </div>
+
+    <!-- Visão do Dealer / Agência -->
+    <section ng-show="usuarioLogado.emailConfirmado == true" class="container dealers" ng-if="usuarioLogado.perfil == 'Dealer' || usuarioLogado.perfil == 'Agencia' && usuarioLogado.emailConfirmado == true">
+        <!-- Últimas notícias -->
+        <div class="col-sm-12" ng-show="notices.length > 0">
+            <h2 class="titleHome text-center">Notícias</h2>
+            <div ng-repeat="notice in notices">
+                <ul class="notice">
+                    <li>
+                        <div class="DataNews">{{ notice.data | date: "dd/MM/yyyy"}}</div>
+                        <div Class="TituloNews">{{ notice.titulo }} <span></span></div>
+                        <div Class="AssuntoNews"> {{ notice.descricao }}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tabela de Inconsistências exibida aos dealers e agência -->
+        <div class="col-sm-12"
+             ng-show="usuarioLogado.perfil !== 'Administrador' && usuarioLogado.perfil !== 'Auditor' && usuarioLogado.perfil !== 'Financeiro'">
+            <div class="col-sm-12 container">
+                <h2 class="titleHome text-center" style="margin-top: 5%;">Minhas Inconsistências</h2>
+            </div>
+
+            <div class="container">
+                <div class="col-sm-12 mt20" ng-if="usuarioLogado.perfil == 'Dealer'">
+                    <div class="table-responsive table-home-1">
+                        <div ng-controller="inconsistenciaTableCntrl">
+                            <div id="grid1"
+                                 ui-grid="gridOptions1"
+                                 ui-grid-pagination
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid-selection
+                                 class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 mt20" ng-if="usuarioLogado.perfil == 'Agencia'">
+                    <div class="table-responsive table-home-1">
+                        <div ng-controller="inconsistenciasAgenciaTableCntrl">
+                            <div id="grid1"
+                                 ui-grid="gridOptions1"
+                                 ui-grid-pagination
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid-selection
+                                 class="grid">
+                                <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                                    <div class="msg">
+                                        <span>Sem registros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Visão Administrador, Auditor e Financeiro -->
+    <section class="administrator" ng-show="usuarioLogado.perfil == 'Administrador'  || usuarioLogado.perfil == 'Consultor' || usuarioLogado.perfil == 'Financeiro' || usuarioLogado.perfil == 'Auditor' && usuarioLogado.emailConfirmado == true && notices.length > 0">
+        <!-- Últimas notícias -->
+        <div class="col-sm-12" ng-if="usuarioLogado.emailConfirmado">
+            <h2 class="titleHome text-center">Notícias</h2>
+            <div ng-repeat="notice in notices">
+                <ul class="notice">
+                    <li>
+                        <div class="DataNews">{{ notice.data | date: "dd/MM/yyyy"}}</div>
+                        <div Class="TituloNews">{{ notice.titulo }} <span></span></div>
+                        <div Class="AssuntoNews"> {{ notice.descricao }}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+</div>

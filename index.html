@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br" ng-app="sysLogin" ng-controller="appController">
+<head>
+    <title>Hyundai - Mídia Cooperada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#002C5F !important">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <!-- <base href="/Admin/" /> -->
+    <base href="/" />
+    <meta charset="utf-8" />
+
+    <!--BOOTSTRAP-->
+    <link href="assets/libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/libs/bootstrap/bootstrap-theme.min.css"
+          rel="stylesheet" />
+
+    <!--FONTS-->
+    <link href="assets/fonts/font-awesome/font-awesome.css" rel="stylesheet" />
+    <link href="assets/fonts/glyphicons/glyphicons.css" rel="stylesheet" />
+    <link href="assets/css/cookies.css" rel="stylesheet" />
+    <link href="assets/css/warning.css" rel="stylesheet" />
+
+    <!--LIBS-->
+    <!-- OWL CAROUSEL-->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+    <link rel="stylesheet"
+          href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+
+    <!--JQUERY-->
+    <script src="assets/libs/jquery/jquery-1.11.1.min.js"></script>
+    <script src="assets/libs/jquery/jquery_ui/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+    <!-- Page Plugins -->
+    <script src="assets/libs/magnific/jquery.magnific-popup.js"></script>
+
+    <!-- VARIAVEIS GLOBAIS -->
+    <script src="globals.js"></script>
+    <script src="assets/js/js.cookie.js"></script>
+    <script src="assets/js/warning.js"></script>
+
+    <!--ANGULAR-->
+    <script src="assets/libs/angularjs/angular1.5.9.min.js"></script>
+    <script src="assets/libs/angularjs/angular-cookies1.5.9.min.js"></script>
+    <script src="assets/libs/angular-ui-router/angular-ui-router0.4.2.min.js"></script>
+    <script src="assets/libs/angularjs/angular-sanitize1.5.9.min.js"></script>
+
+    <!--COMPONENTES PARA O APP, APOS ANGULAR-->
+    <script src="assets/libs/angularjs/moment.min.js"></script>
+
+    <!--LOADER-->
+    <link href="assets/libs/loader/loading-bar.css" rel="stylesheet" />
+    <script src="assets/libs/loader/loading-bar.min.js"></script>
+    <script src="assets/libs/loader/loader.js"></script>
+
+    <!--NOTIFY-->
+    <link href="assets/libs/ngNotify/ng-notify.min.css" rel="stylesheet" />
+    <script src="assets/libs/ngNotify/ng-notify.min.js"></script>
+
+    <!--ANGULAR INPUT MASK-->
+    <script src="assets/libs/angularInputMasks/angular-input-masks-standalone.min.js"></script>
+
+    <!-- DEVICE DETECTOR -->
+    <script src="assets/libs/deviceDetector/ng-device-detector.js"></script>
+    <script src="assets/libs/deviceDetector/re-tree.js"></script>
+
+    <!--CUSTOM STYLES-->
+    <link href="assets/css/theme.css" rel="stylesheet" />
+    <link href="assets/css/admin-forms.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/style-toyota.css" rel="stylesheet" />
+    <link href="assets/css/login.css" rel="stylesheet" />
+
+    <link href="../assets/fonts/triumph/stylesheet.css" rel="stylesheet" />
+    <!-- Vendor CSS -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="assets/libs/magnific/magnific-popup.css" />
+
+    <!--APP: CONFIG-->
+    <script src="login/app.module.js?v=1.1"></script>
+    <script src="login/app.services.js?v=1.1"></script>
+    <script src="login/app.controllers.js?v=1.1"></script>
+    <script src="login/app.routes.js?v=1.1"></script>
+
+    <link rel="shortcut icon" href="assets/img/favicon.png" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        ::-webkit-input-placeholder {
+            color: #ddddddd9;
+            font-family: 'DIN2014-Regular';
+            font-size: 12px;
+        }
+
+        input:-moz-placeholder {
+            color: #fff;
+            font-family: 'DIN2014-Regular';
+        }
+
+        textarea:-moz-placeholder {
+            color: #fff;
+            font-family: 'DIN2014-Regular';
+        }
+    </style>
+</head>
+
+<body id="bg-login" class="external-page external-alt sb-l-c sb-r-c   bodyLogin" style="background-position: center;">
+    <div id="main" class="animated fadeIn">
+
+        <div class="boxLogin container pull-left flex" id="loginBox">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="divImg">
+                        <img src="assets/img/LOGO BRANCO.png" class="logoLogin img-responsive">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h1 class="titleLogin">mídia cooperada</h1>
+                    <h1 class="subtitleLogin">Acesse com seu login</h1>
+                </div>
+                <form method="post"
+                      action="/"
+                      id="login"
+                      class="mt-0 admin-form theme-info"
+                      autocomplete="off"
+                      ng-keydown="$event.which === 13 && login()">
+                    <div class="p25 pb15">
+                        <div class="section">
+                            <label for="username"
+                                   class="field-label text-muted fs18 mb10"></label>
+                            <label for="username" class="field prepend-icon boxuser">
+                                <input ng-model="usuario"
+                                       type="text"
+                                       name="usuario"
+                                       id="usuario"
+                                       class="gui-input"
+                                       placeholder="Usuário" />
+                                <label for="username" class="field-icon">
+
+                                </label>
+                            </label>
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="loginBox">
+                            <label for="username"
+                                   class="field-label text-muted fs18 mb10"></label>
+                            <label for="password" class="field prepend-icon">
+                                <input ng-model="senha"
+                                       type="password"
+                                       name="senha"
+                                       id="senha"
+                                       class="gui-input"
+                                       placeholder="Senha" />
+                                <label for="password" class="field-icon">
+
+                                </label>
+                            </label>
+                        </div>
+                        <div class="section pull-left esqueciSenha">
+                            <div class="section forgotPass text-right">
+                                <a onclick="abreModal('#modal-form','mfp-sign');">Esqueci a senha</a>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button"
+                                    class="button button-toyota btn-lg"
+                                    ng-click="login()">
+                                Entrar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-form"
+         class=" popup-basic admin-form mfp-with-anim mfp-hide">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <i class="fa fa-rocket"></i>Recuperação de Senha
+                </span>
+            </div>
+            <form method="post" action="/" id="comment">
+                <div class="panel-body p25">
+                    <div class="section row">
+                        <div class="col-md-12">
+                            <label for="cpf" class="field prepend-icon">
+                                <input type="text"
+                                       class="gui-input"
+                                       placeholder="login"
+                                       ng-model="recuperaCpf" />
+                                <label for="cpf" class="field-icon">
+                                    <i class="fa fa-user"></i>
+                                </label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <button type="button"
+                            class="btn btn-danger"
+                            ng-click="recuperaSenha();">
+                        Recuperar Senha
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function abreModal(modal, effect) {
+            $.magnificPopup.open({
+                removalDelay: 500, //delay removal by X to allow out-animation,
+                items: {
+                    src: modal
+                },
+                // overflowY: 'hidden', //
+                callbacks: {
+                    beforeOpen: function (e) {
+                        this.st.mainClass = effect;
+                    }
+                },
+                midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+            });
+        }
+    </script>
+</body>
+</html>

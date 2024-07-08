@@ -1,0 +1,354 @@
+<style>
+    .agency-area {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .panel-body {
+        padding: 0 15px;
+    }
+
+    .badgeDealer {
+        display: flex;
+        padding: 1rem 4rem;
+        background: rgb(211, 211, 211);
+        margin: .5rem;
+        color: #333;
+        border-radius: 25px;
+        position: relative;
+    }
+
+        .badgeDealer i {
+            position: absolute;
+            right: 15px;
+            color: #002C5F !important;
+            outline: 0;
+        }
+
+    .dealerList {
+        margin-bottom: 9.5px;
+        position: absolute;
+        margin-top: 3rem;
+        background: whitesmoke;
+        padding: .5rem;
+        width: 100%;
+        z-index: 9999;
+        height: 300px;
+        overflow-y: auto;
+    }
+
+        .dealerList li {
+            list-style: none;
+            padding: 1rem .5rem;
+        }
+
+    .selectedDealer {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .selectedDealerName {
+        position: absolute;
+        top: 25px;
+    }
+
+    .close-button {
+        position: absolute;
+        right: 50px;
+        font-size: 20px;
+        top: 25px;
+        color: #002C5F !important;
+        border: none;
+        background: transparent;
+        z-index: 999 !important;
+        outline: 0 !important;
+    }
+
+    .panel {
+        min-height: 73.8vh;
+    }
+
+    .vinculo--child {
+        margin-left: 30px;
+    }
+</style>
+<div>
+    <div ng-controller="cadastrosUserController" ng-show="usuarioLogado.emailConfirmado">
+
+        <div class="panel">
+            <div class="panel-body">
+                <h3>Dados cadastrais</h3>
+                <form autocomplete="off">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container>
+                                    <label>Nome:</label>
+                                    <input type="text" ng-model="dealer.nome" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-6">
+                                <md-input-container>
+                                    <label>Email:</label>
+                                    <input type="email" ng-model="dealer.email" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-3">
+                                <md-input-container>
+                                    <label>Login:</label>
+                                    <input type="text" ng-model="dealer.login" ng-disabled="id" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-3">
+                                <md-input-container>
+                                    <label>Telefone:</label>
+                                    <input type="text" ng-model="dealer.telefone" ui-br-phone-number />
+                                </md-input-container>
+                            </div>
+                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Categorias de Acesso:</label>
+                                    <md-select ng-model="dealer.perfil.nome">
+                                        <md-option ng-repeat="state in perfisList" value="{{ state.nome }}"
+                                                   ng-click="hanldePerfilName(state.nome)">{{ state.nome }}</md-option>
+                                    </md-select>
+                                    <div class="md-errors-spacer"></div>
+                                </md-input-container>
+                            </div>
+                            <!-- Selecione um Dealer -->
+                            <div class="col-sm-3 col-md-3 col-lg-3" ng-if="dealer.perfil.nome == 'Dealer'">
+
+                                <div class="selectedDealer">
+                                    <span class="selectedDealerName">{{ selectedDealerName }}</span>
+                                    <button ng-click="selectAnotherDealer()" class="close-button">
+                                        <i title="Trocar o dealer" ng-show="selectedDealerName" class="far fa-times-circle"></i>
+                                    </button>
+
+                                </div>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+
+                                    <label style="margin-bottom: 3rem; font-size: 10px;">
+                                        Digite o nome do Dealer com ao menos 3
+                                        letras:
+                                    </label>
+
+                                    <input ng-show="!selectedDealerName" type="text" ng-model="selectedDealer" ng-change="choiceDealer()">
+
+                                    <ul class="dealerList" ng-show="!hideDealerList">
+
+                                        <li ng-repeat="dealer in dealers | filter: selectedDealer">
+                                            <a ng-click="selectDealer(dealer.nomeFantasia, dealer.dealerID)">{{ dealer.nomeFantasia }}</a>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="md-errors-spacer"></div>
+
+                                </md-input-container>
+                            </div>
+
+                            <!-- Selecione um ou mais dealers (Visão da Agência) -->
+                            <div class="col-sm-3 col-md-3 col-lg-3" ng-if="dealer.perfil.nome == 'Agencia'">
+
+                                <div class="selectedDealer">
+                                    <span class="selectedDealerName">{{ selectedDealerName }}</span>
+                                    <button ng-click="selectAnotherDealer()" class="close-button">
+                                        <i title="Trocar o dealer" ng-show="selectedDealerName" class="far fa-times-circle"></i>
+                                    </button>
+
+                                </div>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+
+                                    <label style="margin-bottom: 3rem; font-size: 10px;">
+                                        Digite o nome do Dealer com ao menos 3
+                                        letras:
+                                    </label>
+
+                                    <input ng-show="!selectedDealerName" type="text" ng-model="selectedDealer" ng-change="choiceDealer()">
+
+                                    <ul class="dealerList" ng-show="!hideDealerList">
+
+                                        <li ng-repeat="dealer in dealers | filter: selectedDealer">
+                                            <a ng-click="selectDealerToAgency(dealer.nomeFantasia, dealer.dealerID)">{{ dealer.nomeFantasia }}</a>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="md-errors-spacer"></div>
+
+                                </md-input-container>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6"
+                                 ng-show=" perfil == 'Dealer' || perfil == 'Agencia' || dealer.perfil.nome == 'Dealer' || dealer.perfil.nome == 'Agencia' || dealer.perfil.nome == 'Consultor' || dealer.perfil.nome == 'Administrador'">
+                                <label>Acesso:</label><br />
+                                <md-container ng-repeat="app in applications">
+                                    <md-checkbox ng-checked="app.checked == true" value="{{ app.applicationId}}"
+                                                 ng-click="selectAppID(app)">
+                                        {{ app.applicationName }} - {{ app.applicationPerc}} %
+                                    </md-checkbox>
+                                </md-container>
+                            </div>
+
+                            <div class="col-md-6" ng-show=" dealer.perfil.nome == 'Consultor' || perfil == 'Agencia' ">
+                                <label>Selecionar vinculo:</label>
+                                <div style="max-height: 200px; overflow-y: scroll;">
+
+                                    <fieldset class="vinculo-field" ng-repeat="vinculo in vinculos track by $index">
+                                        <md-checkbox aria-label="Select All" ng-checked="vinculo.adicionarNovosDealersAutomaticamente"
+                                                     md-indeterminate="vinculo.temAcesso"
+                                                     ng-click="toggleAll(vinculo.regiaoId, vinculo.adicionarNovosDealersAutomaticamente)">
+                                            {{ vinculo.nome }}
+                                        </md-checkbox>
+                                        <button id="btnPlusR_{{$index}}" class="btn btn-default btn-xs btnOpen"
+                                                ng-click="openListTable($index)">
+                                            <i class="fa fa-plus"></i><i class="fa fa-minus"></i>
+                                        </button>
+
+                                        <div id="listRegiao_{{$index}}" class="hide">
+                                            <div class="vinculo--child" flex="100" ng-repeat="item in vinculo.dealers">
+                                                <md-checkbox ng-checked="item.temAcesso"
+                                                             ng-click="toggle(item.dealerId, item.temAcesso, vinculo.regiaoId )">
+                                                    {{ item.codigo }} - {{ item.nomeFantasia }}
+                                                </md-checkbox>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <md-input-container>
+                                    <label>Senha:</label>
+                                    <input type="password" name="password" ng-model="dealer.senha" autocomplete="new-password" />
+                                </md-input-container><small ng-show="dealer.senha !== dealer.confirmaSenha && !userData.id"
+                                                            style="color: red">Senha e Confirmar senha devem ser iguais</small>
+                            </div>
+                            <div class="col-md-3">
+                                <md-input-container>
+                                    <label>Confirmar Senha:</label>
+                                    <input type="password" ng-model="dealer.confirmaSenha" />
+                                </md-input-container>
+                                <small ng-show="dealer.senha !== dealer.confirmaSenha && !userData.id" style="color: red">
+                                    Senha e
+                                    Confirmar senha devem ser iguais*
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-show="dealer.perfil.nome == 'Agencia'">
+                            <h3>Perfil vinculado aos Dealers:</h3>
+                            <div class="well agency-area">
+                                <span class="badgeDealer" ng-repeat="d in listaDeDealers">
+                                    {{ d.dealerNome }} <i ng-click="removeDealerFromList(d)" class="fas fa-times"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <hr />
+        </div>
+
+        <div class="col-sm-12" ng-if="showAddRegiao">
+
+            <h3>Regiões</h3>
+
+            <div class="row mt20">
+                <md-checkbox ng-repeat="state in aovList track by $index" ng-model="state.selected" aria-label="Toyota"
+                             class="col-sm-2">
+                    {{state.nome}}
+                </md-checkbox>
+            </div>
+        </div>
+
+        <div class="col-sm-12" ng-if="showAddDealer">
+            <div class="row mt20">
+                <h2 class="col-sm-8">Dados cadastrais do Dealer</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>AOV:</label>
+                        <md-select ng-model="selectedAov" ng-change="aovChange()">
+                            <md-option ng-repeat="state in aovList track by $index" value="{{ state }}">{{ state.label }}</md-option>
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                    </md-input-container>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Dealer:</label>
+                        <md-select ng-model="selectedDealer" ng-change="dealerChange()">
+                            <md-option ng-repeat="state in dealerList track by $index" value="{{ state }}">
+                                {{ state.label }}
+                            </md-option>
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                    </md-input-container>
+                </div>
+                <button type="button" ng-disabled="selectedDealer == null && selectedAov == null"
+                        class="btn btn-primary col-sm-2" ng-click="clearDealer()" ng-if="editingDealer == -1">
+                    Limpar
+                </button>
+                <button type="button" ng-disabled="selectedDealer == null || selectedAov == null"
+                        class="btn btn-danger col-sm-2" ng-if="editingDealer == -1" ng-click="addDealer()">
+                    Adicionar Dealer
+                </button>
+
+                <button type="button" ng-disabled="selectedDealer == null && selectedAov == null"
+                        class="btn btn-primary col-sm-2" ng-click="clearDealer()" ng-if="editingDealer != -1">
+                    cancelar
+                </button>
+                <button type="button" ng-disabled="selectedDealer == null || selectedAov == null"
+                        class="btn btn-danger col-sm-2" ng-if="editingDealer != -1" ng-click="addDealer()">
+                    ok
+                </button>
+            </div>
+
+            <div class="row">
+                <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns
+                     ui-grid-move-columns ui-grid-selection class="grid">
+                    <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                        <div class="msg">
+                            <span>Sem registros</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mt20 mb20 text-center">
+            <button type="button" ng-if="dealer.status == false" class="btn btn-primary mr20" ng-click="activateUser()">
+                Ativar
+            </button>
+            <button type="button" ng-if="dealer.status == true" class="btn btn-primary mr20" ng-click="inactivateUser()">
+                Desativar
+            </button>
+            <button ng-if="userData.id " type="button" class="btn btn-danger mr20" ng-click="updateUser()">
+                Salvar alteração
+            </button>
+            <button ng-if="!userData.id" type="button" class="btn btn-danger mr20"
+                    ng-disabled="dealer.senha !== dealer.confirmaSenha" ng-click="newUser()">
+                Criar usuário
+            </button>
+            <button type="button" class="btn btn-primary mr20" ng-click="voltarClickHandler()">
+                Voltar
+            </button>
+        </div>
+
+
+    </div>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>

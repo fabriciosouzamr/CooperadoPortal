@@ -1,0 +1,1095 @@
+    <style>
+
+    .col-sm-12.mt20.table-responsive.table-reembolso-2 {
+      height: 200px;
+    }
+    .reembolso-line{
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      margin: 1rem 0;
+    }
+    .reembolso-line:nth-child(odd){
+      background: #efefef;
+    }
+    .reembolso-line span{
+      width: 50%;
+    }
+    .reembolso-line b{
+      width: 20%;
+    }
+    .reembolso-line i{
+      display: flex;
+      justify-content: center;
+      width: 10%;
+      transition: .3s all;
+    }
+    .reembolso-line i:hover{
+      transform: scale(1.1);
+      transition: .3s all;
+      color: #002C5F !important;
+    }
+    .total-item{
+      background: red !important;
+    }
+    .aditional-infos {
+       display: flex;
+       justify-content: space-evenly;
+     }
+     .aditional-infos strong{
+       color: #002C5F !important;
+     }
+  </style>
+  <section class="dealer" ng-if="usuarioLogado.perfil == 'Dealer'">
+      <div ng-controller="reembolsoController">
+          <div class="panel">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h1>Solicitar Reembolso</h1>
+                </div>
+              </div>
+              <!--Marcas-->
+              <div class="row">
+                <div class="col-sm-12">
+                  <ul class="globalnav">
+                    <li
+                      class="marcaNav"
+                      ng-class="{'active': marcaActive == 'toyota'}"
+                      ng-if="usuarioLogado.permissionT50 || usuarioLogado.permissionT100"
+                    >
+                      <a herf="#" ng-click="changeMarca('toyota');"
+                        ><span class="logo">t</span>TOYOTA</a
+                      >
+                    </li>
+                    <li
+                      class="marcaNav"
+                      ng-class="{'active': marcaActive == 'lexus'}"
+                      ng-if="usuarioLogado.permissionL50 || usuarioLogado.permissionL100"
+                    >
+                      <a herf="#" ng-click="changeMarca('lexus');"
+                        ><span class="logo">l</span>LEXUS</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!--abas toyotas-->
+              <div class="row">
+                <div class="col-sm-12" ng-show="marcaActive=='toyota'">
+                  <ul class="nav nav-tabs">
+                    <li
+                      ng-class="{'active': abaActive == 'midia50'}"
+                      ng-if="usuarioLogado.permissionT50"
+                    >
+                      <a href="javascript:;" ng-click="changeAba('midia50', 'toyota');"
+                        >Mídia 50%</a
+                      >
+                    </li>
+                    <li
+                      ng-class="{'active': abaActive == 'midia100'}"
+                      ng-if="usuarioLogado.permissionT100"
+                    >
+                      <a href="javascript:;" ng-click="changeAba('midia100', 'lexus');"
+                        >Mídia 100%</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!--abas lexus-->
+              <div class="row">
+                <div class="col-sm-12" ng-show="marcaActive=='lexus'">
+                  <ul class="nav nav-tabs">
+                    <li
+                      ng-class="{'active': abaActive == 'midia50'}"
+                      ng-if="usuarioLogado.permissionL50"
+                    >
+                      <a href="javascript:;" ng-click="changeAba('midia50', 'toyota');"
+                        >Mídia 50%</a
+                      >
+                    </li>
+                    <li
+                      ng-class="{'active': abaActive == 'midia100'}"
+                      ng-if="usuarioLogado.permissionL100"
+                    >
+                      <a href="javascript:;" ng-click="changeAba('midia100', 'lexus');"
+                        >Mídia 100%</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+        
+              <!--midia 50 e midia 100-->
+              <div ng-show="abaActive=='midia50' || abaActive == 'midia100'">
+                <div class="row mb20 mt20">
+                  <div class="col-sm-12 mt10">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                          <label>Ano Fiscal:</label>
+                          <md-select ng-model="filtro.ano" ng-change="filtrar()">
+                            <md-option
+                              ng-repeat="state in anoFiscal"
+                              value="{{ state.anoFiscal }}"
+                              >{{ state.anoFiscalComNormal }}
+                            </md-option>
+                          </md-select>
+                          <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                      </div>
+                      <div class="col-sm-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                          <label>Mês:</label>
+                          <md-select ng-model="filtro.mes" ng-change="filtrar()">
+                            <md-option
+                              ng-repeat="state in meses"
+                              value="{{ state.mesId }}"
+                              >{{ state.mes }}</md-option
+                            >
+                          </md-select>
+                          <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div class="col-sm-12" ng-if="abaActive=='midia50'">
+                    <div class="alert alert-default">
+                      <p>
+                        * Neste mês, o seu limite de reembolso é de
+                        <span class="strong">{{ verbaGeral.verbaBrutaTodos | currency }}</span
+                        >. Para recebê-lo integralmente, o valor gasto a ser aprovado
+                        deve ser de
+                        <span class="strong">{{ verbaGeral.verbaBrutaTodos*2 | currency }}</span
+                        >.
+                      </p>
+                      <p>
+                        Dúvidas sobre a verba a ser recebida?
+                        <a onclick="abreModal('#modalDuvidaVerba', 'mfp-sign')"
+                          >Clique aqui</a
+                        >.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="row mb20 mt20">
+                  <div class="col-sm-12">
+                    <div class="titles">
+                        <div class="col-sm-6">
+                          <h3 style="padding-left: 1rem">DETALHE - <span style="font-weight: 100; font-size: 15px">Veja abaixo a sua verba no mês</span></h3>
+                          
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                      <h3 style="padding-left: 1rem">RESUMO - <span style="font-weight: 100; font-size: 15px">Veja abaixo a sua utilização da verba no mês</span></h3>
+                    </div>
+                    <!-- Detalhe  -->
+                    <div class="mt20 col-sm-6">
+        
+                      <div class="reembolso-line">
+                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor pago pela montadora."></i>
+                        <span>Valor liberado TDB (Teto):</span>
+                        <b style="color: rgb(37, 180, 37)">{{ verbaGeral.verbaBrutaTodos | currency }}</b>
+                      </div>
+        
+                      <div class="reembolso-line"
+                        ng-if="abaActive == 'midia50'">
+                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor adicional."></i>
+                        <span>Verba Extra:</span> 
+                        <b style="color: rgb(37, 180, 37)">{{ verbaGeral.verbaExtraDealer | currency }}</b>
+                      </div>
+        
+                      <div class="reembolso-line" 
+                      ng-if="marcaActive == 'toyota' && abaActive == 'midia10000'">
+        
+                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Escrever mensagem com breve descrição."></i>
+                        <span>Valor liberado região (Dentsu)</span>
+                        <b style="color: rgb(37, 180, 37)">{{ verbaGeral. verbaBrutaAgencia| currency }}</b>
+                      </div>
+        
+                      <div class="reembolso-line" ng-if="abaActive == 'midia50'">
+                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor a ser comprovado."></i>
+                        <span>Total a comprovar:</span> 
+                        <b style="color: orange">{{ verbaGeral.verbaBrutaTodos*2 | currency }}</b>
+                      </div>       
+                      
+                      <div class="reembolso-line" ng-if="abaActive == 'midia100'">
+                          <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor a ser comprovado."></i>
+                          <span>Total a comprovar:</span> 
+                          <b style="color: orange">{{ verbaGeral.verbaBrutaTodos | currency }}</b>
+                        </div>       
+                    </div>
+                   
+                    <!-- Resumo  -->
+                    <div class="col-sm-6">
+                    <div class="mt20 col-sm-12">
+                        <div class="reembolso-line">
+                          <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Total comprovado pelo Dealer."></i>
+                          <span>Total Comprovado:</span>
+                          <b style="color: orange">{{ verbaGeral.valorSolicitadoBrutoTodos | currency }}</b>
+                        </div>
+                        <div class="reembolso-line">
+                          <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Total aprovado pela auditoria."></i>
+                          <span>Total Aprovado:</span> 
+                          <b style="color: rgb(37, 180, 37)">{{ verbaGeral.valorAprovadoLiquidoTodos | currency }}</b>
+                        </div>
+                        <div class="reembolso-line">
+                          <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Total reprovado pela auditoria."></i>
+                          <span>Total Reprovado:</span>
+                          <b style="color:red">{{ verbaGeral.valorReprovadoLiquidoDealer | currency }}</b>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="total-itens col-sm-12 mt-40" style="padding: 1rem 0;">
+                      <h3 ng-if="abaActive == 'midia50' && marcaActive == 'toyota'" style="padding-left: 1rem">COMPROVAÇÃO - <span style="font-weight: 100; font-size: 15px">Veja abaixo os valores disponíveis</span></h3>
+                    </div>  
+                    <div class="vlrsdisponiveis">
+                        <div class="reembolso-line col-sm-12" 
+                        ng-if="marcaActive == 'toyota' && abaActive == 'midia50'">
+                        
+                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor a ser comprovado pela Dentsu."></i>
+                        <span>Disponível para Retail:</span>
+                        <b style="color: rgb(37, 180, 37)">{{ verbaGeral. verbaBrutaAgencia| currency }}</b>
+                      </div>             
+                      
+                      <div class="reembolso-line col-sm-12" 
+                        ng-if="marcaActive == 'toyota' && abaActive == 'midia50'">
+        
+                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Valor a ser comprovado pelo Dealer.git "></i>
+                        <span>Disponível para Dealer:</span>
+                        <b style="color: rgb(37, 180, 37)">{{ verbaGeral.verbaBrutaTodos*2 - verbaGeral. verbaBrutaAgencia | currency }}</b>
+                      </div>          
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="aditional-infos col-sm-12 mt40">
+                    <p>
+                        <strong><i class="fas fa-dollar-sign"></i> Valor Solicitado pelo Dealer:</strong>
+                      {{ verbaGeral.valorSolicitadoBrutoTodos| currency }}
+                    </p>
+                    <p>
+                        <strong><i class="fas fa-dollar-sign"></i> Valor do Reembolso Toyota:</strong>
+                      <!--{{ verbaGeral.verbaUtilizadaDealer | currency }}-->
+                      R$ 0,00
+                    </p>
+                    <p>
+                        <strong><i class="far fa-calendar-alt" style="font-size: 18px"></i>  Previsão de Pagamento:</strong>
+                      {{ verbaGeral.dataPrevistaPagamento | date: "dd/MM/yyyy" }}
+                    </p>
+                  </div>
+                  <div class="col-sm-12 mt40">            
+                    <button
+                      class="btn btn-danger mr20"
+                      ng-if="verba.status==1 || verba.status==2"
+                      ng-click="novaAcao()"
+                      >
+                      Nova Ação
+                    </button>
+                  </div>
+                  <div class="col-sm-12 mt20">
+                    <h2>Ações Realizadas </h2>
+                  </div>
+        
+                  <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                    <div ng-controller="acoesRealizadasTableCntrl">
+                      <button
+                        ng-click="toggleFiltering()"
+                        ng-show="gridOptions1.data.length"
+                        class="btn btn-sm ui-grid-filter-button"
+                        style="right:11px"
+                      >
+                        <i class="fa fa-filter"></i>
+                      </button>
+                      <div
+                        id="grid1"
+                        ui-grid="gridOptions1"
+                        ui-grid-pagination
+                        ui-grid-auto-resize
+                        ui-grid-resize-columns
+                        ui-grid-move-columns
+                        ui-grid-selection
+                        class="grid"
+                      >
+                        <div
+                          class="pd-t-b-10 no-rows"
+                          ng-show="!gridOptions1.data.length"
+                        >
+                          <div class="msg">
+                            <span>Sem registros</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>         
+        
+                  <div class="col-sm-12 mt40 text-center">
+                    <button
+                      class="btn btn-default mr20"
+                      ng-if="verba.status==1 || verba.status==2"
+                      onclick="abreModal('#modalGerarNota', 'mfp-sign')"
+                    >
+                      Gerar Nota Débito
+                    </button>
+        
+                    <button
+                      class="btn btn-default mr20"
+                      ng-if="verba.status==6"
+                      onclick="abreModal('#modalReenviarNota', 'mfp-sign')"
+                    >
+                      Reenviar Nota Débito
+                    </button>
+                    <button
+                      class="btn btn-primary mr20"
+                      ng-if="verba.status!=1 && verba.status!=2 && verba.status!=undefined"
+                      ng-click="reImpressao()"
+                    >
+                      Re Impressão
+                    </button>
+        
+                    <!-- <button class="btn btn-primary mr20" ng-click="reImpressao()">Re Imp</button> -->
+                  </div>
+                </div>
+        
+                <div class="col-sm-12">
+                  <div class="col-sm-12 mt20">
+                    <h2>Etapas</h2>
+                  </div>
+        
+                  <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                    <div ng-controller="etapasTableCntrl" class="table-responsive">
+                      <button
+                        ng-click="toggleFiltering()"
+                        ng-show="gridOptions1.data.length"
+                        class="btn btn-sm ui-grid-filter-button"
+                        style="right:11px"
+                      >
+                        <i class="fa fa-filter"></i>
+                      </button>
+                      <div
+                        id="grid1"
+                        ui-grid="gridOptions1"
+                        ui-grid-pagination
+                        ui-grid-auto-resize
+                        ui-grid-resize-columns
+                        ui-grid-move-columns
+                        ui-grid-selection
+                        class="grid"
+                      >
+                        <div
+                          class="pd-t-b-10 no-rows"
+                          ng-show="!gridOptions1.data.length"
+                        >
+                          <div class="msg">
+                            <span>Sem registros</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div class="col-sm-12 mt20">
+                    <h2>Atenção</h2>
+                  </div>
+        
+                  <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                    <div ng-controller="atencaoTableCntrl" class="table-responsive">
+                      <button
+                        ng-click="toggleFiltering()"
+                        ng-show="gridOptions1.data.length"
+                        class="btn btn-sm ui-grid-filter-button"
+                        style="right:11px"
+                      >
+                        <i class="fa fa-filter"></i>
+                      </button>
+                      <div
+                        id="grid1"
+                        ui-grid="gridOptions1"
+                        ui-grid-pagination
+                        ui-grid-auto-resize
+                        ui-grid-resize-columns
+                        ui-grid-move-columns
+                        ui-grid-selection
+                        class="grid"
+                      >
+                        <div
+                          class="pd-t-b-10 no-rows"
+                          ng-show="!gridOptions1.data.length"
+                        >
+                          <div class="msg">
+                            <span>Sem registros</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Modais -->
+        
+          <div id="modalExcluirAcao" class="popup-basic mfp-with-anim mfp-hide">
+              <div class="panel" ng-controller="acoesRealizadasTableCntrl">
+                <div class="panel-heading">
+                  <span class="panel-title"> 
+                    Deseja realmente excluir esta ação?
+                  </span>
+                </div>
+                <div class="panel-body">
+                  <div class="section row">
+                    <div class="col-md-12">
+                      <button ng-click="removeAcao()">Sim</button>
+                     <button ng-click="closeModal()">Não</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        
+          <div id="modalDuvidaVerba" class="popup-basic mfp-with-anim mfp-hide">
+            <div class="panel">
+              <div class="panel-heading">
+                <span class="panel-title"> <i class="fa fa-question"></i>Dúvida </span>
+              </div>
+              <div class="panel-body">
+                <div class="section row">
+                  <div class="col-md-12">
+                    <p>
+                      No caso de Mídia 50%, o valor total da verba a ser recebida
+                      corresponde a 50% do valor da verba que foi comprovada (por ex.,
+                      se o valor da verba comprovada foi de R$ 10.000,00, o valor total
+                      da verba a ser recebida é de R$ 5.000,00).
+                    </p>
+                    <p>
+                      Além disso, o valor total da verba a ser recebida jamais poderá
+                      ultrapassar o limite de recebimento (por ex., se o limite de
+                      recebimento for de R$ 5.000,00, mesmo que o valor da verba
+                      comprovada seja de R$ 15.000,00, o valor total da verba a ser
+                      recebida continuará sendo de R$ 5.000,00).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div id="modalGerarNota" class="popup-basic mfp-with-anim mfp-hide">
+            <div class="panel" ng-controller="gerarNotaController">
+              <div class="panel-heading">
+                <span class="panel-title">
+                  <i class="fa fa-file"></i>Gerar Nota de Débito
+                </span>
+              </div>
+              <div class="panel-body">
+                <div class="section row">
+                  <div class="col-md-12">
+                    <p>
+                      <span ng-show="verbaGeral.verbaNaoUtilizadaAgencia > 0">
+                      Não foi utilizada toda a Verba Retail disponível.
+                </span>
+        
+                Tem certeza de que deseja gerar a nota?
+                    </p>
+                  </div>
+                  <div class="col-md-12 text-center">
+                    <button class="btn btn-danger" ng-click="gerarNotaDebido()">
+                      Sim
+                    </button>
+                    <button class="btn btn-primary" ng-click="closeModal()">Não</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="modalReenviarNota" class="popup-basic mfp-with-anim mfp-hide">
+            <div class="panel" ng-controller="gerarNotaController">
+              <div class="panel-heading">
+                <span class="panel-title">
+                  <i class="fa fa-file"></i>Reenviar Nota de Débito
+                </span>
+              </div>
+              <div class="panel-body">
+                <div class="section row">
+                  <div class="col-md-12">
+                    <p>
+                      Tem certeza que deseja reenviar a nota de débito
+                    </p>
+                  </div>
+                  <div class="col-md-12 text-center">
+                    <button class="btn btn-danger" ng-click="reenviarNotaDebido()">
+                      Sim
+                    </button>
+                    <button class="btn btn-primary" ng-click="closeModal()">Não</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>       
+  </section>
+
+  <section class="agencia" ng-if="usuarioLogado.perfil == 'Agencia'">
+      <style>
+          .reembolso-line{
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            margin: 1rem 0;
+          }
+          .reembolso-line:nth-child(odd){
+            background: #efefef;
+          }
+          .reembolso-line span{
+            width: 50%;
+          }
+          .reembolso-line b{
+            width: 20%;
+          }
+          .reembolso-line i{
+            display: flex;
+            justify-content: center;
+            width: 10%;
+            transition: .3s all;
+          }
+          .reembolso-line i:hover{
+            transform: scale(1.1);
+            transition: .3s all;
+            color: #002C5F !important;
+          }
+          .total-item{
+            background: red !important;
+          }
+          .aditional-infos {
+             display: flex;
+             justify-content: space-evenly;
+           }
+           .aditional-infos strong{
+             color: #002C5F !important;
+           }
+         </style>
+      <div ng-controller="reembolsoController">
+        <div class="panel">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <h1>Solicitar Reembolso Dentsu {{ budgetDealerNFID }}</h1>
+              </div>
+            </div>
+            <!--Marcas-->
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="globalnav">
+                  <li
+                    class="marcaNav"
+                    ng-class="{'active': marcaActive == 'toyota'}"
+                    ng-if="usuarioLogado.permissionT50 || usuarioLogado.permissionT100"
+                  >
+                    <a herf="#" ng-click="changeMarca('toyota');"
+                      ><span class="logo">t</span>TOYOTA</a
+                    >
+                  </li>
+                  <li
+                    class="marcaNav"
+                    ng-class="{'active': marcaActive == 'lexus'}"
+                    ng-if="usuarioLogado.permissionL50 || usuarioLogado.permissionL100"
+                  >
+                    <a herf="#" ng-click="changeMarca('lexus');"
+                      ><span class="logo">l</span>LEXUS</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!--abas toyotas-->
+            <div class="row">
+              <div class="col-sm-12" ng-show="marcaActive=='toyota'">
+                <ul class="nav nav-tabs">
+                  <li
+                    ng-class="{'active': abaActive == 'midia50'}"
+                    ng-if="usuarioLogado.permissionT50"
+                  >
+                    <a href="javascript:;" ng-click="changeAba('midia50', 'toyota');"
+                      >Mídia 50%</a
+                    >
+                  </li>
+                  <li
+                    ng-class="{'active': abaActive == 'midia100'}"
+                    ng-if="usuarioLogado.permissionT10000"
+                  ><!-- Ajustar depois-->
+                    <a href="javascript:;" ng-click="changeAba('midia100', 'lexus');"
+                      >Mídia 100%</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!--abas lexus-->
+            <div class="row">
+              <div class="col-sm-12" ng-show="marcaActive=='lexus'">
+                <ul class="nav nav-tabs">
+                  <li
+                    ng-class="{'active': abaActive == 'midia50'}"
+                    ng-if="usuarioLogado.permissionL50"
+                  >
+                    <a href="javascript:;" ng-click="changeAba('midia50', 'toyota');"
+                      >Mídia 50%</a
+                    >
+                  </li>
+                  <li
+                    ng-class="{'active': abaActive == 'midia100'}"
+                    ng-if="usuarioLogado.permissionL100"
+                  >
+                    <a href="javascript:;" ng-click="changeAba('midia100', 'lexus');"
+                      >Mídia 100%</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+      
+            <!--midia 50 e midia 100-->
+            <div ng-show="abaActive=='midia50' || abaActive == 'midia100'">
+              <div class="row mb20 mt20">
+                <div class="col-sm-12 mt10">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <md-input-container>
+                        <label>Região:</label>
+                        <md-select ng-model="filtro.regiao" ng-change="getDealersByRegionId(filtro.regioes) && clearCookie()">
+                          <md-option
+                          ng-repeat="region in regionList track by $index"
+                          value="{{ region.regiaoID }}">{{ region.nome }}</md-option>
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                      </md-input-container>
+                    </div>
+                    <div class="col-sm-6">
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Dealer:</label>
+                        <md-select ng-model="filtro.dealer" ng-change="filtrar()">
+                          <md-option
+                          ng-repeat="state in dealersList"
+                          value="{{ state.dealerID }}"
+                          >{{ state.cnpj ? state.cnpj + '  | ' : ''  }} {{ state.nomeFantasia }}</md-option
+                          >
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                      </md-input-container>
+                    </div>
+                    <div class="col-sm-2">
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ano Fiscal:</label>
+                        <md-select ng-model="filtro.ano" ng-change="filtrar()">
+                          <md-option
+                            ng-repeat="state in anoFiscal"
+                            value="{{ state.anoFiscal }}"
+                            >{{ state.anoFiscalComNormal }}</md-option
+                          >
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                      </md-input-container>
+                    </div>
+                    <div class="col-sm-1">
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Mês:</label>
+                        <md-select ng-model="filtro.mes" ng-change="filtrar()">
+                          <md-option
+                            ng-repeat="state in meses"
+                            value="{{ state.mesId }}"
+                            >{{ state.mes }}</md-option
+                          >
+                        </md-select>
+                        <div class="md-errors-spacer"></div>
+                      </md-input-container>
+                    </div>
+                  </div>
+                </div>         
+              </div>
+      
+              <div class="row mb20 mt20">
+                <div class="col-sm-6">
+                  <div>
+                    <h3>RESUMO - <span style="font-size: 15px; font-weight: 100">Veja abaixo a sua utilização da verba no mês</span></h3>
+                  </div>
+                  <div class="mt20">
+                   <!-- <table class="table text-center">
+                      <tbody>
+                        <tr class="tableDetalhe">
+                          <td>
+                            Verba Total Liberada 
+                          </td>
+                          <td>
+                            {{ verbaResumo. verbaBrutaAgencia | currency }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            -
+                          </td>
+                          <td></td>
+                        </tr>
+                        <tr class="tableDetalhe">
+                          <td>
+                            Verba Total Aprovada
+                          </td>
+                          <td>
+                            {{ verbaResumo.valorAprovadoLiquidoAgencia | currency }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            -
+                          </td>
+                          <td></td>
+                        </tr>
+                        <tr class="tableDetalhe red">
+                          <td>
+                            Verba Total Reprovada
+                          </td>
+                          <td>
+                            {{ verbaResumo.valorReprovadoLiquidoAgencia | currency }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            =
+                          </td>
+                          <td></td>
+                        </tr>
+                        <tr class="tableDetalhe red bold">
+                          <td>
+                            Verba Não Utilizada
+                          </td>
+                          <td>
+                            {{
+                              verbaResumo.verbaNaoUtilizadaAgencia | currency
+                            }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>-->
+                  
+                    <div class="reembolso-line">
+                      <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Escrever mensagem com breve descrição."></i>
+                      <span>Verba total liberada (Teto):</span>
+                      <b style="color: rgb(37, 180, 37)">{{ verbaResumo. verbaBrutaAgencia | currency }}</b>
+                    </div>
+      
+                    <div class="reembolso-line">
+                      <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Escrever mensagem com breve descrição."></i>
+                      <span>Verba total aprovada:</span>
+                      <b style="color: rgb(37, 180, 37)">{{ verbaResumo.valorAprovadoLiquidoAgencia | currency }}</b>
+                    </div>
+      
+                    <div class="reembolso-line">
+                      <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Escrever mensagem com breve descrição."></i>
+                      <span>Verba total reprovada:</span>
+                      <b style="color: #002C5F !important">{{  verbaResumo.valorReprovadoLiquidoAgencia | currency }}</b>
+                    </div>
+      
+                    <div class="reembolso-line">
+                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="bottom" title="Escrever mensagem com breve descrição."></i>
+                        <span>Verba não utilizada :</span>
+                        <b style="color: orange">{{  verbaResumo.verbaNaoUtilizadaAgencia | currency }}</b>
+                      </div>
+                    
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-sm-12 mt40 text-rightLeft">
+                  <div class="aditional-infos col-sm-12 mt40">
+                      <p>
+                          <strong><i class="fas fa-dollar-sign"></i> Valor Solicitado pela Dentsu:</strong>
+                        {{ verbaResumo.valorSolicitadoBrutoAgencia| currency }}
+                      </p>
+                      <p>
+                          <strong><i class="fas fa-dollar-sign"></i> Valor do Reembolso:</strong>
+                         <!--{{ verbaResumo.verbaUtilizadaAgencia | currency }}-->
+                         R$ 0,00
+                      </p>
+                      <p>
+                          <strong><i class="far fa-calendar-alt" style="font-size: 18px"></i>  Previsão de Pagamento:</strong>
+                        {{ verbaResumo.dataPrevistaPagamento | date: "dd/MM/yyyy" }}
+                      </p>
+                  </div>
+              </div>
+      
+              <!-- ng-if="verba.status==1 || verba.status==2" -->
+              <!--
+                <div class="col-sm-12 mt40 alert alert-default">
+                  <div
+                  id="gridDealers"
+                  ui-grid="gridDealers"
+                  ui-grid-pagination
+                  ui-grid-auto-resize
+                  ui-grid-resize-columns
+                  ui-grid-move-columns
+                  ui-grid-selection
+                  class="grid"
+                  >
+                  <div class="pd-t-b-10 no-rows" ng-show="!gridDealers.data.length">
+                    <div class="msg">
+                      <span>Sem registros</span>
+                    </div>
+                  </div>
+                </div>
+      
+      
+              -->
+              <div class="col-sm-12 mb20 mt20">
+                <button class="btn btn-danger mr20" ng-click="novaAcao()"  ng-if="verbaStatus == 1 || verbaStatus == 2">
+                  Nova Ação
+                </button>
+              </div>
+      
+                <div class="col-sm-12 mt20">
+                  <h2>Ações Realizadas {{ gridOptions1.data }} </h2>
+                </div>
+      
+                <div class="col-sm-12 mt20 table-responsive table-reembolso-1">
+                  <div ng-controller="acoesRealizadasTableCntrl">
+                    <button
+                      ng-click="toggleFiltering()"
+                      ng-show="gridOptions1.data.length"
+                      class="btn btn-sm ui-grid-filter-button"
+                      style="right:11px"
+                    >
+                      <i class="fa fa-filter"></i>
+                    </button>
+                    <div
+                      id="grid1"
+                      ui-grid="gridOptions1"
+                      ui-grid-pagination
+                      ui-grid-auto-resize
+                      ui-grid-resize-columns
+                      ui-grid-move-columns
+                      ui-grid-selection
+                      class="grid"
+                    >
+                      <div
+                        class="pd-t-b-10 no-rows"
+                        ng-show="!gridOptions1.data.length"
+                      >
+                        <div class="msg">
+                          <span>Sem registros</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-sm-12 mt40 text-center">
+                  <button
+                    class="btn btn-default mr20"
+                    ng-if="verba.status==6"
+                    onclick="abreModal('#modalReenviarNota', 'mfp-sign')"
+                  >
+                    Reenviar Nota Débito
+                  </button>
+                  <button
+                    class="btn btn-primary mr20"
+                    ng-if="verba.status!=1 && verba.status!=2 && verba.status!=0 && verba.status!=undefined"
+                    ng-click="reImpressao()"
+                  >
+                    Re Impressão
+                  </button>
+      
+                  <!-- <button class="btn btn-primary mr20" ng-click="reImpressao()">Re Imp</button> -->
+                </div>
+              </div>
+      
+              <div class="row mb20 mt20">
+                <div class="col-sm-12 mt20">
+                  <h2>Etapas</h2>
+                </div>
+      
+                <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                  <div ng-controller="etapasTableCntrl" class="table-responsive">
+                    <button
+                      ng-click="toggleFiltering()"
+                      ng-show="gridOptions1.data.length"
+                      class="btn btn-sm ui-grid-filter-button"
+                      style="right:11px"
+                    >
+                      <i class="fa fa-filter"></i>
+                    </button>
+                    <div
+                      id="grid1"
+                      ui-grid="gridOptions1"
+                      ui-grid-pagination
+                      ui-grid-auto-resize
+                      ui-grid-resize-columns
+                      ui-grid-move-columns
+                      ui-grid-selection
+                      class="grid"
+                    >
+                      <div
+                        class="pd-t-b-10 no-rows"
+                        ng-show="!gridOptions1.data.length"
+                      >
+                        <div class="msg">
+                          <span>Sem registros</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-sm-12 mt20">
+                  <h2>Atenção</h2>
+                </div>
+      
+                <div class="col-sm-12 mt20 table-responsive table-reembolso-3">
+                  <div ng-controller="atencaoTableCntrl" class="table-responsive">
+                    <button
+                      ng-click="toggleFiltering()"
+                      ng-show="gridOptions1.data.length"
+                      class="btn btn-sm ui-grid-filter-button"
+                      style="right:11px"
+                    >
+                      <i class="fa fa-filter"></i>
+                    </button>
+                    <div
+                      id="grid1"
+                      ui-grid="gridOptions1"
+                      ui-grid-pagination
+                      ui-grid-auto-resize
+                      ui-grid-resize-columns
+                      ui-grid-move-columns
+                      ui-grid-selection
+                      class="grid"
+                    >
+                      <div
+                        class="pd-t-b-10 no-rows"
+                        ng-show="!gridOptions1.data.length"
+                      >
+                        <div class="msg">
+                          <span>Sem registros</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 mt20 text-center">
+                    <button  class="btn btn-primary" ng-click="exportarClickHandler($event)">
+                      Exportar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!--altera midia-->
+        <div id="modalDuvidaVerba" class="popup-basic mfp-with-anim mfp-hide">
+          <div class="panel">
+            <div class="panel-heading">
+              <span class="panel-title"> <i class="fa fa-question"></i>Dúvida </span>
+            </div>
+            <div class="panel-body">
+              <div class="section row">
+                <div class="col-md-12">
+                  <p>
+                    No caso de Mídia 50%, o valor total da verba a ser recebida
+                    corresponde a 50% do valor da verba que foi comprovada (por ex.,
+                    se o valor da verba comprovada foi de R$ 10.000,00, o valor total
+                    da verba a ser recebida é de R$ 5.000,00).
+                  </p>
+                  <p>
+                    Além disso, o valor total da verba a ser recebida jamais poderá
+                    ultrapassar o limite de recebimento (por ex., se o limite de
+                    recebimento for de R$ 5.000,00, mesmo que o valor da verba
+                    comprovada seja de R$ 15.000,00, o valor total da verba a ser
+                    recebida continuará sendo de R$ 5.000,00).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div id="modalGerarNota" class="popup-basic mfp-with-anim mfp-hide">
+          <div class="panel" ng-controller="gerarNotaController">
+            <div class="panel-heading">
+              <span class="panel-title">
+                <i class="fa fa-file"></i>Gerar Nota de Débito
+              </span>
+            </div>
+            <div class="panel-body">
+              <div class="section row">
+                <div class="col-md-12">
+                  <p>
+                    Tem certeza que deseja gerar a nota de débito
+                  </p>
+                </div>
+                <div class="col-md-12 text-center">
+                  <button class="btn btn-danger" ng-click="gerarNotaDebido()">
+                    Sim
+                  </button>
+                  <button class="btn btn-primary" ng-click="closeModal()">Não</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div id="modalCertezaGerarNota" class="popup-basic mfp-with-anim mfp-hide">
+          <div class="panel" ng-controller="gerarNotaController">
+            <div class="panel-heading">
+              <span class="panel-title">
+                <i class="fa fa-file"></i>Gerar Nota de Débito
+              </span>
+            </div>
+            <div class="panel-body">
+              <div class="section row">
+                <div class="col-md-12">
+                  <p>
+                    Não foi utilizada toda a Verba Retail disponível. Tem certeza de que deseja gerar a nota?
+                  </p>
+                </div>
+                <div class="col-md-12 text-center">
+                  <button class="btn btn-danger" ng-click="gerarNotaDebido()">
+                    Sim
+                  </button>
+                  <button class="btn btn-primary" ng-click="closeModal()">Não</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div id="modalReenviarNota" class="popup-basic mfp-with-anim mfp-hide">
+          <div class="panel" ng-controller="gerarNotaController">
+            <div class="panel-heading">
+              <span class="panel-title">
+                <i class="fa fa-file"></i>Reenviar Nota de Débito
+              </span>
+            </div>
+            <div class="panel-body">
+              <div class="section row">
+                <div class="col-md-12">
+                  <p>
+                    Tem certeza que deseja reenviar a nota de débito
+                  </p>
+                </div>
+                <div class="col-md-12 text-center">
+                  <button class="btn btn-danger" ng-click="reenviarNotaDebido()">
+                    Sim
+                  </button>
+                  <button class="btn btn-primary" ng-click="closeModal()">Não</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  </section>

@@ -1,0 +1,168 @@
+<style>
+
+    .title {
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .upload-btn {
+        border: 1px solid #002C5F !important;
+        transition: 0.3s all;
+        margin: 2rem 0;
+        background: #002C5F !important;
+        color: white !important;
+    }
+
+        .upload-btn:hover {
+            background: 002C5F;
+            border: 1px solid 002C5F;
+        }
+
+    .result-table {
+        margin: 0 0 4rem 0 !important;
+    }
+
+    .buttons {
+        padding: 1rem;
+    }
+
+        .buttons input {
+            width: 100%;
+        }
+
+    .liked {
+        padding: 0.5rem 2rem;
+        border: 1px solid #d0e9c6;
+        background: #dff0d8;
+        color: #3c763d;
+        font-size: 15px !important;
+        transition: 0.3s all;
+    }
+
+        .liked:hover {
+            transition: 0.3s all;
+            transform: scale(1.001);
+        }
+
+    .disliked {
+        padding: 0.5rem 2rem;
+        border: 1px solid #ebcccc;
+        background: #f2dede;
+        color: #a94442;
+        font-size: 15px !important;
+    }
+
+        .disliked:hover {
+            transform: scale(1.001);
+            transition: 0.3s all;
+        }
+
+    .liked i {
+        padding: 0 0.5rem;
+    }
+
+    .disliked i {
+        padding: 0 0.5rem;
+    }
+
+    .alert-message {
+        color: #002C5F !important;
+        float: left;
+        padding: 0.5rem 0;
+    }
+
+    .error-input {
+        border-bottom: 2px solid red !important;
+    }
+
+    .md-errors-spacer {
+        width: 100%;
+        min-height: 0 !important;
+    }
+
+    button[disabled] {
+        cursor: not-allowed !important;
+        opacity: 0.6;
+    }
+
+    .alert-size {
+        background: #f7e7d9;
+        border: 1px solid #ffa744;
+        color: #e75a08;
+        margin: 1rem;
+        padding: 1.5rem;
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+        .alert-size i {
+            padding: 0 1rem;
+        }
+</style>
+<div ng-controller="gestaoBannersController" ng-show="usuarioLogado.emailConfirmado">
+    <div class="panel">
+        <div class="panel-body">
+            <h1 class="title">Gestão de Banners</h1>
+            <div>
+                <!-- Alerta sobre tamanho ídeal para banners-->
+                <div class="row">
+                    <div class="alert-size">
+                        <i class="fas fa-exclamation-circle"></i>O tamanho recomendado para
+                        banners é de 1920px x 500px.
+                    </div>
+                </div>
+                <!-- Inserir título e ação de upload -->
+                <md-input-container class="md-block" flex-gt-sm style="margin-top: 2.5rem">
+                    <label>Nome do banner</label>
+                    <input type="text"
+                           ng-model="bannerName"
+                           ng-class="{ 'error-input' : previsualizacao && !bannerName }" />
+                    <div class="md-errors-spacer">
+                        <small ng-if="previsualizacao && !bannerName" class="alert-message">Preencha o nome do banner para salva-lo.</small>
+                    </div>
+                </md-input-container>
+                <button ng-if="!previsualizacao"
+                        class="btn btn-block btn-default upload-btn"
+                        ngf-select="uploadFiles($files, $invalidFiles)"
+                        single
+                        accept=".jpg, .png"
+                        ngf-max-size="5MB">
+                    <i class="fa fa-upload mr10"></i>Adicionar novo banner
+                </button>
+                <!-- Previsualização -->
+                <div class="row buttons" ng-if="previsualizacao">
+                    <button class="liked" ng-click="liked()" ng-disabled="!bannerName">
+                        <b> <i class="fas fa-check"></i>Gostei!</b> Salvar Banner.
+                    </button>
+                    <button class="disliked" ng-click="disliked()">
+                        <b> <i class="fas fa-times"></i>Não gostei!</b> Enviar novo banner para
+                        pré-visualização.
+                    </button>
+                </div>
+            </div>
+            <div ng-if="previsualizacao"
+                 class="previsualizao"
+                 style="width: 100%; height: auto;">
+                <img src="{{ previsualizacao }}" alt="" width="100%" height="100%" />
+            </div>
+            <!-- Listagem de banners e ações de Visualizar e Excluir -->
+            <div class="result-table">
+                <div id="grid1"
+                     ui-grid="gridOptions1"
+                     ui-grid-pagination
+                     ui-grid-auto-resize
+                     ui-grid-resize-columns
+                     ui-grid-move-columns
+                     ui-grid-selection
+                     class="grid">
+                    <div class="pd-t-b-10 no-rows" ng-show="!gridOptions1.data.length">
+                        <div class="msg">
+                            <span>Sem registros</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

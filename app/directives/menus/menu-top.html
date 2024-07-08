@@ -1,0 +1,150 @@
+﻿
+<header class="navbar navbar-fixed-top" ng-controller="getUserData">
+    <div class="row TextHeader">
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <div class="logoHeader">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <img src="../assets/img/LOGO BRANCO.png" style="width:108px;height:23px;"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-9 col-md-9 col-lg-9">
+            <ul class="logOut pull-right">
+                <li class="logouticon visible-xs">
+                    <img src="../assets/img/sair.png" ng-click="logOut()" class="iconSair">
+                </li>
+                <li class="avatar hidden-xs">
+                    <span class="hidden-xs">
+                        <img src="../assets/img/icon-temporario1.png" class="iconUser" />
+                        <a class="animated animated-short fadeInUp sairEstilo" ng-click="logOut()">
+                            &nbsp;&nbsp;
+                            <img src="../assets/img/sair.png">
+                        </a>
+                    </span>
+                </li>
+            </ul>
+
+            <ul class="nav nav-list nav-list-topbar liAjuste">
+                <li ng-show="usuarioLogado.perfil == 'Administrador'|| usuarioLogado.perfil == 'Consultor' || usuarioLogado.perfil == 'Auditor'">
+                    <a href="javascript:;" ui-sref="home" ng-click="clearCookies()">
+                        <span class="sidebar-title">Início</span>
+                    </a>
+                </li>
+
+                <li ng-show="usuarioLogado.perfil == 'Administrador' || usuarioLogado.perfil == 'Consultor'">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="sidebar-title">Verba</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" ui-sref="verba">Gestão de Verba</a>
+                        </li>
+                        <li ng-show="usuarioLogado.perfil != 'Consultor'">
+                            <a href="#" ui-sref="financeiro">Financeiro</a>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Administrador' ">
+                    <a href="javascript:;" ui-sref="planoMidia">
+                        <span class="sidebar-title">Plano de Marketing</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Administrador'">
+                    <a href="javascript:;" ui-sref="PreAprovacaoAdmin">
+                        <span class="sidebar-title">Pré Aprovação</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Administrador'|| usuarioLogado.perfil == 'Consultor' || usuarioLogado.perfil == 'Auditor'">
+                    <a href="#" ui-sref="auditoria">
+                        <span class="sidebar-title">Auditoria</span>
+                    </a>
+                </li>
+
+                <li ng-show="usuarioLogado.perfil == 'Administrador'">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="sidebar-title">Portal</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" ui-sref="gestaoBanners" ng-click="clearCookies()">Banners</a>
+                        </li>
+                        <li ng-show="show">
+                            <a href="#" ui-sref="gestaoEventos" ng-click="clearCookies()">Eventos</a>
+                        </li>
+                        <li>
+                            <a href="#" ui-sref="gestaoNoticias" ng-click="clearCookies()">Notícias</a>
+                        </li>
+                        <li>
+                            <a href="#" ui-sref="gestaoPrazos" ng-click="clearCookies()">Prazos</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li ng-show="usuarioLogado.perfil == 'Administrador' || usuarioLogado.perfil == 'Consultor'">
+                    <a href="#" ui-sref="cadastros">
+                        <span class="sidebar-title">Cadastros</span>
+                    </a>
+                </li>
+
+                <!--Dealer-->
+
+                <li ng-show="usuarioLogado.perfil == 'Dealer' || usuarioLogado.perfil == 'Agencia'">
+                    <a href="javascript:;" ui-sref="home" ng-click="clearCookies()">
+                        <span class="sidebar-title">Início</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Dealer'">
+                    <a href="javascript:;" ui-sref="planoMidia">
+                        <span class="sidebar-title">Plano de Mídia</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Dealer'">
+                    <a href="javascript:;" ui-sref="PreAprovacaoDealer">
+                        <span class="sidebar-title">Pré Aprovação</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Dealer'">
+                    <a href="javascript:;" ui-sref="reembolsoDealer">
+                        <span class="sidebar-title">Solicitar Reembolso</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Dealer' && usuarioLogado.acessoSecundario == false">
+                    <a href="javascript:;" ui-sref="detalheDealer">
+                        <span class="sidebar-title">Meu Cadastro</span>
+                    </a>
+                </li>
+                <li ng-click="clearCookies()"
+                    ng-show="usuarioLogado.perfil == 'Dealer' || usuarioLogado.perfil == 'Administrador' || usuarioLogado.perfil == 'Agencia' || usuarioLogado.perfil == 'Consultor'">
+                    <a href="javascript:;" ui-sref="faleConosco">
+                        <span class="sidebar-title">Fale Conosco</span>
+                    </a>
+                </li>
+                <li ng-click="clearCookies()"
+                    ng-show="usuarioLogado.perfil == 'Administrador' || usuarioLogado.perfil == 'Consultor'">
+                    <a href="javascript:;" ui-sref="consultaRapida">
+                        <span class="fas fa-bolt"></span>
+                        <span class="sidebar-title">Consulta Rápida</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Dealer' || usuarioLogado.perfil == 'Administrador' || usuarioLogado.perfil == 'Consultor'"
+                    ng-click="clearCookies()">
+                    <a href="javascript:;" ui-sref="relatorios">
+                        <span class="fas fa-file-alt"></span>
+                        <span class="sidebar-title">Relatórios</span>
+                    </a>
+                </li>
+                <li ng-show="usuarioLogado.perfil == 'Dealer' ||  usuarioLogado.perfil == 'Administrador' || usuarioLogado.perfil == 'Consultor'"
+                    ng-click="clearCookies()">
+                    <a href="javascript:;" ui-sref="regulamentos">
+                        <span class="sidebar-title">Regulamentos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</header>

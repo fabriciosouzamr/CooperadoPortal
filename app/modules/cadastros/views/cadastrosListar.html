@@ -1,0 +1,116 @@
+﻿<div class="tray tray-center" ng-controller="cadastrosController" ng-show="usuarioLogado.emailConfirmado">
+
+    <div class="panel">
+        <div class="panel-body" ng-hide="hideGrid">
+                  
+            <div class="row mb40">
+                <div class="col-sm-12 mb20">
+                    <h2>Cadastros Pendentes</h2>
+                </div>
+                <div class="col-sm-12">
+                    <div ng-controller="precadastrosTableCntrl">
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button" style="right:11px"><i class="fa fa-filter"></i></button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb40">
+                <div class="col-sm-12 mb20">
+                    <h2>Cadastros Aprovados</h2>
+                </div>
+                <div class="col-sm-12">
+                    <div ng-controller="cadastrosAprovacaoTableCntrl">
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button" style="right:11px"><i class="fa fa-filter"></i></button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                
+                
+            <div class="row">
+                <div class="col-sm-12 mb20">
+                    <h2>Cadastros Reprovados</h2>
+                </div>
+                <div class="col-sm-12">
+                    <div ng-controller="cadastrosBloqueadoTableCntrl">
+                        <button ng-click="toggleFiltering()" ng-show="gridOptions1.data.length" class="btn btn-sm ui-grid-filter-button" style="right:11px"><i class="fa fa-filter"></i></button>
+                        <div id="grid1" ui-grid="gridOptions1" ui-grid-pagination ui-grid-auto-resize ui-grid-resize-columns ui-grid-move-columns ui-grid-selection class="grid">
+                            <div class="no-rows" ng-show="!gridOptions1.data.length">
+                                <div class="msg">
+                                    <span>Sem registros</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+           
+    </div>
+
+    <div id="modal-formReprovar" class="popup-basic admin-form mfp-with-anim mfp-hide">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <i class="fa fa-rocket"></i>Reprovar Cadastro
+                </span>
+            </div>
+                
+                
+            <div class="panel-body p25">
+                <div class="section row">
+                    <div class="col-md-12">
+                        <p>Tem certeza que deseja reprovar este cadastro?</p>
+                    </div>
+                        
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <button type="button" class="button btn-danger" ng-click="reprovCadastro();">Sim</button>
+            </div>
+                
+                    
+        </div>
+    </div>
+
+    <div id="modal-formAprovar" class=" popup-basic admin-form mfp-with-anim mfp-hide">
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <i class="fa fa-rocket"></i>Aprovar Cadastro
+                </span>
+            </div>
+                
+                
+            <div class="panel-body p25">
+                <div class="section row">
+                    <div class="col-md-12">
+                        <p>Tem certeza que deseja aprovar este cadastro?</p>
+                    </div>
+                        
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <button type="button" class="button btn-success" ng-click="aprovCadastro();">Sim</button>
+            </div>
+                
+                    
+        </div>
+    </div>
+
+</div>

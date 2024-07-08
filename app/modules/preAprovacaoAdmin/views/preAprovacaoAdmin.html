@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+/* contents styling */
+header {
+  padding: 5px 10px;
+  background: darkgray;
+}
+.container {
+  padding: 10px;
+}
+
+/* tab styling */
+.tab-content {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.tab-nav {
+  display: flex;
+}
+
+.tab-link {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 70px;
+  margin-right: -1px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border: 1px solid;
+  border-bottom: 0;
+  font-size: 12px;
+}
+
+.tab-content:not(:target) {
+  display: none;
+}
+
+.tab-content:target {
+  display: block;
+}
+</style>
+<div class="panel">
+    <font style="font-size:x-large;">PRÉ-APROVAÇÃO</font>
+</div>
+<div>
+    <ul class="tab-nav">
+        <li id="ValidacaoLi" runat="server" class="tab-link"><a href="PreAprovacaoCLIENTE.aspx?PreAprovacaoStatusID=4"><font style="font-size: large;">Pendente</font></a></li>
+        <li id="ReprovadosLi" runat="server" class="tab-link"><a href="PreAprovacaoCLIENTE.aspx?PreAprovacaoStatusID=6"><font style="font-size: large;">Aprovada</font></a></li>
+        <li id="AprovadosLi" runat="server" class="tab-link"><a href="PreAprovacaoCLIENTE.aspx?PreAprovacaoStatusID=5"><font style="font-size: large;">Reprovada</font></a></li>
+    </ul>    
+</div>
+
+<div>
+    <div ng-controller="preAprovacaoTableCntrl" ng-show="usuarioLogado.emailConfirmado">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="container-fluid well">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <md-input-container>
+                            <label>Dealer:</label>
+                            <input type="text" ng-model="dealer.razaoSocial"/>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-3">
+                            <md-input-container>
+                            <label>Nº Pré Aprovação:</label>
+                            <input type="text" ng-model="dealer.nomeFantasia"/>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-3">
+                            <md-input-container>
+                            <label>Ano:</label>
+                            <input type="text" ng-model="dealer.codigo"/>
+                            </md-input-container>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="$.magnificPopup.close()">Buscar</button>                
+                        <button type="button" class="btn btn-outline-primary" ng-click="deletarContato()">Limpar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 pd-t-b-10">
+      <h3>Lista de Usuários</h3>
+      <div
+        ng-controller="preAprovacaoTableCntrl"
+        class="table-responsive table-cadastro-1"
+      >
+        <div
+          id="grid1"
+          ui-grid="gridOptions1"
+          ui-grid-pagination
+          ui-grid-resize-columns
+          ui-grid-move-columns
+          ui-grid-selection
+          class="grid"
+        >
+          <div
+            class="pd-t-b-10 no-rows"
+            ng-show="!gridOptions1.data.length"
+          >
+            <div class="msg">
+              <span>Sem registros</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,532 @@
+<style>
+    .expanded {
+        width: 100% !important;
+        height: 96vh !important;
+    }
+
+        .expanded img {
+            width: 80%;
+            height: 600px;
+        }
+
+        .expanded .file-content object {
+            min-height: 95vh !important;
+        }
+
+    .file-content audio {
+        margin: 22rem 0;
+    }
+
+    .expanded .file-content audio {
+        margin: 28rem 0;
+    }
+
+    .expanded .file-content embed {
+        min-height: 99vh !important;
+    }
+
+    .expanded .file-content img {
+        min-height: 99vh !important;
+    }
+
+    .hasexcessao {
+        color: #002C5F !important !important;
+    }
+
+    .navbar,
+    aside#sidebar_left,
+    #content-footer {
+        display: none !important;
+    }
+
+    #main:before {
+        background: white !important;
+    }
+
+    .telacheia {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid red;
+        color: #002C5F !important;
+        transition: .3s all;
+        margin: .5rem .5rem 0 .5rem;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+        .telacheia:hover {
+            background: red;
+            color: white;
+            transition: .3s all;
+            font-weight: bold;
+        }
+
+        .telacheia i {
+            padding: 0 .5rem;
+        }
+
+    .btn-saveandback {
+        position: fixed;
+        top: -185px;
+        right: -160px;
+        background: red;
+        border-radius: 50%;
+        width: 300px;
+        height: 300px;
+        z-index: 99;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, .1);
+    }
+
+        .btn-saveandback > .icons {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+            .btn-saveandback > .icons i.back {
+                color: white;
+                font-size: 25px !important;
+                position: absolute;
+                bottom: 58px;
+                left: 45px;
+                cursor: pointer;
+                transition: .3s all;
+            }
+
+            .btn-saveandback > .icons i.save {
+                color: white;
+                font-size: 35px;
+                position: absolute;
+                bottom: 55px;
+                left: 85px;
+                cursor: pointer;
+                padding: 0 0 0 1.5rem;
+                transition: .3s all;
+            }
+
+            .btn-saveandback > .icons i.hidedata {
+                color: white;
+                font-size: 35px !important;
+                position: absolute;
+                bottom: 55px;
+                left: 50px;
+                cursor: pointer;
+                padding: 0 0 0 1.5rem;
+                transition: .3s all;
+            }
+
+    .separador {
+        position: absolute;
+        bottom: 48px;
+        left: 84px;
+        width: 1px;
+        height: 45px;
+        background: white;
+    }
+
+    .btn-saveandback i:hover {
+        transition: .3s all;
+        transform: scale(1.1);
+    }
+
+    .left,
+    .right {
+        width: 50%;
+        padding: 1rem 0 0 0;
+        position: fixed;
+    }
+
+    .left {
+        left: 10px;
+    }
+
+    .right {
+        right: 10px;
+    }
+
+    .files-view {
+        width: 90%;
+    }
+
+    .file-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 100vh;
+        height: 100%;
+        position: relative;
+    }
+
+        .file-content .actions {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: -25px;
+        }
+
+        .file-content embed {
+            height: 100%;
+            min-height: 75vh;
+        }
+
+        .file-content iframe {
+            height: 76vh;
+        }
+
+    .right {
+        position: absolute;
+        right: 0;
+    }
+
+    .box-auditoria {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        min-height: 95px;
+    }
+
+    .box {
+        min-height: 95px;
+    }
+
+    .title {
+        padding: .75rem 0;
+    }
+
+    .dadosdealer {
+        padding: 0.75rem 1rem;
+        background: #efefef;
+        margin: 0.5rem 0.5rem 0.5rem 0px;
+        border-radius: 25px;
+    }
+
+    .modeloincentivo i {
+        color: rgb(18, 197, 18);
+        padding: 0 0.5rem;
+    }
+
+    .margintop-20 {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 20px 0 0 0;
+    }
+
+    .reprove-reason {
+        background: rgb(250, 169, 169);
+        border: 1px solid red;
+        border-radius: 3px;
+        width: 100% !important;
+        padding: .5rem;
+    }
+
+    .reprove-reason-msg {
+        color: #002C5F !important;
+        line-height: 1.2;
+        padding: .2rem;
+    }
+
+    .end {
+        position: absolute;
+        right: 0;
+    }
+
+    .files-not-found {
+        width: 90%;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button.left-btn {
+        position: absolute;
+        top: 35%;
+        left: 10px;
+        background: none;
+        border: none;
+        font-size: 30px;
+        color: red;
+    }
+
+    button.right-btn {
+        position: absolute;
+        top: 35%;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 30px;
+        color: red;
+    }
+
+    button[disabled], html input[disabled] {
+        cursor: not-allowed;
+        color: grey !important;
+    }
+
+    .auditar-selected {
+        margin: 22px 40px;
+        line-height: 33px;
+        width: 100%;
+    }
+</style>
+
+<!-- ng-if="auditar == true" -->
+<div ng-controller="auditarController" class="auditar-container">
+    <div class="btn-saveandback" ng-if="!showMotivoView">
+        <div class="icons" ng-show="showData">
+            <i class="far fa-save save" title="Salvar"
+               ng-click="onSalvarClickEvidencias()"></i>
+            <div ng-if="acao.status == 'Pendente' || acao.status == 'Inconsistente'" class="separador "></div>
+            <i class="fas fa-arrow-left back" title="voltar" ng-click="onDetalheVoltarClick()"></i>
+        </div>
+        <div class="icons" ng-if="!showData" ng-click="show()">
+            <i class="fas fa-eye-slash hidedata" title="Sair do modo tela cheia"></i>
+        </div>
+    </div>
+    <div class="btn-voltar"></div>
+    <!-- <div id="auditar-container" class=""> -->
+    <div class="auditar-options col-lg-12">
+        <section class="left" ng-class="{'expanded' : !showData}">
+            <!-- Caso não haja nenhuma evidência cadastrada -->
+            <div class="files-not-found" ng-show="listAnexos == false">
+                <h1>Evidências encaminhadas no físico.</h1>
+            </div>
+            <div style="padding:20px;">
+                <div class="row">
+                    <b>Qtde de Arquivos na Ação</b>:
+                    <span class="dadosdealer" title="Quantidade de arquivos na ação">
+                        <strong>{{ listAnexos.length }}</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="files-view" ng-repeat="item in listAnexos">
+                <div class="file-content" ng-show="$index === activeIndex" style="justify-content: normal;">
+
+                    <!-- Se arquivos forem do tipo Imagem -->
+                    <img ng-click="openAnexo(item.url)" ng-if="item.type == 'jpg' || item.type == 'png' || item.type == 'svg' || item.type == 'jpeg' || item.type == 'jfif'" src="{{ item.url }}" alt="" width="90%">
+                    <!-- Se arquivos forem do tipo PDF -->
+                    <!--<object ng-if="item.type == 'PDF' || item.type == 'pdf'" width="100%" height="80vh" data="{{ item.url }}" type="application/pdf"></object>-->
+                    <embed width="100%" height="80vh" ng-show="item.type == 'PDF' || item.type == 'pdf'" ng-src="{{trustSrc(item.url)}}" width="90%" frameborder="0"></embed>
+                    <!-- Se arquivos forem do tipo Aúdio-->
+                    <audio ng-show="item.type == 'mp3' || item.type == 'wav'" id="pauseAudio" src="{{ item.url }}" width="90%" controls preload="none"></audio>
+
+                    <!-- Se arquivos forem do tipo Vídeo-->
+                    <embed ng-show="item.type == 'mp4' || item.type == 'mov' || item.type == 'wmv'" ng-src="{{trustSrc(item.url)}}" width="90%" frameborder="0"></embed>
+
+                    <!-- Se arquivos for em status não suportado-->
+                    <img ng-show="item.type !== 'jpg' && item.type !== 'png' && item.type !== 'svg' && item.type !== 'jpeg' && item.type !== 'jfif'
+                        && item.type !== 'PDF' && item.type !== 'pdf'
+                        && item.type !== 'mp3' && item.type !== 'wav'
+                        && item.type !== 'mp4' && item.type !== 'mov' && item.type !== 'wmv'"
+                         ng-click="openAnexo(item.url)"
+                         src="../../../../assets/img/arquivo-nao-suportado.jpg"
+                         alt="File not supported"
+                         width="480px">
+                    <div class="auditar-buttons">
+                        <button ng-show="!$last" class="right-btn" ng-click="nextEvidency()">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </button>
+                        <button ng-show="$last" class="right-btn" ng-click="goToFirstEvidency()">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </button>
+                        <button ng-show="{{ $index !== 0}}" class="left-btn" ng-click="previousEvidency()">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                        </button>
+                    </div>
+                    <div style="margin: 0 !important" class="auditar-selected reprove-reason col-md-10" ng-if="acao.status == 'Inconsistente' || acao.motivo">
+                        <div class="row reprove-reason-msg">
+                            <b>
+                                <i style="font-size: 25px" class="fas fa-exclamation-triangle"></i>
+                                {{ acao.reprovacao }}:
+                            </b>
+                            <small>{{ acao.motivo }}</small>
+                        </div>
+                    </div>
+                    <div ng-if="showData" class="auditar-selected col-md-10" style="margin: -8px 0">
+                        <div class="row">
+                            <div class="telacheia" ng-click="hide()">
+                                Ver evidência em tela cheia <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <b>{{ item.categoria }}</b>
+                        </div>
+                        <div ng-show="item.type !== 'jpg' && item.type !== 'png' && item.type !== 'svg' && item.type !== 'jpeg' && item.type !== 'jfif'
+                            && item.type !== 'PDF' && item.type !== 'pdf'
+                            && item.type !== 'mp3' && item.type !== 'wav'
+                            && item.type !== 'mp4' && item.type !== 'mov' && item.type !== 'wmv'">
+                            Nome do arquivo: <b>{{ item.nome }}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- BTs Salvar e Fechar -->
+            <div class="col-sm-6 text-center actions-btn">
+            </div>
+        </section>
+        <section class="right">
+            <!-- Dados do Dealer -->
+            <div ng-if="showData">
+                <div class="box-auditoria">
+                    <div class="row title"><b>Dados do Dealer</b>:</div>
+                    <div class="wrap">
+                        <span class="dadosdealer" title="Código do Dealer">
+                            {{ acao.codigo }}
+                        </span>
+                        <span class="dadosdealer" title="Nome do Dealer">
+                            {{ acao.nomeFantasia }}
+                        </span>
+                        <span class="dadosdealer" title="Razão Social do Dealer">
+                            {{ acao.razaoSocial }}
+                        </span>
+                        <span class="dadosdealer" title="Cnpj do Dealer">
+                            <input style="border: none; font-weight: 100; background: transparent; width: 140px; text-align: center" ui-br-cpfcnpj-mask type="text" class="gui-input" ng-model="acao.cnpj" readonly>
+                        </span>
+                        <span class="dadosdealer" title="Data de recebimento">
+                            {{ acao.dataRecebimento | date: "dd/MM/yyyy" }}
+                        </span>
+                        <span class="dadosdealer" title="Mês de Competência">
+                            {{ acao.mes }}
+                        </span>
+                        <span class="dadosdealer" title="Número Nota de Débito">
+                            {{ acao.budgetDealerID }}
+                        </span>
+                    </div>
+                </div>
+                <!-- Dados do Fornecedor -->
+                <div class="box-auditoria">
+                    <div class="row title wrap">
+                        <b>Dados do Fornecedor / NF</b>
+                        <md-checkbox ng-if="hasChecked[2]" class="check end" ng-model="evidenciaCheck.F" ng-checked="hasChecked[2].aprovado"
+                                     ng-click="clearNFChecked()">
+                        </md-checkbox>
+                        <md-checkbox ng-if="!hasChecked[2]" class="check end" ng-model="evidenciaCheck.F"
+                                     ng-click="clearNFChecked()">
+                        </md-checkbox>
+                    </div>
+                    <div class="wrap">
+                        <span class="dadosdealer" title="Nome do Fornecedor">
+                            {{ acao.fornecedor }}
+                        </span>
+                        <span class="dadosdealer" title="Documento do Fornecedor">
+                            <input style="border: none; font-weight: 100; background: transparent; width: 140px; text-align: center" ui-br-cpfcnpj-mask type="text" class="gui-input" placeholder="CPF/CNPJ" ng-model="acao.documento" readonly>
+                        </span>
+                        <span class="dadosdealer" title="Número da NF">
+                            {{ acao.num_NF }}
+                        </span>
+                        <span class="dadosdealer" title="Data">
+                            {{ acao.dataNF | date: "dd/MM/yyyy" }}
+                        </span>
+                        <span class="dadosdealer" title="Valor"> {{ acao.valor | currency }} </span>
+                    </div>
+                </div>
+                <!-- Modelo de Incentivo -->
+                <div class="box-auditoria">
+                    <div class="row title">
+                        <b>Número do PI / Autorizações</b>
+                        <md-checkbox ng-if="hasChecked[0]" class="check end" ng-model="evidenciaCheck.A" ng-checked=" hasChecked[0].aprovado"
+                                     ng-click="clearPIChecked()">
+                        </md-checkbox>
+                        <md-checkbox ng-if="!hasChecked[0]" class="check end" ng-model="evidenciaCheck.A"
+                                     ng-click="clearPIChecked()">
+                        </md-checkbox>
+                    </div>
+                    <div class="wrap">
+                        <span class="dadosdealer" title="Número do PI">
+                            {{ acao.numPI}}
+                        </span>
+                        <span class="dadosdealer" title="Quantidade de Veículações">
+                            {{ acao.qtdeVeic}}
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <div class="row title">
+                        <b>Evidencias</b>
+                        <md-checkbox ng-if="hasChecked[1]" class="check end" ng-model="evidenciaCheck.E" ng-checked=" hasChecked[1].aprovado"
+                                     ng-click="clearEvidenciasChecked()">
+                        </md-checkbox>
+                        <md-checkbox ng-if="!hasChecked[1]" class="check end" ng-model="evidenciaCheck.E"
+                                     ng-click="clearPIChecked()">
+                        </md-checkbox>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="row title">
+                        <b>Tipo Mídia</b>
+                    </div>
+                    <div class="wrap">
+                        <span class="dadosdealer modeloincentivo">
+                            {{ acao.midia }}
+                        </span>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="row title">
+                        <b>Modelo de Incentivo</b>
+                        <!--<md-checkbox  class="check end" ng-model="evidenciaCheck.I" ng-checked=" hasChecked[2].aprovado"
+                          ng-click="clearIncentivosChecked()">
+                        </md-checkbox>-->
+                    </div>
+                    <div class="wrap">
+                        <span class="dadosdealer modeloincentivo" ng-repeat="modelos in acao.modelosIncentivo">
+                            <i class="fas fa-check"></i>
+                            {{ modelos.descricao }}
+                        </span>
+                    </div>
+                </div>
+                <div class="row margintop-20" style="display: flex;
+                    flex-direction: column">
+                    <b style="padding-bottom: 1rem">Arquivos / Descrição do Dealer</b>
+                    <b style="font-weight: 100">{{ acao.descricaoServico }}</b>
+                </div>
+
+                <div class="row margintop-20">
+                    <!-- Box  Outros -->
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        <div class="boxFeatures">
+                            <div class="head">
+                                <md-checkbox ng-if="hasChecked[3]" class="check" ng-model="evidenciaCheck.O" ng-checked=" hasChecked[3].aprovado"
+                                             ng-click="clearOutrosChecked()">
+                                </md-checkbox>
+                                <md-checkbox ng-if="!hasChecked[3]" class="check end" ng-model="evidenciaCheck.O"
+                                             ng-click="clearPIChecked()">
+                                </md-checkbox>
+                                <label>Outros</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Motivo da reprova -->
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="auditoria-motivo" ng-if="showMotivoView">
+        <div class="row">
+            <h2>Comentários</h2>
+        </div>
+        <div class="row">
+            <h3>Motivo da Reprovação</h3>
+            <select ng-model="motivoReprovacao.codigo" class="form-control" type="text">
+                <option ng-repeat="item in listMotivoReprovacao" value="{{ item.motivoReprovacaoID }}">
+                    {{ item.descricao }}
+                </option>
+            </select>
+        </div>
+        <div class="row">
+            <textarea class="md-textarea auditoria-textarea" ng-model="motivoReprovacao.text"></textarea>
+        </div>
+        <div class="col-sm-6 mt20 text-center">
+            <button class="btn btn-danger" ng-disabled="motivoReprovacao.text.length < 5" ng-click="onSalvarMotivoClick()">
+                Salvar
+            </button>
+            <button class="btn btn-primary" ng-click="onMotivoVoltarClick()">
+                fechar
+            </button>
+        </div>
+    </div>
+</div>
+<!--</div>-->

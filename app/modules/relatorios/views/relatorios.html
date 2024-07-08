@@ -1,0 +1,130 @@
+﻿<style>
+    .export-btn:disabled{
+        background: grey;
+        cursor: not-allowed;
+    }
+    .relatorios-page {
+        height: 78vh;
+    }
+
+    .page-title {
+        padding: 0 1rem;
+        font-size: 25px;
+    }
+
+    .export-btn {
+        background: #002C5F;
+        color: white !important;
+        border: none;
+        padding: 1.4rem 1rem;
+    }
+
+    .export-btn i {
+        padding: 0 2px;
+    }
+
+    .panel {
+        height: 100%;
+    }
+
+    .message {
+        display: flex;
+        align-items: center;
+        padding: 2rem;
+        width: 98%;
+        height: 70px;
+        background: #f6f6f6;
+        margin: 1rem 4rem 1rem 1rem;
+    }
+
+    .message i {
+        padding: 1rem;
+    }
+
+    b {
+        padding: 0 4px;
+    }
+    .warn-msg{
+        color: #002C5F;
+        float: right;
+        padding: 0 4rem 0 0;
+    }
+</style>
+<div ng-controller="relatoriosController" class="relatorios-page" ng-show="usuarioLogado.emailConfirmado">
+
+    <div class="panel">
+        <div class="panel-body admin-form noBotRadius">
+            <h1 class="page-title">Relatórios</h1>
+            <div class="message">
+                <i class="fas fa-exclamation-triangle"></i>
+                <b>Escolha um Tipo de relatório</b> e na sequência <b> preencha todos os campos</b> para exportar um
+                relatório.
+            </div>
+            <!-- Tipo de Relatório -->
+            <div class="col-md-2">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Tipo de relatório:</label>
+                    <md-select ng-model="tiposRelatorio" ng-change="limpar()">
+                        <md-option ng-repeat="(key, value) in relatorios" value="{{key}}">
+                            {{ value.nome }}
+                        </md-option>
+                    </md-select>
+                    <div class="md-errors-spacer"></div>
+                </md-input-container>
+            </div>  
+            
+            <!-- Ano Fiscal -->         
+            <div class="col-md-2" ng-show="relatorios[tiposRelatorio].campos['anoFiscal'].visivel">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Ano Fiscal<span ng-if="relatorios[tiposRelatorio].campos['anoFiscal'].obrigatorio">*</span>:</label>
+                    <md-select ng-model="anoFiscal" ng-change="getMonths()" ng-disabled="!tiposRelatorio" placeholder="Ano Fiscal{{relatorios[tiposRelatorio].campos['anoFiscal'].obrigatorio ? '*' : ''}}:">
+                        <md-option ng-repeat="ano in anos" value="{{ano.anoFiscal}}">
+                            {{ ano.anoFiscalComNormal }}
+                        </md-option>
+                    </md-select>
+                    <div class="md-errors-spacer"></div>
+                </md-input-container>
+            </div>
+            <!-- Periodo De -->
+            <div class="col-md-2" ng-show="relatorios[tiposRelatorio].campos['periodoDe'].visivel">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Período de<span ng-if="relatorios[tiposRelatorio].campos['periodoDe'].obrigatorio">*</span>:</label>
+                    <md-select ng-model="periodoDe" ng-disabled="!tiposRelatorio" placeholder="Período de{{relatorios[tiposRelatorio].campos['periodoDe'].obrigatorio ? '*' : ''}}:">
+                        <md-option ng-repeat="mes in meses" value="{{mes.mesId}}">
+                            {{ mes.descricao }}
+                        </md-option>
+                    </md-select>
+                    <div class="md-errors-spacer"></div>
+                </md-input-container>
+            </div>
+            <!-- Periodo Até -->
+            <div class="col-md-2" ng-show="relatorios[tiposRelatorio].campos['periodoAte'].visivel">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Período até<span ng-if="relatorios[tiposRelatorio].campos['periodoAte'].obrigatorio">*</span>:</label>
+                    <md-select ng-model="periodoAte" ng-disabled="!tiposRelatorio" placeholder="Periodo até{{relatorios[tiposRelatorio].campos['periodoAte'].obrigatorio ? '*' : ''}}:">
+                        <md-option ng-repeat="mes in meses" value="{{mes.mesId}}">
+                            {{ mes.descricao }}
+                        </md-option>
+                    </md-select>
+                    <div class="md-errors-spacer"></div>
+                </md-input-container>
+            </div>
+            <!-- Botões -->
+            <div class="col-md-4">
+                <button ng-click="reportExport()" class="export-btn" ng-disabled="
+                    !tiposRelatorio
+                    || (relatorios[tiposRelatorio].campos['anoFiscal'].obrigatorio && !anoFiscal)
+                    || (relatorios[tiposRelatorio].campos['periodoDe'].obrigatorio && !periodoDe)
+                    || (relatorios[tiposRelatorio].campos['periodoAte'].obrigatorio && !periodoAte)
+                ">
+                    <i class="fas fa-file-download"></i>
+                    Exportar Relatório
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <span class="warn-msg">Os campos marcados com * são obrigatórios.</span>
+        </div>       
+    </div>
+
+</div>
